@@ -1,0 +1,78 @@
+package cc.sourcebox.entities;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.List;
+
+
+/**
+ * The persistent class for the users database table.
+ * 
+ */
+@Entity
+@Table(name="users")
+public class User implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int iduser;
+
+	@Column(name="last_activity")
+	private Timestamp lastActivity;
+
+	private String name;
+
+	//bi-directional many-to-one association to Message
+	@OneToMany(mappedBy="user")
+	private List<Message> messages;
+
+	//bi-directional many-to-one association to Operation
+	@OneToMany(mappedBy="user")
+	private List<Operation> operations;
+
+    public User() {
+    }
+
+	public int getIduser() {
+		return this.iduser;
+	}
+
+	public void setIduser(int iduser) {
+		this.iduser = iduser;
+	}
+
+	public Timestamp getLastActivity() {
+		return this.lastActivity;
+	}
+
+	public void setLastActivity(Timestamp lastActivity) {
+		this.lastActivity = lastActivity;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public List<Message> getMessages() {
+		return this.messages;
+	}
+
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
+	}
+	
+	public List<Operation> getOperations() {
+		return this.operations;
+	}
+
+	public void setOperations(List<Operation> operations) {
+		this.operations = operations;
+	}
+	
+}
