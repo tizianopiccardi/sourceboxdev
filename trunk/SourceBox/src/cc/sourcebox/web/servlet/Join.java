@@ -1,27 +1,23 @@
 package cc.sourcebox.web.servlet;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
-
-import javax.ejb.EJB;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import cc.sourcebox.beans.UserEnvRemote;
-import cc.sourcebox.web.utils.Utils;
 
 @WebServlet(urlPatterns="/join")
-public class Join extends HttpServlet {
+public class Join extends SourceBoxServlet {
 
+	private static final long serialVersionUID = 8233025717568950848L;
 
-	@EJB(mappedName="SourceBoxLogicEAR/UserEnv/remote")
-	private UserEnvRemote userEnv;
+	@Override
+	public void process(HttpServletRequest req) throws Exception {
+		String nick = req.getParameter("nick");
+		session.setAttribute("nick", nick);
+	}
+
+//	@EJB(mappedName="SourceBoxLogicEAR/UserEnv/remote")
+//	private UserEnvRemote userEnv;
 	
-	private static final long serialVersionUID = -2640921971396804806L;
+/*	private static final long serialVersionUID = -2640921971396804806L;
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -34,17 +30,18 @@ public class Join extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
+		HttpSession session = req.getSession(true);
 
 		PrintWriter out = resp.getWriter();
 		HashMap<String, Object> respData = new HashMap<String, Object>();
 
 		String nick = req.getParameter("nick");
 		try {
-			userEnv.setName(nick);
-			
+			//userEnv.setName(nick);
+			session.setAttribute("name", nick);
 			//respData.put("seq", userEnv.getSequence());
 			
-			respData.put("name", userEnv.getName());
+			//respData.put("name", userEnv.getName());
 			
 			respData.put("success", true);
 		} catch (Exception e) {
@@ -57,6 +54,6 @@ public class Join extends HttpServlet {
 		
 		
 	}
-	
+	*/
 	
 }
