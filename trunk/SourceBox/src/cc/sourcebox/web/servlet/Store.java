@@ -16,24 +16,68 @@ import cc.sourcebox.beans.BoxBeanRemote;
 import cc.sourcebox.web.utils.EncodeDecode;
 
 @WebServlet(urlPatterns = "/store")
-public class Store extends HttpServlet {
+public class Store extends SourceBoxServlet {
 
-	/**
+
+
+/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-
-	@Override
+	private static final long serialVersionUID = -1457195029910148809L;
+/*	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(req, resp);
-	}
+	}*/
 
 	@EJB(mappedName = "SourceBoxLogicEAR/BoxBean/remote")
 	private BoxBeanRemote bbr;
 
+	
 	@Override
+		public void process(HttpServletRequest req) throws Exception {
+				
+			/*************
+			 * Captcha check
+			 */
+			String captcha = ""  + session.getAttribute("captcha");
+			if (!captcha.equals(req.getParameter("captcha")))
+				throw new RuntimeException( "Wrong security code...");
+			/*************/
+			
+			String language = req.getParameter("language").toString();
+			String code = req.getParameter("code").toString();
+			String password = (req.getParameter("is_private").equals("true")) ? req
+					.getParameter("password") : null;	
+					
+			boolean readonly = req.getParameter("readonly").equals("true");
+
+			String alias = bbr.make(language, code, password, readonly);
+			
+			
+			System.out.println("Language: " + language);
+			System.out.println("Code: " + code);
+			System.out.println("Password: " + password);
+			System.out.println("ReadOnly: " + readonly);
+
+			System.out.println("BOX ALIAS: " + alias);
+
+			
+			URL reconstructedURL = new URL(req.getScheme(),
+					req.getServerName(),
+					req.getServerPort(),
+					req.getContextPath()+"/@"+alias);
+			
+			output.put("url", reconstructedURL);
+			output.put("alias", alias);
+			
+		}
+	
+	
+	
+	
+/*	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		resp.setContentType("application/json");
@@ -43,7 +87,7 @@ public class Store extends HttpServlet {
 
 		String captcha = "" + req.getSession().getAttribute("captcha");
 
-		if (/*!captcha.equals(req.getParameter("captcha"))*/false) {
+		if (!captcha.equals(req.getParameter("captcha"))false) {
 			System.err.println("Captcha error: " + captcha + "!="
 					+ req.getParameter("captcha"));
 
@@ -81,6 +125,6 @@ public class Store extends HttpServlet {
 		out.print(EncodeDecode.get().encode(result));
 
 		out.close();
-	}
+	}*/
 
 }
