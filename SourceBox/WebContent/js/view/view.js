@@ -102,7 +102,7 @@ $.ajax({
 			if (response.success) {
 				
 				
-				if (response.loggedAs.length<1) 
+				if (response.loggedAs==undefined || response.loggedAs.length<1) 
 					$( "#nickname-panel" ).dialog("open");
 				
 				

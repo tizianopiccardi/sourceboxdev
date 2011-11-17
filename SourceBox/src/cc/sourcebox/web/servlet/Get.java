@@ -16,7 +16,7 @@ import cc.sourcebox.entities.Revision;
 import cc.sourcebox.web.utils.Utils;
 
 @WebServlet(urlPatterns="/get")
-public class Get extends HttpServlet {
+public class Get extends SourceBoxServlet {
 
 	/**
 	 * 
@@ -25,7 +25,28 @@ public class Get extends HttpServlet {
 	
 	@EJB(mappedName = "SourceBoxLogicEAR/BoxBean/remote")
 	private BoxBeanRemote boxbean;
+	
+	
+	@Override
+	public void process(HttpServletRequest req) throws Exception {
 
+
+		String alias = req.getParameter("alias");
+		String password = req.getParameter("pw");
+		
+		Revision rev = (Revision)boxbean.get(alias, password);
+		
+
+		output.put("alias", rev.getBox().getAlias());
+		output.put("code", rev.getSource());
+		output.put("language", rev.getBox().getLanguage());
+		output.put("readonly", rev.getBox().getReadonly());
+		output.put("revision", rev.getRev());	
+		
+	}
+	
+	
+/*
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -67,6 +88,6 @@ public class Get extends HttpServlet {
 		
 		out.close();
 		
-	}
+	}*/
 	
 }

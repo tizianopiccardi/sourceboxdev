@@ -27,7 +27,7 @@
         	<init-param>
                 <param-name>modRewriteConfText</param-name>
                 <param-value>
-                    RewriteRule ^/@([a-zA-Z0-9]+) /?id=$1
+                    RewriteRule ^/@([a-zA-Z0-9]+) /?alias=$1
                 </param-value>
             </init-param>
            

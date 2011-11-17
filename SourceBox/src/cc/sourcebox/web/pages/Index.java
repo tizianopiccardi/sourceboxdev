@@ -49,10 +49,10 @@ public class Index extends HttpServlet {
 
 		
 		
-		if (req.getParameter("id")==null)
+		if (req.getParameter("alias")==null)
 			t = cfg.getTemplate("index.ftl");
 		else {
-			params.put("alias", req.getParameter("id"));
+			params.put("alias", req.getParameter("alias"));
 			t = cfg.getTemplate("view.ftl");
 		}
         
