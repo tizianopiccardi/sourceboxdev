@@ -7,6 +7,10 @@ $(function() {
 	$("#password-form").hide();
 	$("#pw-check-img").hide();
 	$("#wrong-password").hide();
+	
+	$("#save-status").hide();
+	
+	$("#save-loading").hide();
 
 	$("#password-form").dialog({
 		autoOpen : false,
@@ -68,15 +72,24 @@ $(function() {
 				},
 
 				onKeyEvent : function(ed, ke) {
-
+					
 					if (ke.type == 'keydown') {
 						var k = ke.keyCode || ke.which;
+						//console.log(k);
 						if (ke.ctrlKey && k == 83) {
 							ke.preventDefault();
-							console.log("SAVE");
+							EditorManager.save();
+							return;
+						}
+						if (ke.ctrlKey && k == 78) {
+							ke.preventDefault();
+							EditorManager.openNew();
 						}
 					}
 
+				},
+				onChange : function(ed) {
+					$('#save-status').html("Not saved");
 				}
 
 			});
@@ -174,6 +187,10 @@ $(function() {
 						ch : 0
 					}, null, true);
 					editor.setOption('mode', response.language);
+					EditorManager.isReadOnly = (response.readonly>0);
+					editor.setOption('readOnly', (EditorManager.isReadOnly));
+					
+					
 				}
 
 				else {

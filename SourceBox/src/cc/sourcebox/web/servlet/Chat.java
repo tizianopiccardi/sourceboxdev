@@ -6,24 +6,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(urlPatterns="/save")
-public class Save extends SourceBoxServlet {
+@WebServlet(urlPatterns="/chat")
+public class Chat extends SourceBoxServlet {
 
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 2045546592011857067L;
-
+	private static final long serialVersionUID = 551653406115271400L;
 
 	@Override
 	public void process(HttpServletRequest req, HttpSession session,
 			HashMap<String, Object> output) throws Exception {
 
 
-		Thread.sleep(1000);
+		
 		
 		
 	}
-	
 	
 }
