@@ -23,7 +23,26 @@
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-position: center;
+	/*margin-top: 50px;*/
 }
+
+#save-status {
+	top: 5px ;
+	position: fixed ;
+	right: 25px;
+	z-index: 1000 ;
+	color:#AAAAAA;
+}
+
+
+#save-loading {
+	top: 200px ;
+	position: fixed ;
+	left: 50%;
+	z-index: 1000 ;
+}
+
+
 
 .text {
 	font-size: 12px!important;

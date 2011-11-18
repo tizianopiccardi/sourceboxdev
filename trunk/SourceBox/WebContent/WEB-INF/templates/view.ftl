@@ -25,6 +25,7 @@
    <script type="text/javascript" src="js/view/EditorManager.js"></script>
    <script type="text/javascript" src="js/view/chat.js"></script>
  
+    <script type="text/javascript" src="libs/jquery/jquery.scrollTo.js"></script>
     <!-- <script type="text/javascript" src="js/view/EditorManager.js"></script> -->
  
     <link rel="stylesheet" href="css/view.css"> 
@@ -43,8 +44,14 @@
 </textarea></form>  -->
 <br>
 
+<div id="save-loading" align="center">
+<img alt="loading" src="images/load.gif" id="save-loading-img"><br>Saving...
+</div>
+
 <div id="error" title="Ops..."></div>
 
+
+<div id="save-status"></div>
 
 <div id="site-bottom-bar" class="fixed-position" >
 	<div id="site-bottom-bar-frame">
@@ -53,7 +60,7 @@
 			<a id="menu-root" href="#"><img src="images/logo64.png" alt="menu" border="0"></a>
  
 			<div id="menu" class="ui-corner-all">
-				<a href="#" onClick="javascript: save(); return false;">Save (Crtl + s)</a>
+				<a href="#" onClick="javascript: EditorManager.save(); return false;">Save (Crtl + s)</a>
 				<a href="#" onClick="javascript: EditorManager.openNew();return false;">New Box (Crtl + n)</a>
 			</div>
  

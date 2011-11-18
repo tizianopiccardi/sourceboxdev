@@ -1,13 +1,32 @@
 var EditorManager = {
 
 		editor: null,
-		setEditor: function(ed) {this.editor=ed},
+		setEditor: function(ed) {this.editor=ed;},
 		
 		saved: true,
 		
+		isReadOnly: false,
+		
 		save: function() {
 			
-			this.saved = true;
+			if (EditorManager.isReadOnly) return;
+			
+			$("#save-loading").show();
+			
+			$.ajax({
+				url : "save",
+				dataType : "json",
+				data : {alias : document.alias},
+				success : function(response) {
+					if (response.success) {
+						this.saved = true;
+					}
+					$("#save-loading").hide();
+					$('#save-status').html("");
+				}
+			});
+			
+			
 		},
 		
 		openNew: function() {

@@ -16,9 +16,9 @@ $(function(){
 	    	
 	    	
 	    	$.ajax({
-	  		  url: "chat.php",
+	  		  url: "chat",
 	  		  dataType: "json",
-	  		  data: ({ id: document.id, msg: $('#comment').val() }),
+	  		  data: ({ alias: document.alias, msg: $('#comment').val() }),
 	  		  type: "POST",
 	  		  success: function(response){
 	  				if (response.success) {
@@ -32,7 +32,7 @@ $(function(){
 	    	
 	    	
 	    	
-	    	$('#comments-list').append('<br/>'+document.nick+': '+$('#comment').val());
+	    	$('#comments-list').append('<br/>'+document.boxinfo.loggedAs+': '+$('#comment').val());
 	    	$('#comments-list').scroll();
 	    	
 	    	$('#comments-list').scrollTo('100%');
