@@ -18,10 +18,6 @@ public class SourceBoxServlet extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 5257979831768209196L;
-
-	HttpSession session;
-	HashMap<String, Object> output = new HashMap<String, Object>();
-	PrintWriter out;
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -33,14 +29,15 @@ public class SourceBoxServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		out = resp.getWriter();
+		PrintWriter out = resp.getWriter();
 		/************
 		 * Session start
 		 */
-		session = req.getSession(true);
-		
+		HttpSession session = req.getSession(true);
+		HashMap<String, Object> output = new HashMap<String, Object>();
 		try {
-			process(req);
+			
+			process(req, session, output);
 
 			output.put("success", true);
 		} catch (Exception e) {
@@ -50,13 +47,13 @@ public class SourceBoxServlet extends HttpServlet {
 			output.put("message", e.getMessage());
 		}
 		
-		out.print(Utils.gson.toJson(output));
+		out.print(Utils.encode(output));
 		out.close();
 		
 	}
 	
 	
-	public void process(HttpServletRequest req) throws Exception {}
-	
+	public void process(HttpServletRequest req, HttpSession session, HashMap<String, Object> output) throws Exception {}
+
 	
 }

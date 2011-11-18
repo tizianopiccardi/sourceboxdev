@@ -5,6 +5,8 @@
 	background: #f0fcff !important;
 }
 
+.error{ color: red; }
+
 .fullscreen {
 	display: block;
 	position: absolute;
@@ -22,6 +24,12 @@
 	background-attachment: fixed;
 	background-position: center;
 }
+
+.text {
+	font-size: 12px!important;
+}
+
+.invisible-table{ margin: 0px; !important}
 
 .ui-widget {
 	font-size: 12px!important;

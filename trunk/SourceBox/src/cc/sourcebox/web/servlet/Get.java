@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import cc.sourcebox.beans.BoxBeanRemote;
 import cc.sourcebox.entities.Revision;
@@ -26,13 +27,14 @@ public class Get extends SourceBoxServlet {
 	@EJB(mappedName = "SourceBoxLogicEAR/BoxBean/remote")
 	private BoxBeanRemote boxbean;
 	
+
 	
 	@Override
-	public void process(HttpServletRequest req) throws Exception {
-
-
+	public void process(HttpServletRequest req, HttpSession session,
+			HashMap<String, Object> output) throws Exception {
+		
 		String alias = req.getParameter("alias");
-		String password = req.getParameter("pw");
+		String password = req.getParameter("pass");
 		
 		Revision rev = (Revision)boxbean.get(alias, password);
 		
@@ -42,9 +44,7 @@ public class Get extends SourceBoxServlet {
 		output.put("language", rev.getBox().getLanguage());
 		output.put("readonly", rev.getBox().getReadonly());
 		output.put("revision", rev.getRev());	
-		
 	}
-	
 	
 /*
 	@Override
