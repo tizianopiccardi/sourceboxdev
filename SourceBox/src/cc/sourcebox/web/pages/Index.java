@@ -42,7 +42,7 @@ public class Index extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		HttpSession session = req.getSession();
+		HttpSession session = req.getSession(true);
 		PrintWriter out = resp.getWriter();
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		Template t = null;

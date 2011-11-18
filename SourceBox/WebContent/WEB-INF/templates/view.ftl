@@ -22,7 +22,7 @@
    <script type="text/javascript" src="js/view/Insert.js"></script>
    <script type="text/javascript" src="js/view/OTEngine.js"></script>
    <script type="text/javascript" src="js/view/view.js"></script>
-   
+   <script type="text/javascript" src="js/view/EditorManager.js"></script>
    <script type="text/javascript" src="js/view/chat.js"></script>
  
     <!-- <script type="text/javascript" src="js/view/EditorManager.js"></script> -->
@@ -53,8 +53,8 @@
 			<a id="menu-root" href="#"><img src="images/logo64.png" alt="menu" border="0"></a>
  
 			<div id="menu" class="ui-corner-all">
-				<a href="#" onClick="javascript: save(); return false;">Save (Crtl + S)</a>
-				<a href="#" onClick="javascript: openNickNamePanel(); return false;">Join discussion</a>
+				<a href="#" onClick="javascript: save(); return false;">Save (Crtl + s)</a>
+				<a href="#" onClick="javascript: EditorManager.openNew();return false;">New Box (Crtl + n)</a>
 			</div>
  
 		</div>
@@ -87,7 +87,7 @@
 		Join it:
 		<center>
 			<table class="invisible-table"><tr>
-			<td><label for="pass">Password: </label></td>
+			<td><label for="pass" class="text">Password: </label></td>
 			<td><input type="password" name="pass" id="pass" class="text ui-widget-content ui-corner-all" /></td>
 			<td><img alt="loading" src="images/load.gif" id="pw-check-img"></td>
 			</tr>

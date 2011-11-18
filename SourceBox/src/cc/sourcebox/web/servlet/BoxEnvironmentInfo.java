@@ -1,8 +1,11 @@
 package cc.sourcebox.web.servlet;
 
+import java.util.HashMap;
+
 import javax.ejb.EJB;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import cc.sourcebox.beans.BoxBeanRemote;
 
@@ -19,10 +22,13 @@ public class BoxEnvironmentInfo extends SourceBoxServlet {
 
 	
 	@Override
-	public void process(HttpServletRequest req) throws Exception {
+	public void process(HttpServletRequest req, HttpSession session,
+			HashMap<String, Object> output) throws Exception {
+
+
 		String alias = req.getParameter("alias");
 		
-		output.put("private", boxbean.isPrivate(alias));
+		output.put("isPrivate", boxbean.isPrivate(alias));
 		output.put("inbox", session.getAttribute("BOX_"+alias)!=null);
 		output.put("loggedAs", session.getAttribute("nick"));
 		
