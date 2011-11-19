@@ -26,7 +26,7 @@ var EventsManager = {
 			for(var key in eventsList) {
 				
 				switch (key) {
-				case 'edit': EventsManager.onEditCase(eventsList[key])
+				case 'edit': EventsManager.onEditCase(eventsList[key]);
 							 break;
 				default:
 					break;
@@ -89,7 +89,7 @@ var EventsManager = {
 		},
 		
 		applyHistoryOT: function(external /*modifica arrivata*/) {
-			for (i = 0 ; i < SyncManager.history.length ; i++) {
+			for (var i = 0 ; i < SyncManager.history.length ; i++) {
 				external = OTEngine.T(external, SyncManager.history[i]);
 			}
 			return external;
@@ -98,4 +98,4 @@ var EventsManager = {
 		
 		
 		
-}
+};
