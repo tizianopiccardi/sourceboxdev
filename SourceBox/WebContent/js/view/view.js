@@ -59,7 +59,7 @@ $(function() {
 				lineNumbers : true,
 				matchBrackets : true,
 				indentWithTabs : true,
-				// undoDepth: 0,
+				undoDepth: 0,
 				enterMode : "keep",
 				onCursorActivity : function(i) {
 					editor.setLineClass(hlLine, null);
@@ -89,7 +89,7 @@ $(function() {
 
 				},
 				onChange : function(ed) {
-					$('#save-status').html("Not saved");
+					$('#save-status').show();
 				}
 
 			});
@@ -120,6 +120,7 @@ $(function() {
 						|| response.loggedAs.length < 1)
 					$("#nickname-panel").dialog("open");
 				else {
+					User.name = response.loggedAs;
 					join();
 					init();
 				}
@@ -144,7 +145,10 @@ $(function() {
 	 * EditorManager.setEditor(editor); EditorManager.run();
 	 */
 
-	// $(document).everyTime(300, 'flushBuffer', SyncManager.flush);
+	/*************
+	 * Every n seconds I check the buffer for new changes
+	 */
+	$(document).everyTime(300, 'flushBuffer', SyncManager.flush);
 	// EventsManager.setEditor(editor);
 	// EventsManager.run();
 	/*
@@ -162,7 +166,7 @@ $(function() {
 
 	function join() {
 
-		$('#comment-top').html(document.boxinfo.loggedAs);
+		$('#comment-top').html(User.name);
 		$('#chat-wrapper').fadeIn(1000);
 		$('#chat-dot').attr('src', 'images/green_dot.gif');
 	}
@@ -190,7 +194,7 @@ $(function() {
 					EditorManager.isReadOnly = (response.readonly>0);
 					editor.setOption('readOnly', (EditorManager.isReadOnly));
 					
-					
+					User.name = response.loggedAs;
 				}
 
 				else {
@@ -234,7 +238,8 @@ $(function() {
 			type : "POST",
 			success : function(response) {
 				if (response.success) {
-					document.boxinfo.loggedAs = $("input#nick").val();
+					User.name = $("input#nick").val();
+					//document.boxinfo.loggedAs = $("input#nick").val();
 					$("#nickname-panel").dialog("close");
 
 					join();

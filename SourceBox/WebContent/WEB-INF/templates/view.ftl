@@ -51,7 +51,7 @@
 <div id="error" title="Ops..."></div>
 
 
-<div id="save-status"></div>
+<div id="save-status">Not saved</div>
 
 <div id="site-bottom-bar" class="fixed-position" >
 	<div id="site-bottom-bar-frame">

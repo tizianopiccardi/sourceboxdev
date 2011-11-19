@@ -35,7 +35,7 @@ var SyncManager = {
 			if (SyncManager.errorFlag && SyncManager.counterErrorFlag<10) 
 			{SyncManager.counterErrorFlag++; return true;}
 			SyncManager.errorFlag=false;SyncManager.counterErrorFlag=0;
-			return false
+			return false;
 		},
 		
 		
@@ -55,21 +55,23 @@ var SyncManager = {
 			
 			if (SyncManager.lastWasError()) return;
 				
-			if (SyncManager.buffer.length > 0 && !SyncManager.isRunning && !SyncManager.lockBuffer) {
+			if ((SyncManager.buffer.length > 0 || SyncManager.cursorPos.line!=undefined) 
+					&& !SyncManager.isRunning 
+					&& !SyncManager.lockBuffer) {
 				
 				var currentBuffer = SyncManager.buffer.slice();
 				SyncManager.buffer = [];
 				
 				SyncManager.isRunning = true;
 				$.ajax({
-					  url: "edit.php",
+					  url: "edit",
 					  dataType: "json",
 					  traditional: true,
 					  data: {	c: JSON.stringify(SyncManager.cursorPos), 
 								e: JSON.stringify(currentBuffer)},
 					  type: "POST",
 					  success: function(response){
-							
+						  
 					  },
 					  error: function(jqXHR, textStatus) {
 						  SyncManager.buffer = currentBuffer.concat(SyncManager.buffer);
@@ -77,6 +79,7 @@ var SyncManager = {
 					  },
 					  complete: function() {
 						  SyncManager.isRunning = false;
+						  SyncManager.cursorPos = {};
 						  delete currentBuffer;
 					  }
 					});
@@ -86,5 +89,5 @@ var SyncManager = {
 		
 		
 		
-}
+};
 
