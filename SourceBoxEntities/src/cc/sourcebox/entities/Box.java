@@ -31,6 +31,10 @@ public class Box implements Serializable {
 
 	private int readonly;
 
+	//bi-directional many-to-one association to Inbox
+	@OneToMany(mappedBy="box", cascade={CascadeType.ALL})
+	private List<Inbox> inbox;
+
 	//bi-directional many-to-one association to Message
 	@OneToMany(mappedBy="box")
 	private List<Message> messages;
@@ -102,6 +106,14 @@ public class Box implements Serializable {
 		this.readonly = readonly;
 	}
 
+	public List<Inbox> getInbox() {
+		return this.inbox;
+	}
+
+	public void setInbox(List<Inbox> inbox) {
+		this.inbox = inbox;
+	}
+	
 	public List<Message> getMessages() {
 		return this.messages;
 	}

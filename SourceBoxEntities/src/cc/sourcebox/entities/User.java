@@ -24,6 +24,10 @@ public class User implements Serializable {
 
 	private String name;
 
+	//bi-directional many-to-one association to Inbox
+	@OneToMany(mappedBy="user", cascade={CascadeType.ALL})
+	private List<Inbox> inbox;
+
 	//bi-directional many-to-one association to Message
 	@OneToMany(mappedBy="user")
 	private List<Message> messages;
@@ -59,6 +63,14 @@ public class User implements Serializable {
 		this.name = name;
 	}
 
+	public List<Inbox> getInbox() {
+		return this.inbox;
+	}
+
+	public void setInbox(List<Inbox> inbox) {
+		this.inbox = inbox;
+	}
+	
 	public List<Message> getMessages() {
 		return this.messages;
 	}
