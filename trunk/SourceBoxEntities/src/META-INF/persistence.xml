@@ -4,11 +4,11 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:SourceBoxDS</jta-data-source>
 		<class>cc.sourcebox.entities.Box</class>
-		<class>cc.sourcebox.entities.Configuration</class>
 		<class>cc.sourcebox.entities.Message</class>
 		<class>cc.sourcebox.entities.Operation</class>
 		<class>cc.sourcebox.entities.Revision</class>
 		<class>cc.sourcebox.entities.User</class>
+		<class>cc.sourcebox.entities.Inbox</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 			<property name="hibernate.show_sql" value="true"/>
