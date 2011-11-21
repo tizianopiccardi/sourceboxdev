@@ -1,6 +1,7 @@
 package cc.sourcebox.beans;
 
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,9 @@ import javax.persistence.Query;
 
 import cc.sourcebox.beans.exceptions.BoxNotFoundException;
 import cc.sourcebox.entities.Box;
+import cc.sourcebox.entities.Inbox;
 import cc.sourcebox.entities.Revision;
+import cc.sourcebox.entities.User;
 
 import com.google.gson.Gson;
 
@@ -29,6 +32,9 @@ public class BoxBean implements BoxBeanRemote, BoxBeanLocal {
 	
 	@EJB
 	UrlHelperLocal urlHelper;
+	
+	@EJB
+	UsersManagerBeanLocal usersMgr;
 	
 	
     /**
@@ -109,7 +115,7 @@ public class BoxBean implements BoxBeanRemote, BoxBeanLocal {
 	}
 
 	@Override
-	public Revision get(String alias, String password) throws BoxNotFoundException {
+	public Revision get(int userId, String alias, String password) throws BoxNotFoundException {
 		
 		Query boxQuery = em.createQuery("SELECT r from Revision r join r.box b where b.alias=:alias and b.password=:pwd order by r.rev desc" );
 		
@@ -119,8 +125,10 @@ public class BoxBean implements BoxBeanRemote, BoxBeanLocal {
 		boxQuery.setMaxResults(1);
 		boxQuery.setParameter("alias", alias);
 		boxQuery.setParameter("pwd", (password==null)?"":password);
-		try {
+		try {	
+			
 			Revision lastRev = (Revision)boxQuery.getSingleResult();
+			usersMgr.joinBox(userId, lastRev.getBox());
 			return lastRev;
 		}
 		catch (Exception e) {
@@ -143,8 +151,22 @@ public class BoxBean implements BoxBeanRemote, BoxBeanLocal {
 		}
 		
 	}
+/*
 
-	
+	@Override
+	public void joinBox(int userid) {
+		User user = em.find(User.class, userid);
+	    if (user != null) {
+	    	Inbox joinDiscussion = new Inbox();
+	    	joinDiscussion.setCursorColumn(0);
+	    	joinDiscussion.setCursorLine(0);
+	    	joinDiscussion.setFrom(new Timestamp(System.currentTimeMillis()));
+	    	
+	    	user.getInbox().add(joinDiscussion);
+	    }
+	}
+
+	*/
 	
 	
 	
