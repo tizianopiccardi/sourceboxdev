@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 
 public class EncodeDecode {
 
-	private static EncodeDecode ed = null;
+	/*private static EncodeDecode ed = null;
 	
 	private static Gson gson = null;
 	
@@ -19,6 +19,6 @@ public class EncodeDecode {
 	public String encode(Object obj) {
 		return gson.toJson(obj);
 	}
-	
+	*/
 	
 }
