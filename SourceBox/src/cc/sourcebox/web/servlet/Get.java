@@ -35,9 +35,13 @@ public class Get extends SourceBoxServlet {
 		
 		String alias = req.getParameter("alias");
 		String password = req.getParameter("pass");
+		//System.out.println("========================");
+		//System.out.println(Utils.getUserId(session));
 		
-		Revision rev = (Revision)boxbean.get(alias, password);
+		Revision rev = (Revision)boxbean.get(Utils.getUserId(session), alias, password);
 		
+		//QUICK CHECK
+		session.setAttribute("BOX_"+alias, true);
 
 		output.put("alias", rev.getBox().getAlias());
 		output.put("code", rev.getSource());
