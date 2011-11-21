@@ -38,7 +38,7 @@ public class Tester {
 			BoxBeanRemote b = (BoxBeanRemote) ctx
 					.lookup("SourceBoxLogicEAR/BoxBean/remote");
 
-			Revision rev = (Revision)b.get("xp",null);
+			Revision rev = (Revision)b.get(0,"xp",null);
 
 			
 			Gson gson= new Gson();
