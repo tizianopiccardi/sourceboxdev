@@ -67,7 +67,8 @@ var SyncManager = {
 					  url: "edit",
 					  dataType: "json",
 					  traditional: true,
-					  data: {	c: JSON.stringify(SyncManager.cursorPos), 
+					  data: {	alias: document.alias,
+						  		c: JSON.stringify(SyncManager.cursorPos), 
 								e: JSON.stringify(currentBuffer)},
 					  type: "POST",
 					  success: function(response){
