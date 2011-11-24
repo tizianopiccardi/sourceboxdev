@@ -1,7 +1,6 @@
 package cc.sourcebox.beans;
 
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +12,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import cc.sourcebox.beans.exceptions.BoxNotFoundException;
+import cc.sourcebox.dto.InsertObject;
 import cc.sourcebox.entities.Box;
-import cc.sourcebox.entities.Inbox;
 import cc.sourcebox.entities.Revision;
-import cc.sourcebox.entities.User;
-
-import com.google.gson.Gson;
 
 /**
  * Session Bean implementation class BoxBean
@@ -151,42 +147,15 @@ public class BoxBean implements BoxBeanRemote, BoxBeanLocal {
 		}
 		
 	}
-/*
 
 	@Override
-	public void joinBox(int userid) {
-		User user = em.find(User.class, userid);
-	    if (user != null) {
-	    	Inbox joinDiscussion = new Inbox();
-	    	joinDiscussion.setCursorColumn(0);
-	    	joinDiscussion.setCursorLine(0);
-	    	joinDiscussion.setFrom(new Timestamp(System.currentTimeMillis()));
-	    	
-	    	user.getInbox().add(joinDiscussion);
-	    }
+	public void edit(String alias, int userID, List<InsertObject> inserts)
+			throws BoxNotFoundException {
+		// TODO Auto-generated method stub
+		
 	}
 
-	*/
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	
