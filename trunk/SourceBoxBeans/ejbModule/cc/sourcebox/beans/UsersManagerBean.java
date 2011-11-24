@@ -6,9 +6,12 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
+import cc.sourcebox.beans.exceptions.BoxNotFoundException;
 import cc.sourcebox.entities.Box;
 import cc.sourcebox.entities.Inbox;
+import cc.sourcebox.entities.Revision;
 import cc.sourcebox.entities.User;
 
 /**
@@ -37,8 +40,8 @@ public class UsersManagerBean implements UsersManagerBeanRemote, UsersManagerBea
 
 
 	@Override
-	public void heartBeat(int userid) {
-		User user = em.find(User.class, userid);
+	public void heartBeat(int userID) {
+		User user = em.find(User.class, userID);
 	    if (user != null) {
 	      user.setLastActivity(new Timestamp(System.currentTimeMillis()));
 	    }
@@ -48,8 +51,8 @@ public class UsersManagerBean implements UsersManagerBeanRemote, UsersManagerBea
 
 
 	@Override
-	public void joinBox(int userid, Box box) {
-		User user = em.find(User.class, userid);
+	public void joinBox(int userID, Box box) {
+		User user = em.find(User.class, userID);
 
 	    if (user != null) {
 	    	Inbox joinDiscussion = new Inbox();
@@ -62,6 +65,28 @@ public class UsersManagerBean implements UsersManagerBeanRemote, UsersManagerBea
 	    	em.persist(joinDiscussion);
 
 	    }
+	}
+
+
+	@Override
+	public void setCursorPos(String boxAlias, int userID, int line, int ch) {
+		//User user = em.find(User.class, userID);
+		
+		Query inboxQuery = em.createQuery("SELECT i from Inbox i join i.box b join i.user u where u.iduser=:iduser and b.alias=:alias");
+		
+
+		inboxQuery.setMaxResults(1);
+		inboxQuery.setParameter("iduser", userID);
+		inboxQuery.setParameter("alias", boxAlias);
+
+			
+		Inbox inBox = (Inbox)inboxQuery.getSingleResult();
+		
+		inBox.setCursorLine(line);
+		inBox.setCursorColumn(ch);
+
+
+		
 	}
 
 }
