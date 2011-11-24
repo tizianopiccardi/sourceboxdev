@@ -9,5 +9,6 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="org.jboss.ide.eclipse.as.classpath.core.javaee-5.0"/>
 	<classpathentry kind="lib" path="C:/jboss6.1/server/default/lib/gson-1.7.1.jar"/>
+	<classpathentry kind="src" path="/SourceBoxDTO"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
