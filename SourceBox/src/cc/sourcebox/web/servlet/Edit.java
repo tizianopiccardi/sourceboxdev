@@ -28,7 +28,17 @@ public class Edit extends SourceBoxServlet {
 	public void process(HttpServletRequest req, HttpSession session,
 			HashMap<String, Object> output) throws Exception {
 
+		int userID = (Integer)session.getAttribute("userID");	
+		String alias = req.getParameter("alias");
+		
+		/*********
+		 * UPDATE cursor position
+		 */
 		JsonObject cursor = Utils.decodeObject(req.getParameter("c"));
+		int line = cursor.get("line").getAsInt();
+		int ch = cursor.get("ch").getAsInt();
+		usersMgr.setCursorPos(alias, userID, line, ch);
+		
 		
 		
 		usersMgr.heartBeat(Utils.getUserId(session));
