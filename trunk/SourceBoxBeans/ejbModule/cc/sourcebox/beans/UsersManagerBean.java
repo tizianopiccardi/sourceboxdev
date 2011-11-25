@@ -53,7 +53,20 @@ public class UsersManagerBean implements UsersManagerBeanRemote, UsersManagerBea
 	@Override
 	public void joinBox(int userID, Box box) {
 		User user = em.find(User.class, userID);
+		/*Query inboxQuery = em.createQuery("SELECT u from Inbox i join i.user u join i.box b where u.iduser = :userid and b.idboxes = :idbox");
+		inboxQuery.setParameter("userid", userID);
+		inboxQuery.setParameter("idbox", box.getIdboxes());
+		inboxQuery.setMaxResults(1);
+		
+		System.out.println("PREFETCH");
 
+		Object result = inboxQuery.getSingleResult();
+		System.out.println("PostFETCH");
+		System.out.println("res "+result);
+		
+		User user = (User)inboxQuery.getSingleResult();
+		System.out.println(user);*/
+		
 	    if (user != null) {
 	    	Inbox joinDiscussion = new Inbox();
 	    	joinDiscussion.setCursorColumn(0);
@@ -61,8 +74,9 @@ public class UsersManagerBean implements UsersManagerBeanRemote, UsersManagerBea
 	    	joinDiscussion.setSince(new Timestamp(System.currentTimeMillis()));
 	    	joinDiscussion.setUser(user);
 	    	joinDiscussion.setBox(box);
-	    	
-	    	em.persist(joinDiscussion);
+	    	try {
+	    		em.persist(joinDiscussion);
+	    	}catch (Exception e) {}
 
 	    }
 	}
