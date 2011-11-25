@@ -213,7 +213,7 @@ $(function() {
 
 	function init() {
 
-		if (document.boxinfo.isPrivate)
+		if (document.boxinfo.isPrivate && !document.boxinfo.inbox)
 
 			$("#password-form").dialog("open");
 
