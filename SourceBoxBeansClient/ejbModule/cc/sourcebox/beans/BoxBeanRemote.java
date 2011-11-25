@@ -39,6 +39,7 @@ public interface BoxBeanRemote {
 	 * @throws BoxNotFoundException
 	 */
 	public Revision get(int userId, String alias, String password) throws BoxNotFoundException;
+
 	
 	/***********
 	 * Check if the password is not null
