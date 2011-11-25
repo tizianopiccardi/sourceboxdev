@@ -59,6 +59,16 @@ public class InsertObject implements Serializable {
 	public void setText(String text) {
 		this.text = text;
 	}
+	
+	@Override
+	public String toString() {
+		return "\n{SQ: " + getSequence() +
+				"\nFL: " + getFromLine() + 
+				"\nFC: " + getFromChar() + 
+				"\nTL: " + getToLine() + 
+				"\nTC: " + getToChar()+
+				"\nText: " + getText()+"}\n----------";
+	}
 
 
 	
