@@ -1,15 +1,10 @@
 package cc.sourcebox.web.servlet;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 
 import javax.ejb.EJB;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import cc.sourcebox.beans.BoxBeanRemote;
@@ -35,10 +30,9 @@ public class Get extends SourceBoxServlet {
 		
 		String alias = req.getParameter("alias");
 		String password = req.getParameter("pass");
-		//System.out.println("========================");
-		//System.out.println(Utils.getUserId(session));
 		
-		Revision rev = (Revision)boxbean.get(Utils.getUserId(session), alias, password);
+		
+		Revision rev = (Revision)boxbean.get(Utils.getUserId(session), alias, password );
 		
 		//QUICK CHECK
 		session.setAttribute("BOX_"+alias, true);
