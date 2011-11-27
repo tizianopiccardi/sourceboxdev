@@ -7,9 +7,9 @@ var EventsManager = {
 		
 		run: function() {
 			$.ajax({
-				  url: "events.php",
+				  url: "events",
 				  dataType: "json",
-				  data: ({ id: ''/*, string: EventsManager.editor.getValue*/}),
+				  data: ({ alias: document.alias}),
 				  type: "POST",
 				  success: function(response){
 						if (response) 
@@ -28,6 +28,8 @@ var EventsManager = {
 				switch (key) {
 				case 'edit': EventsManager.onEditCase(eventsList[key]);
 							 break;
+				case 'users': EventsManager.onUserList(eventsList[key]);
+								break;		 
 				default:
 					break;
 				}
@@ -35,6 +37,9 @@ var EventsManager = {
 			}
 		},
 		
+		onUserList: function(users) {
+			console.dir(users);
+		},
 		
 		onEditCase: function (values) {
 			

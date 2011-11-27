@@ -149,8 +149,10 @@ $(function() {
 	 * Every n seconds I check the buffer for new changes
 	 */
 	$(document).everyTime(300, 'flushBuffer', SyncManager.flush);
-	// EventsManager.setEditor(editor);
-	// EventsManager.run();
+	
+	
+	EventsManager.setEditor(editor);
+	
 	/*
 	 * $.ajax({ url: "join.php", dataType: "text", success: function(response){
 	 * User.name = response; } });
@@ -193,7 +195,7 @@ $(function() {
 					editor.setOption('mode', response.language);
 					EditorManager.isReadOnly = (response.readonly>0);
 					editor.setOption('readOnly', (EditorManager.isReadOnly));
-					
+					EventsManager.run();
 					User.name = response.loggedAs;
 				}
 
