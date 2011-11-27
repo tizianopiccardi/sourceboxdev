@@ -25,6 +25,8 @@ public class Box implements Serializable {
 
 	private String language;
 
+	private Timestamp lastevent;
+
 	private Timestamp lastvisit;
 
 	private String password;
@@ -80,6 +82,14 @@ public class Box implements Serializable {
 
 	public void setLanguage(String language) {
 		this.language = language;
+	}
+
+	public Timestamp getLastevent() {
+		return this.lastevent;
+	}
+
+	public void setLastevent(Timestamp lastevent) {
+		this.lastevent = lastevent;
 	}
 
 	public Timestamp getLastvisit() {
