@@ -19,6 +19,8 @@ public class User implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int iduser;
 
+	private String color;
+
 	@Column(name="last_activity")
 	private Timestamp lastActivity;
 
@@ -45,6 +47,14 @@ public class User implements Serializable {
 
 	public void setIduser(int iduser) {
 		this.iduser = iduser;
+	}
+
+	public String getColor() {
+		return this.color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 
 	public Timestamp getLastActivity() {
