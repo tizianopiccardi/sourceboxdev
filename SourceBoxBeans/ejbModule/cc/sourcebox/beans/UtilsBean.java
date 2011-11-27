@@ -1,5 +1,9 @@
 package cc.sourcebox.beans;
 
+
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
@@ -12,6 +16,8 @@ import org.apache.commons.lang3.RandomStringUtils;
 @LocalBean
 public class UtilsBean implements UtilsBeanRemote, UtilsBeanLocal {
 
+	public static final long _3Minutes = 1000*60*3;
+	
     /**
      * Default constructor. 
      */
@@ -22,6 +28,13 @@ public class UtilsBean implements UtilsBeanRemote, UtilsBeanLocal {
 	@Override
 	public String getRandomString(int size) {
 		return RandomStringUtils.random(size, true, true);
+	}
+
+	@Override
+	public Date getUsersTimeDeadline() {
+		Calendar cal = Calendar.getInstance(); 
+		cal.setTimeInMillis(System.currentTimeMillis()-_3Minutes);
+		return cal.getTime();
 	}
 
 
