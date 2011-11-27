@@ -112,18 +112,9 @@ public class BoxBean implements BoxBeanRemote, BoxBeanLocal {
 
 	@Override
 	public Revision get(int userId, String alias, String password) throws BoxNotFoundException {
-		//String query = null;
-
-		//if (force)
-		//	query = "SELECT r from Revision r join r.box b where b.alias=:alias order by r.rev desc";
-		//else
-			//query = "SELECT r from Revision r join r.box b where b.alias=:alias and b.password=:pwd order by r.rev desc";
 		String query = "SELECT r from Revision r join r.box b where (b.alias=:alias and b.password=:pwd)" +
 				"OR b.idboxes = (select b.idboxes from Inbox i join i.user u join i.box b where u.iduser = :iduser and b.alias=:alias)" +
 				" order by r.rev desc";
-		
-		//select b.idboxes from Inbox i join i.user u join i.box b where u.iduser = :iduser and b.alias=:alias
-		
 		Query boxQuery = em.createQuery(query);
 		
 		/************
@@ -149,8 +140,7 @@ public class BoxBean implements BoxBeanRemote, BoxBeanLocal {
 	@Override
 	public Boolean isPrivate(String alias) throws BoxNotFoundException {
 		Query boxQuery = em.createQuery("SELECT b.password from Box b where b.alias=:alias" );
-		
-		System.out.println(alias);
+
 		boxQuery.setParameter("alias", alias);
 		
 		try {
