@@ -26,7 +26,7 @@ public class Events extends SourceBoxServlet {
 	public void process(HttpServletRequest req, HttpSession session,
 			HashMap<String, Object> output) throws Exception {
 
-		//Thread.sleep(2000);
+		Thread.sleep(50000);
 
 		List<UserInfo> users = usersMgr.getUsers(req.getParameter("alias"));
 		output.put("users", users);
