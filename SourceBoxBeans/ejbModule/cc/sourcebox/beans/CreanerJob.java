@@ -1,8 +1,5 @@
 package cc.sourcebox.beans;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
@@ -13,9 +10,6 @@ import javax.persistence.Query;
 import org.jboss.ejb3.annotation.ResourceAdapter;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
-
-import cc.sourcebox.dto.UserInfo;
-import cc.sourcebox.entities.Inbox;
 
 /**
  * Message-Driven Bean implementation class for: CreanerJob
@@ -36,6 +30,7 @@ public class CreanerJob implements Job {
      * @see Job#execute(JobExecutionContext)
      */
     public void execute(JobExecutionContext arg0) {
+    	if(1==1) return;
     	cleanUser();
     }
     

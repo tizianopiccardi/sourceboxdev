@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import cc.sourcebox.beans.exceptions.BoxNotFoundException;
 import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.entities.Box;
 import cc.sourcebox.entities.Inbox;
@@ -29,6 +30,8 @@ public class UsersManagerBean implements UsersManagerBeanRemote, UsersManagerBea
 	
 	@EJB
 	private UtilsBeanLocal utils;
+	@EJB
+	private BoxBeanRemote boxBean;
 
 	@Override
 	public int join(String name) {
@@ -81,7 +84,7 @@ public class UsersManagerBean implements UsersManagerBeanRemote, UsersManagerBea
 
 
 	@Override
-	public void setCursorPos(String boxAlias, int userID, int line, int ch) {
+	public void setCursorPos(String boxAlias, int userID, int line, int ch) throws BoxNotFoundException {
 
 
 		Query inboxQuery = em.createQuery("SELECT i from Inbox i join i.box b join i.user u where u.iduser=:iduser and b.alias=:alias");
@@ -108,6 +111,7 @@ public class UsersManagerBean implements UsersManagerBeanRemote, UsersManagerBea
 		inBox.setCursorColumn(ch);
 
 
+		boxBean.notifyUpdate(boxAlias);
 		
 	}
 

@@ -1,6 +1,7 @@
 package cc.sourcebox.beans;
 
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,10 +94,11 @@ public class BoxBean implements BoxBeanRemote, BoxBeanLocal {
 		Query query = em.createQuery("SELECT max(r.rev), b from Revision r inner join r.box b where b.alias=:alias");
 		query.setParameter("alias", alias);
 		
-		if (query.getResultList().size()<1) throw new BoxNotFoundException();
+		List boxList = query.getResultList();
+		if (boxList.size()<1) throw new BoxNotFoundException();
 		
 			
-		Object[] data = (Object[]) query.getResultList().get(0);
+		Object[] data = (Object[]) boxList.get(0);
 		
 		int revNumber = (Integer)data[0]+1;
 		
@@ -112,7 +114,7 @@ public class BoxBean implements BoxBeanRemote, BoxBeanLocal {
 
 	@Override
 	public Revision get(int userId, String alias, String password) throws BoxNotFoundException {
-		String query = "SELECT r from Revision r join r.box b where (b.alias=:alias and b.password=:pwd)" +
+		String query = "SELECT r,b from Revision r join r.box b where (b.alias=:alias and b.password=:pwd)" +
 				"OR b.idboxes = (select b.idboxes from Inbox i join i.user u join i.box b where u.iduser = :iduser and b.alias=:alias)" +
 				" order by r.rev desc";
 		Query boxQuery = em.createQuery(query);
@@ -126,9 +128,15 @@ public class BoxBean implements BoxBeanRemote, BoxBeanLocal {
 		boxQuery.setParameter("pwd", (password==null)?"":password);
 		try {	
 			
-			Revision lastRev = (Revision)boxQuery.getSingleResult();
-			usersMgr.joinBox(userId, lastRev.getBox());
-			return lastRev;
+			//Revision lastRev = (Revision)boxQuery.getSingleResult();
+			Object[] revAndBox = (Object[])boxQuery.getSingleResult();
+			
+			Box b = (Box)revAndBox[1];
+			
+			usersMgr.joinBox(userId,b);
+			b.setLastvisit(new Timestamp(System.currentTimeMillis()));
+			
+			return (Revision)revAndBox[0];
 		}
 		catch (Exception e) {
 			throw new BoxNotFoundException();
@@ -158,6 +166,22 @@ public class BoxBean implements BoxBeanRemote, BoxBeanLocal {
 		System.out.println(inserts);
 		
 	}
+
+	@Override
+	public void notifyUpdate(String alias)  throws BoxNotFoundException {
+		Query query = em.createQuery("SELECT b from Box b where b.alias=:alias");
+		query.setParameter("alias", alias);
+		List boxList = query.getResultList();
+		if (boxList.size()<1) throw new BoxNotFoundException();
+		((Box)boxList.get(0)).setLastevent(new Timestamp(System.currentTimeMillis()));
+	}
+
+	/*@Override
+	public void notifyUpdate(Box box) throws BoxNotFoundException  {
+		System.out.println("BoxBean.notifyUpdate()");
+		box.setLastevent(new Timestamp(System.currentTimeMillis()));
+		//em.persist(box);
+	}*/
 
 
 	
