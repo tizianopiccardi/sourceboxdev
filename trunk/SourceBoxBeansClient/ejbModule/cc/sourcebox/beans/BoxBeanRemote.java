@@ -5,8 +5,8 @@ import javax.ejb.Remote;
 
 import cc.sourcebox.beans.exceptions.BoxNotFoundException;
 import cc.sourcebox.dto.InsertObject;
+import cc.sourcebox.entities.Box;
 import cc.sourcebox.entities.Revision;
-import cc.sourcebox.entities.User;
 
 @Remote
 public interface BoxBeanRemote {
@@ -51,4 +51,6 @@ public interface BoxBeanRemote {
 	
 	public void edit(String alias, int userID, List<InsertObject> inserts) throws BoxNotFoundException;
 	
+	public void notifyUpdate(String alias) throws BoxNotFoundException ;
+	//public void notifyUpdate(Box box) throws BoxNotFoundException ;
 }
