@@ -1,5 +1,6 @@
 package cc.sourcebox.web.servlet;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 
 import javax.ejb.EJB;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import cc.sourcebox.beans.BoxBeanRemote;
 import cc.sourcebox.entities.Revision;
+import cc.sourcebox.web.utils.SessionKeys;
+import cc.sourcebox.web.utils.SessionManager;
 import cc.sourcebox.web.utils.Utils;
 
 @WebServlet(urlPatterns="/get")
@@ -35,7 +38,9 @@ public class Get extends SourceBoxServlet {
 		Revision rev = (Revision)boxbean.get(Utils.getUserId(session), alias, password );
 		
 		//QUICK CHECK
-		session.setAttribute("BOX_"+alias, true);
+		SessionManager.addBox(session, alias);
+		//session.setAttribute(SessionKeys.get("SESSION_BOX_ALIAS",alias), true);
+		//session.setAttribute(SessionKeys.get("SESSION_BOX_LASTCHECK",alias), System.currentTimeMillis());
 
 		output.put("alias", rev.getBox().getAlias());
 		output.put("code", rev.getSource());

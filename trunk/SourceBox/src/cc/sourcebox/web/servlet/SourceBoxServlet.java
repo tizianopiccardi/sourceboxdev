@@ -45,6 +45,7 @@ public class SourceBoxServlet extends HttpServlet {
 			output.put("success", false);
 			output.put("type", e.getClass().getSimpleName());
 			output.put("message", e.getMessage());
+			e.printStackTrace();
 		}
 		
 		out.print(Utils.encode(output));
