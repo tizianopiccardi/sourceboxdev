@@ -32,7 +32,7 @@ $(function(){
 	    	
 	    	
 	    	
-	    	$('#comments-list').append('<br/>'+document.boxinfo.loggedAs+': '+$('#comment').val());
+	    	$('#comments-list').append('<div><b>'+User.name+'</b>: '+$('#comment').val()+"</div>");
 	    	$('#comments-list').scroll();
 	    	
 	    	$('#comments-list').scrollTo('100%');

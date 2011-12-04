@@ -38,7 +38,25 @@ var EventsManager = {
 		},
 		
 		onUserList: function(users) {
-			console.dir(users);
+			
+			//document.getElementById("users-markers").
+			//$("#users-markers").html('');
+			$('[id^="users_"]').remove();
+			
+			for ( var i = 0; i < users.length; i++) {
+				var user = users[i];
+				
+				if (user.username==User.name) continue;
+
+				var pos = {line: user.line, ch: user.ch};
+				//if ($("#users_"+user.username).length < 1) {
+					var newUserDiv = "<div id=\"users_"+user.username+"\" style=\"color: red;position:absolute;font-size:10px !important;\">&oline;"+user.username+"</div>";
+					//console.log("ADD: " + newUserDiv);
+					$("#users-markers").append(newUserDiv);
+				//}
+				
+				this.editor.addWidget(pos, document.getElementById("users_"+user.username), false);
+			}
 		},
 		
 		onEditCase: function (values) {
