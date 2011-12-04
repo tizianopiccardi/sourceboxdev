@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import cc.sourcebox.beans.UsersManagerBeanRemote;
+import cc.sourcebox.web.utils.SessionManager;
 
 @WebServlet(urlPatterns="/join")
 public class Join extends SourceBoxServlet {
@@ -22,13 +23,14 @@ public class Join extends SourceBoxServlet {
 			HashMap<String, Object> output) throws Exception {
 		
 		String nick = req.getParameter("nick");
-		
+
 		/*******
 		 * Save the username and the generated user id
 		 */
-		session.setAttribute("nick", nick);
-		session.setAttribute("userID", usersMgr.join(nick));
-		
+		SessionManager.setNickname(session, nick);
+		SessionManager.setUserId(session, usersMgr.join(nick));
+
+		output.put("nick", nick);
 		
 	}
 

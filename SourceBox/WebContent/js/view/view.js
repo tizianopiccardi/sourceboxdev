@@ -121,6 +121,7 @@ $(function() {
 					$("#nickname-panel").dialog("open");
 				else {
 					User.name = response.loggedAs;
+					console.log("USERNAME: " + User.name);
 					join();
 					init();
 				}
@@ -196,7 +197,7 @@ $(function() {
 					EditorManager.isReadOnly = (response.readonly>0);
 					editor.setOption('readOnly', (EditorManager.isReadOnly));
 					EventsManager.run();
-					User.name = response.loggedAs;
+					//User.name = response.loggedAs;
 				}
 
 				else {
@@ -214,7 +215,7 @@ $(function() {
 	}
 
 	function init() {
-
+		
 		if (document.boxinfo.isPrivate && !document.boxinfo.inbox)
 
 			$("#password-form").dialog("open");
@@ -240,7 +241,9 @@ $(function() {
 			type : "POST",
 			success : function(response) {
 				if (response.success) {
-					User.name = $("input#nick").val();
+					//console.log(response);
+					User.name = response.nick;
+					//console.log(User);
 					//document.boxinfo.loggedAs = $("input#nick").val();
 					$("#nickname-panel").dialog("close");
 

@@ -88,6 +88,7 @@
 	overflow: auto;
 	background-color: #FFFFFF;
 	border: 1px solid #cccccc;
+	font-family: monospace;
 }
 
 textarea#comment {

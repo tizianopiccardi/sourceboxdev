@@ -38,7 +38,7 @@
   </head> 
   <body> 
 
- 
+ <!--
 <div id="user" style="color: red;position:absolute;font-size:10px !important;"><b>^xyz</b></div>
 <!-- form><textarea id="code" name="code"> 
 </textarea></form>  -->
@@ -116,7 +116,7 @@
 <img alt="loading" src="images/load.gif" id="nick-set-img" style="margin-top:15px;">
 </div>
 
-
+<div id="users-markers"></div>
 
   </body> 
 </html> 

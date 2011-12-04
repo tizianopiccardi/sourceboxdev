@@ -9,8 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import cc.sourcebox.beans.BoxBeanRemote;
+import cc.sourcebox.beans.ChatBeanRemote;
 import cc.sourcebox.beans.UsersManagerBeanRemote;
 import cc.sourcebox.dto.UserInfo;
+import cc.sourcebox.web.exception.SecurityException;
 import cc.sourcebox.web.utils.SessionKeys;
 import cc.sourcebox.web.utils.SessionManager;
 
@@ -26,14 +28,18 @@ public class Events extends SourceBoxServlet {
 	private UsersManagerBeanRemote usersMgr;
 	@EJB(mappedName = "SourceBoxLogicEAR/BoxBean/remote")
 	private BoxBeanRemote boxbean;
+	@EJB(mappedName = "SourceBoxLogicEAR/ChatBean/remote")
+	private ChatBeanRemote chatBean;
 	
 	@Override
 	public void process(HttpServletRequest req, HttpSession session,
 			HashMap<String, Object> output) throws Exception {
 
+
 		String alias = req.getParameter("alias");
-		long lastBoxCheck = SessionManager.getLastCheck(session, alias);
+		if (!SessionManager.isInBox(session, alias)) throw new SecurityException();
 		
+		long lastBoxCheck = SessionManager.getLastCheck(session, alias);
 		for (int i = 0; i < 10; i++) {
 			
 			if (boxbean.lastEvent(alias)>lastBoxCheck) {
@@ -41,6 +47,7 @@ public class Events extends SourceBoxServlet {
 				List<UserInfo> users = usersMgr.getUsers(req.getParameter("alias"));
 				output.put("users", users);
 				
+				//output.put("chat", chatBean.get(alias, lastBoxCheck));
 				
 				SessionManager.boxChecked(session, alias);
 				break;
@@ -49,7 +56,8 @@ public class Events extends SourceBoxServlet {
 			
 			Thread.sleep(2000);
 		}
-		
+		//WAIT IF ERROR
+		//else Thread.sleep(2000);
 		
 	
 		
