@@ -88,22 +88,12 @@ public class UsersManagerBean implements UsersManagerBeanRemote, UsersManagerBea
 
 
 		Query inboxQuery = em.createQuery("SELECT i from Inbox i join i.box b join i.user u where u.iduser=:iduser and b.alias=:alias");
-		
-		
-		/*Query inboxQuery = em.createQuery("UPDATE Inbox i set i.cursorLine =:cline " +
-				"where i.box = (select b from Box b where b.alias=:alias) and " +
-				"i.user = (select u from User where u.iduser=:iduser)");*/
-		
+
 		inboxQuery.setParameter("iduser", userID);
 		inboxQuery.setParameter("alias", boxAlias);
-		//inboxQuery.setParameter("cline", line);
-		//int x =inboxQuery.executeUpdate();
-		//System.out.println(x);
-		//em.getTransaction().commit();
+
 		inboxQuery.setMaxResults(1);
-		/*inboxQuery.setParameter("iduser", userID);
-		inboxQuery.setParameter("alias", boxAlias);
-*/
+
 			
 		Inbox inBox = (Inbox)inboxQuery.getSingleResult();
 		
@@ -138,6 +128,12 @@ public class UsersManagerBean implements UsersManagerBeanRemote, UsersManagerBea
 		}
 		
 		return cursors;
+	}
+
+
+	@Override
+	public User get(int userid) {
+		return em.find(User.class, userid);
 	}
 
 }

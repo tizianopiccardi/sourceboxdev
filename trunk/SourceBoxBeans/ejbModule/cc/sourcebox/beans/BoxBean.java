@@ -168,14 +168,18 @@ public class BoxBean implements BoxBeanRemote, BoxBeanLocal {
 	}
 
 	@Override
-	public void notifyUpdate(String alias)  throws BoxNotFoundException {
+	public void notifyUpdate(String alias) throws BoxNotFoundException {
 		Query query = em.createQuery("SELECT b from Box b where b.alias=:alias");
 		query.setParameter("alias", alias);
 		List boxList = query.getResultList();
 		listCheck(boxList);
-		((Box)boxList.get(0)).setLastevent(new Timestamp(System.currentTimeMillis()));
+		Box box = (Box)boxList.get(0);
+		
+		box.setSequence(box.getSequence()+1);
+		
+		//box.setLastevent(new Timestamp(System.currentTimeMillis()));
 	}
-
+/*
 	@Override
 	public long lastEvent(String alias) throws BoxNotFoundException {
 		Query query = em.createQuery("SELECT b.lastevent from Box b where b.alias=:alias");
@@ -185,7 +189,7 @@ public class BoxBean implements BoxBeanRemote, BoxBeanLocal {
 		listCheck(boxList);
 		
 		return ((Timestamp)boxList.get(0)).getTime();
-	}
+	}*/
 
 	/*@Override
 	public void notifyUpdate(Box box) throws BoxNotFoundException  {
@@ -197,6 +201,24 @@ public class BoxBean implements BoxBeanRemote, BoxBeanLocal {
 
 	private void listCheck(List list) throws BoxNotFoundException {
 		if (list.size()<1) throw new BoxNotFoundException();
+	}
+
+	@Override
+	public Box get(String alias) {
+		Query query = em.createQuery("SELECT b from Box b where b.alias=:alias");
+		query.setParameter("alias", alias);
+		return (Box)query.getSingleResult();
+	}
+
+	@Override
+	public int getSequence(String alias) throws BoxNotFoundException {
+		Query query = em.createQuery("SELECT b.sequence from Box b where b.alias=:alias");
+		query.setParameter("alias", alias);
+		List boxList = query.getResultList();
+		
+		listCheck(boxList);
+		
+		return ((Integer)boxList.get(0));
 	}
 	
 	
