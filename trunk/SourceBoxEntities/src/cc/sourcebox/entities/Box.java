@@ -25,13 +25,15 @@ public class Box implements Serializable {
 
 	private String language;
 
-	private Timestamp lastevent;
+	//private Timestamp lastevent;
 
 	private Timestamp lastvisit;
 
 	private String password;
 
 	private int readonly;
+
+	private int sequence;
 
 	//bi-directional many-to-one association to Inbox
 	@OneToMany(mappedBy="box", cascade={CascadeType.ALL})
@@ -84,14 +86,14 @@ public class Box implements Serializable {
 		this.language = language;
 	}
 
-	public Timestamp getLastevent() {
+/*	public Timestamp getLastevent() {
 		return this.lastevent;
 	}
 
 	public void setLastevent(Timestamp lastevent) {
 		this.lastevent = lastevent;
 	}
-
+*/
 	public Timestamp getLastvisit() {
 		return this.lastvisit;
 	}
@@ -114,6 +116,14 @@ public class Box implements Serializable {
 
 	public void setReadonly(int readonly) {
 		this.readonly = readonly;
+	}
+
+	public int getSequence() {
+		return this.sequence;
+	}
+
+	public void setSequence(int sequence) {
+		this.sequence = sequence;
 	}
 
 	public List<Inbox> getInbox() {
