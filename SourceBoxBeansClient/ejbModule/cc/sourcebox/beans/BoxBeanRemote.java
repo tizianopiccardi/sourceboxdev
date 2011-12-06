@@ -53,7 +53,9 @@ public interface BoxBeanRemote {
 	
 	public void notifyUpdate(String alias) throws BoxNotFoundException ;
 
-	public long lastEvent(String alias) throws BoxNotFoundException ;
+	//public long lastEvent(String alias) throws BoxNotFoundException ;
+	
+	public int getSequence(String alias) throws BoxNotFoundException ;
 	
 	
 }
