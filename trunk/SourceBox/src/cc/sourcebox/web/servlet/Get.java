@@ -36,9 +36,10 @@ public class Get extends SourceBoxServlet {
 		
 		
 		Revision rev = (Revision)boxbean.get(Utils.getUserId(session), alias, password );
-		
-		//QUICK CHECK
+
+
 		SessionManager.addBox(session, alias);
+		SessionManager.setSequence(session, alias, rev.getBox().getSequence());
 		//session.setAttribute(SessionKeys.get("SESSION_BOX_ALIAS",alias), true);
 		//session.setAttribute(SessionKeys.get("SESSION_BOX_LASTCHECK",alias), System.currentTimeMillis());
 
