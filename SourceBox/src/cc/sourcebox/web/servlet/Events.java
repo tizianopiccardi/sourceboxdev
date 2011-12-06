@@ -39,17 +39,21 @@ public class Events extends SourceBoxServlet {
 		String alias = req.getParameter("alias");
 		if (!SessionManager.isInBox(session, alias)) throw new SecurityException();
 		
-		long lastBoxCheck = SessionManager.getLastCheck(session, alias);
+		//long lastBoxCheck = SessionManager.getLastCheck(session, alias);
+		
+		int localSequence = SessionManager.getSequence(session, alias);
 		for (int i = 0; i < 10; i++) {
 			
-			if (boxbean.lastEvent(alias)>lastBoxCheck) {
+			int boxSequence = boxbean.getSequence(alias);
+			
+			if (boxSequence>localSequence) {
 				
 				List<UserInfo> users = usersMgr.getUsers(req.getParameter("alias"));
 				output.put("users", users);
 				
 				//output.put("chat", chatBean.get(alias, lastBoxCheck));
 				
-				SessionManager.boxChecked(session, alias);
+				SessionManager.setSequence(session, alias, boxSequence);
 				break;
 			}
 			

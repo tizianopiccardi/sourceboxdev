@@ -7,9 +7,11 @@ import cc.sourcebox.web.exception.SecurityException;
 public class SessionManager {
 
 	private final static String BOX_ALIAS = "BOX_";
-	private final static String BOX_LASTCHECK = "BOX_L_";
+	//private final static String BOX_LASTCHECK = "BOX_L_";
 	private final static String USERNAME = "nick";
 	private final static String USERID = "userID";
+	
+	private final static String BOXSEQUENCE = "sequence_";
 		
 	public static boolean isInBox(HttpSession session, String alias) {
 		return (session.getAttribute(BOX_ALIAS+alias)!=null);
@@ -19,14 +21,25 @@ public class SessionManager {
 		session.setAttribute(BOX_ALIAS+alias, true);
 	}
 	
-	public static void boxChecked(HttpSession session, String alias) {
+	/*public static void boxChecked(HttpSession session, String alias) {
 		session.setAttribute(BOX_LASTCHECK+alias, System.currentTimeMillis());
 	}
 	
 	public static long getLastCheck(HttpSession session, String alias) {
 		try {return (Long)session.getAttribute(BOX_LASTCHECK+alias);
 		}catch(Exception e) {return 0;}
+	}*/
+	
+	public static int getSequence(HttpSession session, String alias) {
+		Object seq = session.getAttribute(BOXSEQUENCE+alias);
+		return (seq!=null)?(Integer)seq:0;
 	}
+	
+	public static void setSequence(HttpSession session, String alias, int val) {
+		session.setAttribute(BOXSEQUENCE+alias, val);
+	}
+	
+	
 	
 	public static String getNickname(HttpSession session) {
 		Object name = session.getAttribute(USERNAME);
