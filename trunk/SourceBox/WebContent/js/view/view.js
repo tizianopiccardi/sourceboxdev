@@ -200,7 +200,7 @@ $(function() {
 					EditorManager.isReadOnly = (response.readonly>0);
 					editor.setOption('readOnly', (EditorManager.isReadOnly));
 					
-					//EventsManager.run();
+					EventsManager.run();
 
 				}
 
