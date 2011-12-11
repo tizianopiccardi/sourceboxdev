@@ -5,6 +5,8 @@ import javax.ejb.Remote;
 
 import cc.sourcebox.beans.exceptions.BoxNotFoundException;
 import cc.sourcebox.dto.UserInfo;
+import cc.sourcebox.entities.Box;
+import cc.sourcebox.entities.User;
 
 @Remote
 public interface UsersManagerBeanRemote {
@@ -17,4 +19,7 @@ public interface UsersManagerBeanRemote {
 	
 	public List<UserInfo> getUsers(String alias);
 	
+	public void joinBox(int userid, Box box);
+	
+	public User get(int userid);
 }
