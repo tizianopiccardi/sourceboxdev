@@ -1,14 +1,12 @@
 package cc.sourcebox.beans;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 import cc.sourcebox.beans.exceptions.BoxNotFoundException;
 import cc.sourcebox.entities.Message;
@@ -27,7 +25,7 @@ public class ChatBean implements ChatBeanRemote, ChatBeanLocal {
 	BoxBeanLocal boxBean;
 	
 	@EJB
-	UsersManagerBeanLocal usersBean;
+	UsersManagerBeanRemote usersBean;
 
 	
     /**
