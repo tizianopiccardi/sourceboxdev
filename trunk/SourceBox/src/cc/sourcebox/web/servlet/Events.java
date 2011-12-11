@@ -13,7 +13,6 @@ import cc.sourcebox.beans.ChatBeanRemote;
 import cc.sourcebox.beans.UsersManagerBeanRemote;
 import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.web.exception.SecurityException;
-import cc.sourcebox.web.utils.SessionKeys;
 import cc.sourcebox.web.utils.SessionManager;
 
 @WebServlet(urlPatterns="/events")
