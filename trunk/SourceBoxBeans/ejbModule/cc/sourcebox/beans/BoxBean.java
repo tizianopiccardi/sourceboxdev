@@ -31,7 +31,7 @@ public class BoxBean implements BoxBeanRemote, BoxBeanLocal {
 	UrlHelperLocal urlHelper;
 	
 	@EJB
-	UsersManagerBeanLocal usersMgr;
+	UsersManagerBeanRemote usersMgr;
 	
 	
     /**
