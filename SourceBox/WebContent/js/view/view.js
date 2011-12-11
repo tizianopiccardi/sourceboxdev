@@ -8,6 +8,9 @@ $(function() {
 	$("#pw-check-img").hide();
 	$("#wrong-password").hide();
 	
+	
+	$("#share-dialog").hide();
+	
 	$("#save-status").hide();
 	
 	$("#save-loading").hide();
@@ -196,8 +199,9 @@ $(function() {
 					editor.setOption('mode', response.language);
 					EditorManager.isReadOnly = (response.readonly>0);
 					editor.setOption('readOnly', (EditorManager.isReadOnly));
-					EventsManager.run();
-					//User.name = response.loggedAs;
+					
+					//EventsManager.run();
+
 				}
 
 				else {

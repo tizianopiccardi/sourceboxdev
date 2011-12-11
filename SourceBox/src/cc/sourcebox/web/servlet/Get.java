@@ -1,6 +1,5 @@
 package cc.sourcebox.web.servlet;
 
-import java.sql.Timestamp;
 import java.util.HashMap;
 
 import javax.ejb.EJB;
@@ -10,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import cc.sourcebox.beans.BoxBeanRemote;
 import cc.sourcebox.entities.Revision;
-import cc.sourcebox.web.utils.SessionKeys;
 import cc.sourcebox.web.utils.SessionManager;
 import cc.sourcebox.web.utils.Utils;
 

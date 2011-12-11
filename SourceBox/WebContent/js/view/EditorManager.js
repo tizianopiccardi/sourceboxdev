@@ -40,6 +40,15 @@ var EditorManager = {
 			else
 				window.location = "./";
 				
+		},
+		
+		
+		share: function() {
+			$("#share-dialog").dialog({
+				closeOnEscape : false,
+				modal : true
+			});
+			$("#boxurl").val(location.href);
 		}
 
 

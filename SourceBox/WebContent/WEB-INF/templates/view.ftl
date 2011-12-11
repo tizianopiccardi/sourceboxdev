@@ -53,20 +53,7 @@
 
 <div id="save-status">Not saved</div>
 
-<div id="site-bottom-bar" class="fixed-position" >
-	<div id="site-bottom-bar-frame">
-		<div id="site-bottom-bar-content">
- 
-			<a id="menu-root" href="#"><img src="images/logo64.png" alt="menu" border="0"></a>
- 
-			<div id="menu" class="ui-corner-all">
-				<a href="#" onClick="javascript: EditorManager.save(); return false;">Save (Crtl + s)</a>
-				<a href="#" onClick="javascript: EditorManager.openNew();return false;">New Box (Crtl + n)</a>
-			</div>
- 
-		</div>
-	</div>
-</div> 
+<#include "/bbar.ftl">  
 
 
 
@@ -106,6 +93,15 @@
 		<br><br><center><a href="./"><img src="images/logo32.png" border="0"></a></center>
 		
 		</div>
+	</div>
+	
+	
+	<div id="share-dialog" title="Share url">
+		<p>Box URL:</p>
+		<center>
+			<input type="text" name="boxurl" id="boxurl" style="width : 250px;" class="text ui-widget-content ui-corner-all" />
+		</center>
+
 	</div>
 
 
