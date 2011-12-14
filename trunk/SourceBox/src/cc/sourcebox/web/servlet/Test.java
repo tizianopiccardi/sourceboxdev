@@ -24,6 +24,10 @@ public class Test extends HttpServlet {
 		
 		out.print(i++);
 		
+		/*
+		XRemote x = SessionManager.get(req, "SourceBoxLogicEAR/X/remote", XRemote.class,"1");
+		out.print(x.get());
+		*/
 		out.close();
 		
 	}
