@@ -1,5 +1,8 @@
 package cc.sourcebox.web.utils;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import cc.sourcebox.web.exception.SecurityException;
@@ -61,5 +64,60 @@ public class SessionManager {
 	public static void inBoxCheck(HttpSession session, String alias) throws SecurityException  {
 		if(!SessionManager.isInBox(session, alias)) throw new SecurityException();
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	static Context ctx = null;
+	
+	/************
+	 * For convenience
+	 * @param req
+	 * @param jndiName
+	 * @param cl
+	 * @return
+	 */
+	public static <T extends Object> T get(HttpServletRequest req, String jndiName, Class<T> cl) {
+		return get(req, jndiName, cl, "");
+	}
+	
+	/***********
+	 * Returns the bean mapped at the given jndi path. It allows (using id) to store and 
+	 * retrieve more bean of the same type (STATEFUL!) 
+	 * @param req
+	 * @param jndiName
+	 * @param cl
+	 * @param id
+	 * @return
+	 */
+	public static <T extends Object> T get(HttpServletRequest req, String jndiName, Class<T> cl, String id) {
+		Object bean = req.getSession().getAttribute(jndiName+"_"+id);
+		if (bean==null) {
+			try {
+				if (ctx == null) ctx = new InitialContext();
+				bean = ctx.lookup(jndiName);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			req.getSession().setAttribute(jndiName+"_"+id, bean);
+		}
+		return cl.cast(bean);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
