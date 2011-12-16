@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import cc.sourcebox.beans.BoxBeanRemote;
 import cc.sourcebox.beans.ChatBeanRemote;
-import cc.sourcebox.beans.EventsRemote;
+import cc.sourcebox.beans.BoxManagerRemote;
 import cc.sourcebox.beans.UsersManagerBeanRemote;
 import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.web.exception.SecurityException;
@@ -38,39 +38,16 @@ public class Events extends SourceBoxServlet {
 
 		//String alias = req.getParameter("alias");
 		//if (!SessionManager.isInBox(session, alias)) throw new SecurityException();
-		
-		//long lastBoxCheck = SessionManager.getLastCheck(session, alias);
-		
-	/*	int localSequence = SessionManager.getSequence(session, alias);
-		for (int i = 0; i < 10; i++) {
-			
-			int boxSequence = boxbean.getSequence(alias);
-			
-			if (boxSequence>localSequence) {
-				
-				List<UserInfo> users = usersMgr.getUsers(req.getParameter("alias"));
-				output.put("users", users);
-				
-				//output.put("chat", chatBean.get(alias, lastBoxCheck));
-				
-				SessionManager.setSequence(session, alias, boxSequence);
-				break;
-			}
-			
-			
-			Thread.sleep(2000);
-		}
-		//WAIT IF ERROR
-		//else Thread.sleep(2000);
-		
-	*/
-		EventsRemote events = SessionManager.get(req, "SourceBoxLogicEAR/Events/remote", EventsRemote.class);
-		events.init("bla");
+
+		//EventsRemote events = SessionManager.get(req, "SourceBoxLogicEAR/Events/remote", EventsRemote.class, false);
+		BoxManagerRemote box = SessionManager.get(req, "SourceBoxLogicEAR/Events/remote", BoxManagerRemote.class, true);
+		box.init("bla");
 
 		for (int i = 0; i < 10; i++) {
-			System.out.println("POLL"  +events.somethingNew());
-			if (events.somethingNew()) {
-				output.put("event", events.get());
+			System.out.println("POLL"  +box.somethingNew());
+			if (box.somethingNew()) {
+				output.put("event", box
+						.getEvents());
 				break;
 			}
 			
