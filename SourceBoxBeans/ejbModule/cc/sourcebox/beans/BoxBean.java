@@ -166,7 +166,7 @@ public class BoxBean implements BoxBeanRemote, BoxBeanLocal {
 		System.out.println(inserts);
 		
 	}
-
+/*
 	@Override
 	public void notifyUpdate(String alias) throws BoxNotFoundException {
 		Query query = em.createQuery("SELECT b from Box b where b.alias=:alias");
@@ -219,8 +219,14 @@ public class BoxBean implements BoxBeanRemote, BoxBeanLocal {
 		listCheck(boxList);
 		
 		return ((Integer)boxList.get(0));
+	}/*
+
+	@Override
+	public void notifyUpdate(String alias) throws BoxNotFoundException {
+		// TODO Auto-generated method stub
+		
 	}
-	
+	*/
 	
 	
 

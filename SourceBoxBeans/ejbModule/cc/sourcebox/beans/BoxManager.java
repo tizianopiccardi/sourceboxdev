@@ -8,15 +8,15 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
+import javax.jms.ObjectMessage;
 import javax.jms.Session;
-import javax.jms.TextMessage;
 import javax.jms.Topic;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.jboss.ejb3.annotation.CacheConfig;
 
 import cc.sourcebox.dto.ChatMessage;
 import cc.sourcebox.dto.EventsDTO;
+import cc.sourcebox.dto.InsertObject;
 
 /**
  * Session Bean implementation class Events
@@ -25,7 +25,7 @@ import cc.sourcebox.dto.EventsDTO;
 @LocalBean
 //@CacheConfig(/* removalTimeoutSeconds=10, */maxSize = 0, idleTimeoutSeconds = 0)
 // !!NON PASSIVARE
-public class Events implements EventsRemote, EventsLocal {
+public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 
 	static final String url = "tcp://localhost:61616";
 	static ConnectionFactory factory = new ActiveMQConnectionFactory(url);
@@ -33,6 +33,7 @@ public class Events implements EventsRemote, EventsLocal {
 	EventsDTO events = new EventsDTO();
 
 
+	boolean hasEvent = false;
 	
 	//MessageProducer producer;
 	MessageConsumer consumer;
@@ -65,7 +66,7 @@ public class Events implements EventsRemote, EventsLocal {
 
 	@Override
 	public boolean somethingNew() {
-		return events.getMsg().size()>0 || events.getOp().size()>0;
+		return hasEvent;
 	}
 
 	private class EventsListener implements MessageListener {
@@ -79,14 +80,19 @@ public class Events implements EventsRemote, EventsLocal {
 		public void onMessage(Message msg) {
 			try {
 				
-				//System.out.println("Events.EventsListener.onMessage()");
-				String payload = ((TextMessage) msg).getText();
-				//if (payload.startsWith(""))
-				//msg.getJMSExpiration();
-				ChatMessage c = new ChatMessage("xxx", payload);
-				events.add(c);
-				//System.out.println(events);
-				//System.out.println(events.getMsg());
+				ObjectMessage message = (ObjectMessage)msg;
+
+				synchronized (events) {
+
+					if (message.getObject() instanceof ChatMessage) {
+						events.add((ChatMessage)message.getObject());
+					} else
+					if (message.getObject() instanceof InsertObject) {
+						events.add((InsertObject)message.getObject());
+					}
+					hasEvent = true;
+				}
+
 			} catch (JMSException e) {
 				e.printStackTrace();
 			}
@@ -95,13 +101,15 @@ public class Events implements EventsRemote, EventsLocal {
 	}
 
 	@Override
-	public EventsDTO get() {
+	public EventsDTO getEvents() {
 		EventsDTO response = null;
 		synchronized (events) {
 
 			response = events;
 			
-			//events = new EventsDTO();
+			events = new EventsDTO();
+			
+			hasEvent = false;
 		}
 		
 		
