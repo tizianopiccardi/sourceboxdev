@@ -8,6 +8,6 @@ import cc.sourcebox.entities.Box;
 public interface BoxBeanLocal {
 
 	public Box get(String alias);
-	public void notifyUpdate(String alias)  throws BoxNotFoundException;
+	//public void notifyUpdate(String alias)  throws BoxNotFoundException;
 	
 }

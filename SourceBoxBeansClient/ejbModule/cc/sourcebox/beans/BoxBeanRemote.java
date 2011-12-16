@@ -51,7 +51,7 @@ public interface BoxBeanRemote {
 	
 	public void edit(String alias, int userID, List<InsertObject> inserts) throws BoxNotFoundException;
 	
-	public void notifyUpdate(String alias) throws BoxNotFoundException ;
+	//public void notifyUpdate(String alias) throws BoxNotFoundException ;
 
 	//public long lastEvent(String alias) throws BoxNotFoundException ;
 	
