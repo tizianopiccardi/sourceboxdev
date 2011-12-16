@@ -5,6 +5,8 @@ import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import sun.awt.windows.ThemeReader;
+
 import cc.sourcebox.web.exception.SecurityException;
 
 public class SessionManager {
@@ -84,8 +86,8 @@ public class SessionManager {
 	 * @param cl
 	 * @return
 	 */
-	public static <T extends Object> T get(HttpServletRequest req, String jndiName, Class<T> cl) {
-		return get(req, jndiName, cl, "");
+	public static <T extends Object> T get(HttpServletRequest req, String jndiName, Class<T> cl, boolean create) {
+		return get(req, jndiName, cl, create, "");
 	}
 	
 	/***********
@@ -97,14 +99,14 @@ public class SessionManager {
 	 * @param id
 	 * @return
 	 */
-	public static <T extends Object> T get(HttpServletRequest req, String jndiName, Class<T> cl, String id) {
+	public static <T extends Object> T get(HttpServletRequest req, String jndiName, Class<T> cl, boolean create, String id) {
 		Object bean = req.getSession().getAttribute(jndiName+"_"+id);
-		if (bean==null) {
+		if (bean==null && create) {
 			try {
 				if (ctx == null) ctx = new InitialContext();
 				bean = ctx.lookup(jndiName);
 			} catch (Exception e) {
-				e.printStackTrace();
+				throw new RuntimeException("Error in bean creation... " + jndiName);
 			}
 			req.getSession().setAttribute(jndiName+"_"+id, bean);
 		}
