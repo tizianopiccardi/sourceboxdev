@@ -7,7 +7,7 @@ public class EventsDTO {
 
 	List<ChatMessage> msg = new ArrayList<ChatMessage>();
 
-	List<OperationDTO> op = new ArrayList<OperationDTO>();
+	List<InsertObject> op = new ArrayList<InsertObject>();
 
 	public List<ChatMessage> getMsg() {
 		return msg;
@@ -17,11 +17,11 @@ public class EventsDTO {
 		this.msg = msg;
 	}
 
-	public List<OperationDTO> getOp() {
+	public List<InsertObject> getOp() {
 		return op;
 	}
 
-	public void setOp(List<OperationDTO> op) {
+	public void setOp(List<InsertObject> op) {
 		this.op = op;
 	}
 	
@@ -30,7 +30,7 @@ public class EventsDTO {
 	}
 
 	
-	public void add(OperationDTO oper) {
+	public void add(InsertObject oper) {
 		op.add(oper);
 	}
 }
