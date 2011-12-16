@@ -48,7 +48,7 @@ public class ChatBean implements ChatBeanRemote, ChatBeanLocal {
 		
 		em.persist(msg);
 		
-		boxBean.notifyUpdate(alias);
+		//boxBean.notifyUpdate(alias);
 		
 	}
 /*?????????????????

@@ -101,7 +101,7 @@ public class UsersManagerBean implements UsersManagerBeanRemote, UsersManagerBea
 		inBox.setCursorColumn(ch);
 
 
-		boxBean.notifyUpdate(boxAlias);
+		//boxBean.notifyUpdate(boxAlias);
 		
 	}
 
