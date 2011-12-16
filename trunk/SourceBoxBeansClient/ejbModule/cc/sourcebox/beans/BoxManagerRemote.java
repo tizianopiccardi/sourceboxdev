@@ -6,11 +6,11 @@ import cc.sourcebox.dto.EventsDTO;
 
 
 @Remote
-public interface EventsRemote {
+public interface BoxManagerRemote {
 
 	public void init(String alias);
 	public boolean somethingNew();
-	public EventsDTO get();
+	public EventsDTO getEvents();
 	
 	
 	/*
