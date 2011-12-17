@@ -9,23 +9,26 @@ public class ChatMessage implements Serializable{
 	 */
 	private static final long serialVersionUID = -2695034597281170856L;
 	
-	String user, text;
+	//int userid;
+	UserInfo user;
+	
+	String text;
 
 	public ChatMessage() {
 		// TODO Auto-generated constructor stub
 	}
-	public ChatMessage(String u, String t) {
-		user = u; text = t;
+	public ChatMessage(UserInfo u, String t) {
+		user = u; text = t; 
 	}
 	
-	public String getUser() {
+
+
+	public UserInfo getUser() {
 		return user;
 	}
-
-	public void setUser(String user) {
+	public void setUser(UserInfo user) {
 		this.user = user;
 	}
-
 	public String getText() {
 		return text;
 	}

@@ -13,6 +13,10 @@ public class UserInfo implements Serializable{
 
 	public UserInfo() {}
 	
+	public UserInfo(int u, String un) {
+		userid = u; username=un;
+	}
+	
 	public UserInfo(int u, String un, int l, int c) {
 		userid = u; line = l; ch = c; username=un;
 	}
