@@ -124,6 +124,7 @@ $(function() {
 					$("#nickname-panel").dialog("open");
 				else {
 					User.name = response.loggedAs;
+					User.uid = response.userId;
 					console.log("USERNAME: " + User.name);
 					join();
 					init();
@@ -247,6 +248,7 @@ $(function() {
 				if (response.success) {
 					//console.log(response);
 					User.name = response.nick;
+					User.uid = response.userId;
 					//console.log(User);
 					//document.boxinfo.loggedAs = $("input#nick").val();
 					$("#nickname-panel").dialog("close");

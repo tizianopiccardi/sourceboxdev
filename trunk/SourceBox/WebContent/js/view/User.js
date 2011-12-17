@@ -1,6 +1,6 @@
 var User = {
 		
-		id: '0',
+		uid: '0',
 		
 		name: 'user'+Math.floor(Math.random()*1000),
 		

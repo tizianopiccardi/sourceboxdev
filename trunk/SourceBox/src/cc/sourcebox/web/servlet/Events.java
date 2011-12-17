@@ -14,6 +14,7 @@ import cc.sourcebox.beans.BoxManagerRemote;
 import cc.sourcebox.beans.UsersManagerBeanRemote;
 import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.web.exception.SecurityException;
+import cc.sourcebox.web.utils.JndiPaths;
 import cc.sourcebox.web.utils.SessionManager;
 
 @WebServlet(urlPatterns="/events")
@@ -36,18 +37,18 @@ public class Events extends SourceBoxServlet {
 			HashMap<String, Object> output) throws Exception {
 
 
-		//String alias = req.getParameter("alias");
-		//if (!SessionManager.isInBox(session, alias)) throw new SecurityException();
+		String alias = req.getParameter("alias");
+		if (!SessionManager.isInBox(session, alias)) throw new SecurityException();
 
 		//EventsRemote events = SessionManager.get(req, "SourceBoxLogicEAR/Events/remote", EventsRemote.class, false);
-		BoxManagerRemote box = SessionManager.get(req, "SourceBoxLogicEAR/Events/remote", BoxManagerRemote.class, true);
-		box.init("bla");
+		BoxManagerRemote box = SessionManager.getManager(req, alias, false);
+				//SessionManager.get(req, JndiPaths.get("BOX_MGR"), BoxManagerRemote.class, false, alias);
+		//box.init("bla");
 
 		for (int i = 0; i < 10; i++) {
-			System.out.println("POLL"  +box.somethingNew());
+			//System.out.println("POLL"  +box.somethingNew());
 			if (box.somethingNew()) {
-				output.put("event", box
-						.getEvents());
+				output.put("events", box.getEvents());
 				break;
 			}
 			

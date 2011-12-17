@@ -7,24 +7,28 @@ import javax.servlet.http.HttpSession;
 
 import sun.awt.windows.ThemeReader;
 
+import cc.sourcebox.beans.BoxManagerRemote;
+import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.web.exception.SecurityException;
 
 public class SessionManager {
 
-	private final static String BOX_ALIAS = "BOX_";
+	//private final static String BOX_ALIAS = "BOX_";
 	//private final static String BOX_LASTCHECK = "BOX_L_";
-	private final static String USERNAME = "nick";
-	private final static String USERID = "userID";
+	//private final static String USERNAME = "nick";
+	//private final static String USERID = "userID";
 	
-	private final static String BOXSEQUENCE = "sequence_";
+	//private final static String BOXMGR_JNDI = "SourceBoxLogicEAR/BoxManager/remote";
+	
+	//private final static String BOXSEQUENCE = "sequence_";
 		
 	public static boolean isInBox(HttpSession session, String alias) {
-		return (session.getAttribute(BOX_ALIAS+alias)!=null);
+		return (session.getAttribute(JndiPaths.get("BOX_MGR")+"_"+alias)!=null);
 	}
 	
-	public static void addBox(HttpSession session, String alias) {
+	/*public static void addBox(HttpSession session, String alias) {
 		session.setAttribute(BOX_ALIAS+alias, true);
-	}
+	}*/
 	
 	/*public static void boxChecked(HttpSession session, String alias) {
 		session.setAttribute(BOX_LASTCHECK+alias, System.currentTimeMillis());
@@ -35,7 +39,7 @@ public class SessionManager {
 		}catch(Exception e) {return 0;}
 	}*/
 	
-	public static int getSequence(HttpSession session, String alias) {
+	/*public static int getSequence(HttpSession session, String alias) {
 		Object seq = session.getAttribute(BOXSEQUENCE+alias);
 		return (seq!=null)?(Integer)seq:0;
 	}
@@ -43,9 +47,9 @@ public class SessionManager {
 	public static void setSequence(HttpSession session, String alias, int val) {
 		session.setAttribute(BOXSEQUENCE+alias, val);
 	}
+	*/
 	
-	
-	
+	/*
 	public static String getNickname(HttpSession session) {
 		Object name = session.getAttribute(USERNAME);
 		return (name!=null)?name.toString():"";
@@ -61,21 +65,27 @@ public class SessionManager {
 	
 	public static void setUserId(HttpSession session, int id) {
 		session.setAttribute(USERID, id);
-	}	
+	}	*/
+	
+	public static void setUserInfo(HttpSession session, UserInfo u) {
+		session.setAttribute("userinfo", u);
+	}
+	
+	public static UserInfo getUserInfo(HttpSession session) {
+		return (UserInfo)session.getAttribute("userinfo");
+	}
+
 	
 	public static void inBoxCheck(HttpSession session, String alias) throws SecurityException  {
 		if(!SessionManager.isInBox(session, alias)) throw new SecurityException();
 	}
 	
+	public static BoxManagerRemote getManager(HttpServletRequest req, String alias, boolean create) throws SecurityException  {
+		return SessionManager.get(req, JndiPaths.get("BOX_MGR"), BoxManagerRemote.class, create, alias);
+	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	static Context ctx = null;
 	
@@ -101,6 +111,12 @@ public class SessionManager {
 	 */
 	public static <T extends Object> T get(HttpServletRequest req, String jndiName, Class<T> cl, boolean create, String id) {
 		Object bean = req.getSession().getAttribute(jndiName+"_"+id);
+		
+		//Provo ad usare il bean per assicurarmi che sia funzionante
+		try {
+			bean.toString();
+		}catch(Exception e) {bean=null;}
+
 		if (bean==null && create) {
 			try {
 				if (ctx == null) ctx = new InitialContext();

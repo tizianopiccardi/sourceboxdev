@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import cc.sourcebox.beans.BoxBeanRemote;
+import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.web.utils.SessionManager;
 
 @WebServlet(urlPatterns="/boxenv")
@@ -31,7 +32,11 @@ public class BoxEnvironmentInfo extends SourceBoxServlet {
 		
 		output.put("isPrivate", boxbean.isPrivate(alias));
 		output.put("inbox", SessionManager.isInBox(session, alias));
-		output.put("loggedAs", SessionManager.getNickname(session));
+		
+		UserInfo user = SessionManager.getUserInfo(session);
+		output.put("loggedAs", (user==null)?"":user.getUsername());
+		
+		output.put("userId", (user==null)?0:user.getUserid());
 		
 	}
 	

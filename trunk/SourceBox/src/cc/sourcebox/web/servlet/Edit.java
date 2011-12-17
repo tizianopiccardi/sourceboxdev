@@ -9,8 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import cc.sourcebox.beans.BoxBeanRemote;
+import cc.sourcebox.beans.BoxManagerRemote;
 import cc.sourcebox.beans.UsersManagerBeanRemote;
 import cc.sourcebox.dto.InsertObject;
+import cc.sourcebox.web.utils.SessionManager;
 import cc.sourcebox.web.utils.Utils;
 
 import com.google.gson.JsonObject;
@@ -23,19 +25,24 @@ public class Edit extends SourceBoxServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = -5621807639847885403L;
-
+/*
 	@EJB(mappedName = "SourceBoxLogicEAR/UsersManagerBean/remote")
 	private UsersManagerBeanRemote usersMgr;
-	
-	@EJB(mappedName = "SourceBoxLogicEAR/BoxBean/remote")
-	private BoxBeanRemote boxbean;
+	*/
+	/*@EJB(mappedName = "SourceBoxLogicEAR/BoxBean/remote")
+	private BoxBeanRemote boxbean;*/
 	
 	@Override
 	public void process(HttpServletRequest req, HttpSession session,
 			HashMap<String, Object> output) throws Exception {
 
-		int userID = (Integer)session.getAttribute("userID");	
 		String alias = req.getParameter("alias");
+		SessionManager.inBoxCheck(session, alias);
+		
+		
+		//int userID = (Integer)session.getAttribute("userID");
+
+		BoxManagerRemote box = SessionManager.getManager(req, alias, false);
 		
 		/*********
 		 * UPDATE cursor position
@@ -44,16 +51,17 @@ public class Edit extends SourceBoxServlet {
 			JsonObject cursor = Utils.decodeObject(req.getParameter("c"));
 			int line = cursor.get("line").getAsInt();
 			int ch = cursor.get("ch").getAsInt();
-			usersMgr.setCursorPos(alias, userID, line, ch);
+			box.setCursor(line, ch);
 		}
 		
 		
 		List<InsertObject> inserts = Utils.getInsertList(req.getParameter("e"));
 		if (inserts.size()>1)
-			boxbean.edit(alias, userID, inserts);
+			box.edit(inserts);
+			//boxbean.edit(alias, userID, inserts);
 		
 		
-		usersMgr.heartBeat(Utils.getUserId(session));
+		//usersMgr.heartBeat(SessionManager.getUserInfo(session).getUserid());
 		
 		
 	}

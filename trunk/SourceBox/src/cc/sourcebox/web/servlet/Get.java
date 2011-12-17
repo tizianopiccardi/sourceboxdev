@@ -8,7 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import cc.sourcebox.beans.BoxBeanRemote;
+import cc.sourcebox.beans.BoxManagerRemote;
+import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.entities.Revision;
+import cc.sourcebox.entities.User;
+import cc.sourcebox.web.utils.JndiPaths;
 import cc.sourcebox.web.utils.SessionManager;
 import cc.sourcebox.web.utils.Utils;
 
@@ -23,6 +27,8 @@ public class Get extends SourceBoxServlet {
 	@EJB(mappedName = "SourceBoxLogicEAR/BoxBean/remote")
 	private BoxBeanRemote boxbean;
 	
+	/*@EJB(mappedName = "SourceBoxLogicEAR/BoxManager/remote")
+	private BoxManagerRemote mgr;*/
 
 	
 	@Override
@@ -32,12 +38,20 @@ public class Get extends SourceBoxServlet {
 		String alias = req.getParameter("alias");
 		String password = req.getParameter("pass");
 		
+		UserInfo user = SessionManager.getUserInfo(session);
+		Revision rev = (Revision)boxbean.get(user.getUserid(), alias, password );
+
+
+		//SessionManager.addBox(session, alias);
 		
-		Revision rev = (Revision)boxbean.get(Utils.getUserId(session), alias, password );
-
-
-		SessionManager.addBox(session, alias);
-		SessionManager.setSequence(session, alias, rev.getBox().getSequence());
+		//mgr.init(alias);
+		
+		//BoxManagerRemote mgr = SessionManager.get(req, JndiPaths.get("BOX_MGR"), BoxManagerRemote.class, true, alias);
+		BoxManagerRemote box = SessionManager.getManager(req, alias, true);
+		box.init(user, alias);
+		
+		
+		//SessionManager.setSequence(session, alias, rev.getBox().getSequence());
 		//session.setAttribute(SessionKeys.get("SESSION_BOX_ALIAS",alias), true);
 		//session.setAttribute(SessionKeys.get("SESSION_BOX_LASTCHECK",alias), System.currentTimeMillis());
 
