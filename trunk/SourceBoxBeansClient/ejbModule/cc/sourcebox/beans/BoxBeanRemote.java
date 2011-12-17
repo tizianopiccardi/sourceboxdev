@@ -49,7 +49,7 @@ public interface BoxBeanRemote {
 	 */
 	public Boolean isPrivate(String alias) throws BoxNotFoundException;
 	
-	public void edit(String alias, int userID, List<InsertObject> inserts) throws BoxNotFoundException;
+	//public void edit(String alias, int userID, List<InsertObject> inserts) throws BoxNotFoundException;
 	
 	//public void notifyUpdate(String alias) throws BoxNotFoundException ;
 
