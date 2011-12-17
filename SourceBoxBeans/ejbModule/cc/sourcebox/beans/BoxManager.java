@@ -1,63 +1,56 @@
 package cc.sourcebox.beans;
 
+import java.util.List;
+
+import javax.annotation.PreDestroy;
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateful;
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageListener;
-import javax.jms.ObjectMessage;
-import javax.jms.Session;
-import javax.jms.Topic;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
+import org.jboss.ejb3.annotation.CacheConfig;
 
+import cc.sourcebox.beans.actions.JmsHelper;
+import cc.sourcebox.beans.exceptions.BoxNotFoundException;
+import cc.sourcebox.beans.exceptions.ChatErrorException;
 import cc.sourcebox.dto.ChatMessage;
 import cc.sourcebox.dto.EventsDTO;
 import cc.sourcebox.dto.InsertObject;
+import cc.sourcebox.dto.UserInfo;
 
 /**
  * Session Bean implementation class Events
  */
 @Stateful
 @LocalBean
-//@CacheConfig(/* removalTimeoutSeconds=10, */maxSize = 0, idleTimeoutSeconds = 0)
-// !!NON PASSIVARE
+@CacheConfig(removalTimeoutSeconds=180)
+
 public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 
-	static final String url = "tcp://localhost:61616";
-	static ConnectionFactory factory = new ActiveMQConnectionFactory(url);
+	
+	
 
 	EventsDTO events = new EventsDTO();
+	JmsHelper jmsTopic;
+	UserInfo user;
+	String alias;
 
-
-	boolean hasEvent = false;
+	@EJB
+	ChatBeanRemote chat;
 	
-	//MessageProducer producer;
-	MessageConsumer consumer;
-	Session session = null;
+	@EJB/*(mappedName = "SourceBoxLogicEAR/UsersManagerBean/remote")*/
+	UsersManagerBeanRemote usersBean;
 	
 	@Override
-	public void init(String alias) {
-
-		if (session != null)
-			return;
+	public void init(UserInfo user, String alias) {
 
 		try {
 			
 			System.out.println("INIT EVENT BEAN ON: " + alias);
-			Connection connection = factory.createConnection();
-			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-			Topic topic = session.createTopic(alias);
-			consumer = session.createConsumer(topic);
+			
+			jmsTopic = new JmsHelper(alias, events);
 
-			consumer.setMessageListener(new EventsListener(events));
-
-			connection.start();
-
-			//producer = session.createProducer(topic);
+			this.user = user;
+			this.alias = alias;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -66,68 +59,67 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 
 	@Override
 	public boolean somethingNew() {
-		return hasEvent;
+		//System.out.println(events.hasEvent);
+		return events.hasEvents();
 	}
 
-	private class EventsListener implements MessageListener {
-		EventsDTO ec;
 
-		public EventsListener(EventsDTO ec) {
-			this.ec = ec;
-		}
-
-		@Override
-		public void onMessage(Message msg) {
-			try {
-				
-				ObjectMessage message = (ObjectMessage)msg;
-
-				synchronized (events) {
-
-					if (message.getObject() instanceof ChatMessage) {
-						events.add((ChatMessage)message.getObject());
-					} else
-					if (message.getObject() instanceof InsertObject) {
-						events.add((InsertObject)message.getObject());
-					}
-					hasEvent = true;
-				}
-
-			} catch (JMSException e) {
-				e.printStackTrace();
-			}
-		}
-
-	}
 
 	@Override
 	public EventsDTO getEvents() {
 		EventsDTO response = null;
 		synchronized (events) {
 
-			response = events;
+			try {
+				response = events.extract();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			
-			events = new EventsDTO();
+			//events.clean();
 			
-			hasEvent = false;
+			//events.hasEvent = false;
 		}
 		
 		
 		return response;
 	}
-/*
-	String s="";
+
 	@Override
-	public String getS() {
-		s+=".";
-		return s;
+	public void send(String msg) throws ChatErrorException {
+		try {
+			//chat.send(msg.getUserid(), msg.getUser(), msg.getText());
+			
+			
+			jmsTopic.send(new ChatMessage(user, msg));
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ChatErrorException();
+		}
+	}
+	
+	@PreDestroy
+	public void remove() {
+		jmsTopic.closeAll();
 	}
 
-	int v = 0;
 	@Override
-	public int getV() {
+	public void setCursor(int l, int c) {
 		// TODO Auto-generated method stub
-		return ++v;
-	}*/
+		user.setCh(c); user.setLine(l);
+		try {
+			usersBean.setCursorPos(this.alias, user.getUserid(), l, c);
+			jmsTopic.send(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void edit(List<InsertObject> inserts) {
+		// TODO Auto-generated method stub
+		
+		usersBean.heartBeat(user.getUserid());
+	}
 
 }

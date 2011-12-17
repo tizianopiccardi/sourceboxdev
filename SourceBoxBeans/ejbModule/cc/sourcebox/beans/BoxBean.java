@@ -160,12 +160,12 @@ public class BoxBean implements BoxBeanRemote, BoxBeanLocal {
 		
 	}
 
-	@Override
+	/*@Override
 	public void edit(String alias, int userID, List<InsertObject> inserts)
 			throws BoxNotFoundException {
 		System.out.println(inserts);
 		
-	}
+	}*/
 /*
 	@Override
 	public void notifyUpdate(String alias) throws BoxNotFoundException {
