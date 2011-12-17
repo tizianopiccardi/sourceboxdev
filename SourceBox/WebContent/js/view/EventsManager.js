@@ -13,7 +13,7 @@ var EventsManager = {
 				  type: "POST",
 				  success: function(response){
 						if (response) 
-							EventsManager.eventSelector(response);
+							EventsManager.eventSelector(response.events);
 				  },
 				  complete: function() {
 					  $(document).stopTime('getEvent');
@@ -24,17 +24,30 @@ var EventsManager = {
 		
 		eventSelector: function(eventsList) {
 			for(var key in eventsList) {
-				
 				switch (key) {
-				case 'edit': EventsManager.onEditCase(eventsList[key]);
+				case 'op': EventsManager.onEditCase(eventsList[key]);
 							 break;
 				case 'users': EventsManager.onUserList(eventsList[key]);
-								break;		 
+								break;	
+				case 'msg': EventsManager.onMessage(eventsList[key]);
+							break;	
 				default:
 					break;
 				}
 
 			}
+		},
+		
+		onMessage: function(messages) {
+			console.log(messages);
+			for ( var i = 0; i < messages.length; i++) {
+				if (messages[i].user.userid != User.uid)
+					$('#comments-list').append('<div><b>'+messages[i].user.username+'</b>: '+messages[i].text+"</div>");
+			}
+
+			$('#comments-list').scroll();
+	    	$('#comments-list').scrollTo('100%');
+			
 		},
 		
 		onUserList: function(users) {

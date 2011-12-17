@@ -31,10 +31,10 @@ public class Utils {
 		return parser.parse(json).getAsJsonArray();
 	}
 
-	
+	/*
 	public static int getUserId(HttpSession session) {
 		return Integer.valueOf(session.getAttribute("userID").toString());
-	}
+	}*/
 	
 	
 	public static List<InsertObject> getInsertList(String json) {

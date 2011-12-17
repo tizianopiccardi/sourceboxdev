@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import cc.sourcebox.beans.UsersManagerBeanRemote;
+import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.web.utils.SessionManager;
 
 @WebServlet(urlPatterns="/join")
@@ -27,9 +28,13 @@ public class Join extends SourceBoxServlet {
 		/*******
 		 * Save the username and the generated user id
 		 */
-		SessionManager.setNickname(session, nick);
-		SessionManager.setUserId(session, usersMgr.join(nick));
+		//SessionManager.setNickname(session, nick);
+		//SessionManager.setUserId(session, usersMgr.join(nick));
+		
+		int uid = usersMgr.join(nick);
+		SessionManager.setUserInfo(session, new UserInfo(uid, nick));
 
+		output.put("userId", uid);
 		output.put("nick", nick);
 		
 	}
