@@ -6,6 +6,7 @@ import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
 
 import cc.sourcebox.dto.ChatMessage;
+import cc.sourcebox.dto.CursorsDTO;
 import cc.sourcebox.dto.EventsDTO;
 import cc.sourcebox.dto.InsertObject;
 import cc.sourcebox.dto.UserInfo;
@@ -20,7 +21,7 @@ public class BoxEventsListener implements MessageListener{
 	@Override
 	public void onMessage(Message msg) {
 		try {
-			System.out.println("BoxEventsListener.onMessage()");
+			//System.out.println("BoxEventsListener.onMessage()");
 			//ec.hasEvent = true;
 			//if (1==1)return;
 			ObjectMessage message = (ObjectMessage)msg;
@@ -33,6 +34,9 @@ public class BoxEventsListener implements MessageListener{
 				if (message.getObject() instanceof InsertObject) {
 					ec.add((InsertObject)message.getObject());
 				} else
+				if (message.getObject() instanceof CursorsDTO) {
+					ec.add((CursorsDTO)message.getObject());
+				}
 				if (message.getObject() instanceof UserInfo) {
 					ec.add((UserInfo)message.getObject());
 				}

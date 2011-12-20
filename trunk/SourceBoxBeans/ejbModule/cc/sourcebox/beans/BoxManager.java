@@ -10,9 +10,9 @@ import javax.ejb.Stateful;
 import org.jboss.ejb3.annotation.CacheConfig;
 
 import cc.sourcebox.beans.actions.JmsHelper;
-import cc.sourcebox.beans.exceptions.BoxNotFoundException;
 import cc.sourcebox.beans.exceptions.ChatErrorException;
 import cc.sourcebox.dto.ChatMessage;
+import cc.sourcebox.dto.CursorsDTO;
 import cc.sourcebox.dto.EventsDTO;
 import cc.sourcebox.dto.InsertObject;
 import cc.sourcebox.dto.UserInfo;
@@ -51,6 +51,9 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 
 			this.user = user;
 			this.alias = alias;
+			
+			jmsTopic.send(user);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -91,7 +94,7 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 			//chat.send(msg.getUserid(), msg.getUser(), msg.getText());
 			
 			
-			jmsTopic.send(new ChatMessage(user, msg));
+			jmsTopic.send(new ChatMessage(user.getUserid(), msg));
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new ChatErrorException();
@@ -109,7 +112,7 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 		user.setCh(c); user.setLine(l);
 		try {
 			usersBean.setCursorPos(this.alias, user.getUserid(), l, c);
-			jmsTopic.send(user);
+			jmsTopic.send(new CursorsDTO(user.getUserid(), l, c));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
