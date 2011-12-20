@@ -31,12 +31,16 @@ var EventsManager = {
 								break;	
 				case 'msg': EventsManager.onMessage(eventsList[key]);
 							break;	
+				case 'cursors': EventsManager.onCursors(eventsList[key]);
+							break;
 				default:
 					break;
 				}
 
 			}
 		},
+		
+		onCursors: function(cursors){},
 		
 		onMessage: function(messages) {
 			console.log(messages);
