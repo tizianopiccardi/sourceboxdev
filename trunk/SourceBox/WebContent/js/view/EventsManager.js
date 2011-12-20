@@ -23,12 +23,26 @@ var EventsManager = {
 		},
 		
 		eventSelector: function(eventsList) {
-			for(var key in eventsList) {
+			
+			
+			/******
+			SE NON CI SONO EVENTI NON CI SONO QUESTI VALORI
+			
+			*******/////////////
+			
+			EventsManager.onUserList(eventsList['users']);
+			EventsManager.onMessage(eventsList['msg']);
+			EventsManager.onEditCase(eventsList['op']);
+			EventsManager.onCursors(eventsList['cursors']);
+
+			
+			
+			/*for(var key in eventsList) {
 				switch (key) {
+				case 'users': EventsManager.onUserList(eventsList[key]);
+							break;	
 				case 'op': EventsManager.onEditCase(eventsList[key]);
 							 break;
-				case 'users': EventsManager.onUserList(eventsList[key]);
-								break;	
 				case 'msg': EventsManager.onMessage(eventsList[key]);
 							break;	
 				case 'cursors': EventsManager.onCursors(eventsList[key]);
@@ -37,16 +51,44 @@ var EventsManager = {
 					break;
 				}
 
-			}
+			}*/
 		},
 		
-		onCursors: function(cursors){},
+		onCursors: function(cursors){
+			//$('[id^="users_"]').remove();
+			
+			for(var uid in cursors) {
+				
+				if (uid==User.uid) continue;
+				
+				username = UsersManager.getName(uid);
+				cursor = cursors[uid];
+				var newUserDiv = "<div id=\"users_"+uid+"\" style=\"color: red;position:absolute;font-size:10px !important;\">&oline;"+username+"</div>";
+				$("#users-markers").append(newUserDiv);
+			}
+			
+			
+			/*for ( var i = 0; i < cursors.length; i++) {
+				var cursor = cursors[i];
+				
+				if (cursor.) continue;
+
+				/*var pos = {line: user.line, ch: user.ch};
+				//if ($("#users_"+user.username).length < 1) {
+					var newUserDiv = "<div id=\"users_"+user.username+"\" style=\"color: red;position:absolute;font-size:10px !important;\">&oline;"+user.username+"</div>";
+					//console.log("ADD: " + newUserDiv);
+					$("#users-markers").append(newUserDiv);
+				//}
+				
+				this.editor.addWidget(pos, document.getElementById("users_"+user.username), false);
+			}*/
+		},
 		
 		onMessage: function(messages) {
 			console.log(messages);
 			for ( var i = 0; i < messages.length; i++) {
-				if (messages[i].user.userid != User.uid)
-					$('#comments-list').append('<div><b>'+messages[i].user.username+'</b>: '+messages[i].text+"</div>");
+				if (messages[i].uid != User.uid)
+					$('#comments-list').append('<div><b>'+UsersManager.getName(messages[i].uid)+'</b>: '+messages[i].text+"</div>");
 			}
 
 			$('#comments-list').scroll();
@@ -56,9 +98,26 @@ var EventsManager = {
 		
 		onUserList: function(users) {
 			
+			
+			for ( var i = 0; i < users.length; i++) {
+				var user = users[i];
+				if (user.userid==User.uid) continue;
+
+				
+				UsersManager.add(user);
+				showNotification({
+	                message: "'"+user.username + "' logged in!",
+	                autoClose: true,
+	                duration: 2
+	            });
+				
+			}
+			
+			
+			
 			//document.getElementById("users-markers").
 			//$("#users-markers").html('');
-			$('[id^="users_"]').remove();
+			/*$('[id^="users_"]').remove();
 			
 			for ( var i = 0; i < users.length; i++) {
 				var user = users[i];
@@ -73,7 +132,7 @@ var EventsManager = {
 				//}
 				
 				this.editor.addWidget(pos, document.getElementById("users_"+user.username), false);
-			}
+			}*/
 		},
 		
 		onEditCase: function (values) {

@@ -11,7 +11,9 @@
     <script type="text/javascript" src="libs/jquery/jquery.timers.js"></script>
    
    <script type="text/javascript" src="libs/jquery/jquery-ui.js"></script>
-  <link type="text/css" href="css/jqueryui/ui-lightness/jqueryui.css" rel="stylesheet" />  
+  <link type="text/css" href="css/jqueryui/ui-lightness/jqueryui.css" rel="stylesheet" /> 
+   <link type="text/css" href="css/jquery_notification.css" rel="stylesheet" /> 
+  
    
    <script type="text/javascript" src="libs/json/json2.js"></script>
    
@@ -24,8 +26,11 @@
    <script type="text/javascript" src="js/view/view.js"></script>
    <script type="text/javascript" src="js/view/EditorManager.js"></script>
    <script type="text/javascript" src="js/view/chat.js"></script>
- 
+    <script type="text/javascript" src="js/view/UsersManager.js"></script>
     <script type="text/javascript" src="libs/jquery/jquery.scrollTo.js"></script>
+    
+        <script type="text/javascript" src="libs/jquery/jquery_notification.js"></script>
+    
     <!-- <script type="text/javascript" src="js/view/EditorManager.js"></script> -->
  
     <link rel="stylesheet" href="css/view.css"> 
