@@ -17,12 +17,19 @@ var EditorManager = {
 				url : "save",
 				dataType : "json",
 				data : {alias : document.alias},
+				type: "POST",
 				success : function(response) {
 					if (response.success) {
 						this.saved = true;
 					}
 					$("#save-loading").hide();
-					$('#save-status').html("");
+					$('#save-status').hide();
+					
+					showNotification({
+		                message: "Saved",
+		                autoClose: true,
+		                duration: 1
+		            });
 				}
 			});
 			

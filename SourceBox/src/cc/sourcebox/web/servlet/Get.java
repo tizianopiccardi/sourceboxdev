@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import cc.sourcebox.beans.BoxBeanRemote;
 import cc.sourcebox.beans.BoxManagerRemote;
+import cc.sourcebox.beans.UsersManagerBeanRemote;
 import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.entities.Revision;
 import cc.sourcebox.entities.User;
@@ -27,8 +28,8 @@ public class Get extends SourceBoxServlet {
 	@EJB(mappedName = "SourceBoxLogicEAR/BoxBean/remote")
 	private BoxBeanRemote boxbean;
 	
-	/*@EJB(mappedName = "SourceBoxLogicEAR/BoxManager/remote")
-	private BoxManagerRemote mgr;*/
+	@EJB(mappedName = "SourceBoxLogicEAR/UsersManagerBean/remote")
+	private UsersManagerBeanRemote users;
 
 	
 	@Override
@@ -55,11 +56,12 @@ public class Get extends SourceBoxServlet {
 		//session.setAttribute(SessionKeys.get("SESSION_BOX_ALIAS",alias), true);
 		//session.setAttribute(SessionKeys.get("SESSION_BOX_LASTCHECK",alias), System.currentTimeMillis());
 
-		output.put("alias", rev.getBox().getAlias());
+		output.put("alias", alias);
 		output.put("code", rev.getSource());
 		output.put("language", rev.getBox().getLanguage());
 		output.put("readonly", rev.getBox().getReadonly());
 		output.put("revision", rev.getRev());	
+		output.put("users", users.getUsers(alias));	
 	}
 	
 /*

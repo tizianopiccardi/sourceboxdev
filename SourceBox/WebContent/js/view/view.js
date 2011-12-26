@@ -114,6 +114,7 @@ $(function() {
 		data : {
 			alias : document.alias
 		},
+		type: "POST",
 		success : function(response) {
 			if (response.success) {
 
@@ -125,7 +126,7 @@ $(function() {
 				else {
 					User.name = response.loggedAs;
 					User.uid = response.userId;
-					console.log("USERNAME: " + User.name);
+					//console.log("USERNAME: " + User.name);
 					join();
 					init();
 				}
@@ -200,6 +201,8 @@ $(function() {
 					editor.setOption('mode', response.language);
 					EditorManager.isReadOnly = (response.readonly>0);
 					editor.setOption('readOnly', (EditorManager.isReadOnly));
+					
+					UsersManager.addList(response.users);
 					
 					EventsManager.run();
 
