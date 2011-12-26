@@ -30,8 +30,8 @@ public class UsersManagerBean implements UsersManagerBeanRemote, UsersManagerBea
 	
 	@EJB
 	private UtilsBeanLocal utils;
-	@EJB
-	private BoxBeanRemote boxBean;
+/*	@EJB
+	private BoxInfoBeanRemote boxBean;*/
 
 	@Override
 	public int join(String name) {

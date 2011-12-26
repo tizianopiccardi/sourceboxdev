@@ -30,7 +30,7 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 	
 
 	EventsDTO events = new EventsDTO();
-	JmsHelper jmsTopic;
+	JmsHelper jmsTopic = null;
 	UserInfo user;
 	String alias;
 
@@ -42,10 +42,12 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 	
 	@Override
 	public void init(UserInfo user, String alias) {
-
+		
+		if (jmsTopic==null)
 		try {
 			
 			System.out.println("INIT EVENT BEAN ON: " + alias);
+			
 			
 			jmsTopic = new JmsHelper(alias, events);
 

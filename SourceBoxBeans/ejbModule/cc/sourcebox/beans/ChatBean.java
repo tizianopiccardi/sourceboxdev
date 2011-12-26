@@ -21,9 +21,9 @@ public class ChatBean implements ChatBeanRemote, ChatBeanLocal {
 	@PersistenceContext(name="SourceBoxEntities")
 	EntityManager em;
 	
-	@EJB
-	BoxBeanLocal boxBean;
-	
+	/*@EJB
+	BoxInfoBeanLocal boxBean;
+	*/
 	@EJB
 	UsersManagerBeanRemote usersBean;
 
@@ -38,17 +38,16 @@ public class ChatBean implements ChatBeanRemote, ChatBeanLocal {
 	@Override
 	public void send(int userid, String alias, String message) throws BoxNotFoundException {
 		
-		Message msg = new Message();
+		/*Message msg = new Message();
 		
 		msg.setText(message);
 		msg.setTime(new Timestamp(System.currentTimeMillis()));
 
 		msg.setUser(usersBean.get(userid));
-		msg.setBox(boxBean.get(alias));
+		msg.setBox(boxBean.get(alias));*/
 		
-		em.persist(msg);
+		//em.persist(msg);
 		
-		//boxBean.notifyUpdate(alias);
 		
 	}
 /*?????????????????
