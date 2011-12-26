@@ -5,11 +5,12 @@ import javax.ejb.Remote;
 
 import cc.sourcebox.beans.exceptions.BoxNotFoundException;
 import cc.sourcebox.dto.InsertObject;
+import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.entities.Box;
 import cc.sourcebox.entities.Revision;
 
 @Remote
-public interface BoxBeanRemote {
+public interface BoxInfoBeanRemote {
 
 	/************
 	 * Create a new BOX. If the password is null or "" the box is public
@@ -28,7 +29,7 @@ public interface BoxBeanRemote {
 	 * @param body
 	 * @throws BoxNotFoundException
 	 */
-	public void save(String alias, String body) throws BoxNotFoundException;
+	//public void save(String alias, String body) throws BoxNotFoundException;
 	
 	/************
 	 * Retrieve the last revision and set the user as logged
@@ -55,7 +56,10 @@ public interface BoxBeanRemote {
 
 	//public long lastEvent(String alias) throws BoxNotFoundException ;
 	
-	public int getSequence(String alias) throws BoxNotFoundException ;
+	//public int getSequence(String alias) throws BoxNotFoundException ;
+	
+	
+	public List<UserInfo> getUsers(String alias);
 	
 	
 }
