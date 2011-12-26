@@ -5,7 +5,7 @@ import cc.sourcebox.beans.exceptions.BoxNotFoundException;
 import cc.sourcebox.entities.Box;
 
 @Local
-public interface BoxBeanLocal {
+public interface BoxInfoBeanLocal {
 
 	public Box get(String alias);
 	//public void notifyUpdate(String alias)  throws BoxNotFoundException;

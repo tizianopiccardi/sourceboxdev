@@ -7,7 +7,7 @@ import javax.naming.InitialContext;
 
 import com.google.gson.Gson;
 
-import cc.sourcebox.beans.BoxBeanRemote;
+import cc.sourcebox.beans.BoxInfoBeanRemote;
 import cc.sourcebox.entities.Revision;
 
 public class Tester {
@@ -35,8 +35,8 @@ public class Tester {
 			
 			
 			
-			BoxBeanRemote b = (BoxBeanRemote) ctx
-					.lookup("SourceBoxLogicEAR/BoxBean/remote");
+			BoxInfoBeanRemote b = (BoxInfoBeanRemote) ctx
+					.lookup("SourceBoxLogicEAR/BoxInfoBean/remote");
 
 			Revision rev = (Revision)b.get(0,"xp",null);
 
