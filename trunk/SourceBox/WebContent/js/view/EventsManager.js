@@ -12,7 +12,7 @@ var EventsManager = {
 				  data: ({ alias: document.alias}),
 				  type: "POST",
 				  success: function(response){
-						if (response) 
+						if (response.events) 
 							EventsManager.eventSelector(response.events);
 				  },
 				  complete: function() {
@@ -22,18 +22,14 @@ var EventsManager = {
 				});
 		},
 		
-		eventSelector: function(eventsList) {
+		eventSelector: function(eventsObj) {
 			
+			//console.log(eventsObj);
 			
-			/******
-			SE NON CI SONO EVENTI NON CI SONO QUESTI VALORI
-			
-			*******/////////////
-			
-			EventsManager.onUserList(eventsList['users']);
-			EventsManager.onMessage(eventsList['msg']);
-			EventsManager.onEditCase(eventsList['op']);
-			EventsManager.onCursors(eventsList['cursors']);
+			EventsManager.onUserList(eventsObj['users']);
+			EventsManager.onMessage(eventsObj['msg']);
+			EventsManager.onEditCase(eventsObj['op']);
+			EventsManager.onCursors(eventsObj['cursors']);
 
 			
 			
@@ -56,15 +52,20 @@ var EventsManager = {
 		
 		onCursors: function(cursors){
 			//$('[id^="users_"]').remove();
-			
+			//console.log(cursors);
 			for(var uid in cursors) {
-				
+				//console.log(uid);
 				if (uid==User.uid) continue;
 				
+				$('#users_'+uid).remove();
+				
 				username = UsersManager.getName(uid);
+				//console.log(username);
 				cursor = cursors[uid];
 				var newUserDiv = "<div id=\"users_"+uid+"\" style=\"color: red;position:absolute;font-size:10px !important;\">&oline;"+username+"</div>";
 				$("#users-markers").append(newUserDiv);
+				
+				this.editor.addWidget(cursor, document.getElementById("users_"+uid), false);
 			}
 			
 			
@@ -85,7 +86,7 @@ var EventsManager = {
 		},
 		
 		onMessage: function(messages) {
-			console.log(messages);
+			//console.log(messages);
 			for ( var i = 0; i < messages.length; i++) {
 				if (messages[i].uid != User.uid)
 					$('#comments-list').append('<div><b>'+UsersManager.getName(messages[i].uid)+'</b>: '+messages[i].text+"</div>");
