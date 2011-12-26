@@ -7,15 +7,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import cc.sourcebox.beans.BoxBeanRemote;
+import cc.sourcebox.beans.BoxInfoBeanRemote;
 import cc.sourcebox.beans.BoxManagerRemote;
 import cc.sourcebox.beans.UsersManagerBeanRemote;
 import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.entities.Revision;
-import cc.sourcebox.entities.User;
-import cc.sourcebox.web.utils.JndiPaths;
 import cc.sourcebox.web.utils.SessionManager;
-import cc.sourcebox.web.utils.Utils;
 
 @WebServlet(urlPatterns="/get")
 public class Get extends SourceBoxServlet {
@@ -25,11 +22,11 @@ public class Get extends SourceBoxServlet {
 	 */
 	private static final long serialVersionUID = 1147497135400155556L;
 	
-	@EJB(mappedName = "SourceBoxLogicEAR/BoxBean/remote")
-	private BoxBeanRemote boxbean;
+	@EJB(mappedName = "SourceBoxLogicEAR/BoxInfoBean/remote")
+	private BoxInfoBeanRemote boxbean;
 	
-	@EJB(mappedName = "SourceBoxLogicEAR/UsersManagerBean/remote")
-	private UsersManagerBeanRemote users;
+	/*@EJB(mappedName = "SourceBoxLogicEAR/UsersManagerBean/remote")
+	private UsersManagerBeanRemote users;*/
 
 	
 	@Override
@@ -40,7 +37,7 @@ public class Get extends SourceBoxServlet {
 		String password = req.getParameter("pass");
 		
 		UserInfo user = SessionManager.getUserInfo(session);
-		Revision rev = (Revision)boxbean.get(user.getUserid(), alias, password );
+		Revision rev = boxbean.get(user.getUserid(), alias, password );
 
 
 		//SessionManager.addBox(session, alias);
@@ -61,7 +58,7 @@ public class Get extends SourceBoxServlet {
 		output.put("language", rev.getBox().getLanguage());
 		output.put("readonly", rev.getBox().getReadonly());
 		output.put("revision", rev.getRev());	
-		output.put("users", users.getUsers(alias));	
+		output.put("users", boxbean.getUsers(alias));	
 	}
 	
 /*

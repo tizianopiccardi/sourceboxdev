@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import cc.sourcebox.beans.BoxBeanRemote;
+import cc.sourcebox.beans.BoxInfoBeanRemote;
 
 @WebServlet(urlPatterns = "/store")
 public class Store extends SourceBoxServlet {
@@ -18,8 +18,8 @@ public class Store extends SourceBoxServlet {
 	 */
 	private static final long serialVersionUID = -1457195029910148809L;
 
-	@EJB(mappedName = "SourceBoxLogicEAR/BoxBean/remote")
-	private BoxBeanRemote bbr;
+	@EJB(mappedName = "SourceBoxLogicEAR/BoxInfoBean/remote")
+	private BoxInfoBeanRemote bbr;
 
 	@Override
 	public void process(HttpServletRequest req, HttpSession session,

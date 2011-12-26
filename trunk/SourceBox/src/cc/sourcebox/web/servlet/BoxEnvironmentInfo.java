@@ -7,7 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import cc.sourcebox.beans.BoxBeanRemote;
+import cc.sourcebox.beans.BoxInfoBeanRemote;
 import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.web.utils.SessionManager;
 
@@ -19,8 +19,8 @@ public class BoxEnvironmentInfo extends SourceBoxServlet {
 	 */
 	private static final long serialVersionUID = 1172396791580431424L;
 
-	@EJB(mappedName = "SourceBoxLogicEAR/BoxBean/remote")
-	private BoxBeanRemote boxbean;
+	@EJB(mappedName = "SourceBoxLogicEAR/BoxInfoBean/remote")
+	private BoxInfoBeanRemote boxbean;
 
 	
 	@Override

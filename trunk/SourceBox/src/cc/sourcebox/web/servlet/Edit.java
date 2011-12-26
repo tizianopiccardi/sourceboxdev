@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import cc.sourcebox.beans.BoxBeanRemote;
+import cc.sourcebox.beans.BoxInfoBeanRemote;
 import cc.sourcebox.beans.BoxManagerRemote;
 import cc.sourcebox.beans.UsersManagerBeanRemote;
 import cc.sourcebox.dto.InsertObject;
