@@ -12,7 +12,9 @@ import javax.persistence.Query;
 
 import cc.sourcebox.beans.exceptions.BoxNotFoundException;
 import cc.sourcebox.entities.Box;
+import cc.sourcebox.entities.Message;
 import cc.sourcebox.entities.Revision;
+import cc.sourcebox.entities.User;
 
 /**
  * Session Bean implementation class BoxesDAO
@@ -74,6 +76,13 @@ public class BoxesDAO implements BoxesDAOLocal {
 		
 		return box.getAlias();
 	}
+	
+	@Override
+	public Box get(String alias) {
+		Query query = em.createQuery("SELECT b from Box b where b.alias=:alias");
+		query.setParameter("alias", alias);
+		return (Box)query.getSingleResult();
+	}
 
 	@Override
 	public void save(String alias, String body) throws BoxNotFoundException {
@@ -129,6 +138,27 @@ public class BoxesDAO implements BoxesDAOLocal {
 		
 		
 	}
+
+	@Override
+	public List<Message> getChatHistory(String alias, int n) {
+		
+		Query query = em.createQuery("SELECT m from Message m join m.box b where b.alias=:alias order by m.idmessages desc");
+		query.setParameter("alias", alias);
+		query.setMaxResults(n);
+		
+		List<Message> chatHis = query.getResultList();
+		
+		return chatHis;
+	}
+
+	@Override
+	public void sendChat(Message msg) {
+		em.persist(msg);
+	}
+
+
+	
+	
 
 
 }

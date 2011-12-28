@@ -13,9 +13,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import cc.sourcebox.beans.exceptions.BoxNotFoundException;
+import cc.sourcebox.dto.ChatMessage;
 import cc.sourcebox.dto.InsertObject;
 import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.entities.Box;
+import cc.sourcebox.entities.Message;
 import cc.sourcebox.entities.Revision;
 
 /**
@@ -30,10 +32,10 @@ public class BoxInfoBean implements BoxInfoBeanRemote, BoxInfoBeanLocal {
 
 	
 	@EJB
-	UsersManagerBeanRemote usersMgr;
+	UsersDAORemote usersDAO;
 	
 	@EJB
-	BoxesDAOLocal dao;
+	BoxesDAOLocal boxDAO;
 	
     /**
      * Default constructor. 
@@ -126,12 +128,12 @@ public class BoxInfoBean implements BoxInfoBeanRemote, BoxInfoBeanLocal {
 		if (list.size()<1) throw new BoxNotFoundException();
 	}*/
 
-	@Override
+	/*@Override
 	public Box get(String alias) {
 		Query query = em.createQuery("SELECT b from Box b where b.alias=:alias");
 		query.setParameter("alias", alias);
 		return (Box)query.getSingleResult();
-	}
+	}*/
 /*
 	@Override
 	public int getSequence(String alias) throws BoxNotFoundException {
@@ -147,15 +149,15 @@ public class BoxInfoBean implements BoxInfoBeanRemote, BoxInfoBeanLocal {
 
 	@Override
 	public String make(String language, String body, String password,Boolean readonly) {
-		return dao.make(language, body, password, readonly);
+		return boxDAO.make(language, body, password, readonly);
 	}
 
 
 	@Override
 	public Revision get(int userId, String alias, String password)
 			throws BoxNotFoundException {
-		Revision rev = dao.get(userId, alias, password);
-		usersMgr.joinBox(userId,rev.getBox());
+		Revision rev = boxDAO.get(userId, alias, password);
+		usersDAO.joinBox(userId,rev.getBox());
 		return rev;
 		
 	}
@@ -164,7 +166,42 @@ public class BoxInfoBean implements BoxInfoBeanRemote, BoxInfoBeanLocal {
 	@Override
 	public List<UserInfo> getUsers(String alias) {
 		// TODO Auto-generated method stub
-		return usersMgr.getUsers(alias);
+		return usersDAO.getUsers(alias);
+	}
+
+
+	@Override
+	public List<ChatMessage> getChatHistory(String alias) {
+		List<Message> chatHis = boxDAO.getChatHistory(alias, 15);
+		
+		List<ChatMessage> wrappedMsg = new ArrayList<ChatMessage>();
+		for (int i = chatHis.size()-1; i >= 0; i--) {
+			ChatMessage c = new ChatMessage(chatHis.get(i).getUser().getIduser(), chatHis.get(i).getText());
+			wrappedMsg.add(c);
+		}
+		return wrappedMsg;
+	}
+
+
+	@Override
+	public void sendChat(int userid, String alias, String message) {
+		// TODO Auto-generated method stub
+		Message msg = new Message();
+		
+		msg.setText(message);
+		msg.setTime(new Timestamp(System.currentTimeMillis()));
+
+		msg.setUser(usersDAO.get(userid));
+		msg.setBox(boxDAO.get(alias));
+		
+		boxDAO.sendChat(msg);
+		//em.persist(msg);
+	}
+
+
+	@Override
+	public int userJoin(String nick) {
+		return usersDAO.join(nick);
 	}
 	
 	/*
