@@ -2,14 +2,11 @@ package cc.sourcebox.web.servlet;
 
 import java.util.HashMap;
 
-import javax.ejb.EJB;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import cc.sourcebox.beans.BoxManagerRemote;
-import cc.sourcebox.beans.ChatBeanRemote;
-import cc.sourcebox.dto.ChatMessage;
 import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.web.utils.SessionManager;
 

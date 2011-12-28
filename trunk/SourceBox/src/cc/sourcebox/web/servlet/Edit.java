@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import cc.sourcebox.beans.BoxInfoBeanRemote;
 import cc.sourcebox.beans.BoxManagerRemote;
-import cc.sourcebox.beans.UsersManagerBeanRemote;
+import cc.sourcebox.beans.UsersDAORemote;
 import cc.sourcebox.dto.InsertObject;
 import cc.sourcebox.web.utils.SessionManager;
 import cc.sourcebox.web.utils.Utils;

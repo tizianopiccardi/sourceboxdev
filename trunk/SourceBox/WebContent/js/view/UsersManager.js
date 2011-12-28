@@ -13,7 +13,7 @@ var UsersManager = {
 		},
 		
 		getName: function(uid) {
-			return this.users["u"+uid].username;
+			return (this.users["u"+uid]==undefined)?"[-]":this.users["u"+uid].username;
 		}
 
 };
