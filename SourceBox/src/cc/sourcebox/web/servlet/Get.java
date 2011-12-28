@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import cc.sourcebox.beans.BoxInfoBeanRemote;
 import cc.sourcebox.beans.BoxManagerRemote;
-import cc.sourcebox.beans.UsersManagerBeanRemote;
+import cc.sourcebox.beans.UsersDAORemote;
 import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.entities.Revision;
 import cc.sourcebox.web.utils.SessionManager;
@@ -58,7 +58,8 @@ public class Get extends SourceBoxServlet {
 		output.put("language", rev.getBox().getLanguage());
 		output.put("readonly", rev.getBox().getReadonly());
 		output.put("revision", rev.getRev());	
-		output.put("users", boxbean.getUsers(alias));	
+		output.put("users", boxbean.getUsers(alias));
+		output.put("chat", boxbean.getChatHistory(alias));
 	}
 	
 /*

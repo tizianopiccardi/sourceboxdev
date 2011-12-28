@@ -88,7 +88,7 @@ var EventsManager = {
 		onMessage: function(messages) {
 			//console.log(messages);
 			for ( var i = 0; i < messages.length; i++) {
-				if (messages[i].uid != User.uid)
+				if (messages[i].uid != User.uid) 
 					$('#comments-list').append('<div><b>'+UsersManager.getName(messages[i].uid)+'</b>: '+messages[i].text+"</div>");
 			}
 

@@ -204,6 +204,14 @@ $(function() {
 					
 					UsersManager.addList(response.users);
 					
+					EventsManager.onMessage(response.chat);
+					
+					for ( var i = 0; i < response.chat.length; i++) 
+						$('#comments-list').append('<div><b>'+UsersManager.getName(response.chat[i].uid)+'</b>: '+response.chat[i].text+"</div>");
+					$('#comments-list').scroll();
+			    	$('#comments-list').scrollTo('100%');
+		
+					
 					EventsManager.run();
 
 				}
