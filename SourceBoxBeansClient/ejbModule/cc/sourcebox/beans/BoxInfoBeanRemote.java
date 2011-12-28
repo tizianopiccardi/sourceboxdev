@@ -4,9 +4,8 @@ import java.util.List;
 import javax.ejb.Remote;
 
 import cc.sourcebox.beans.exceptions.BoxNotFoundException;
-import cc.sourcebox.dto.InsertObject;
+import cc.sourcebox.dto.ChatMessage;
 import cc.sourcebox.dto.UserInfo;
-import cc.sourcebox.entities.Box;
 import cc.sourcebox.entities.Revision;
 
 @Remote
@@ -60,6 +59,10 @@ public interface BoxInfoBeanRemote {
 	
 	
 	public List<UserInfo> getUsers(String alias);
+	
+	public List<ChatMessage> getChatHistory(String alias);
+	
+	public int userJoin(String nick);
 	
 	
 }

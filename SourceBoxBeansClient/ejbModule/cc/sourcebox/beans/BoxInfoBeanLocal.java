@@ -7,7 +7,7 @@ import cc.sourcebox.entities.Box;
 @Local
 public interface BoxInfoBeanLocal {
 
-	public Box get(String alias);
+	//public Box get(String alias);
 	//public void notifyUpdate(String alias)  throws BoxNotFoundException;
-	
+	public void sendChat(int userid, String alias, String message);
 }
