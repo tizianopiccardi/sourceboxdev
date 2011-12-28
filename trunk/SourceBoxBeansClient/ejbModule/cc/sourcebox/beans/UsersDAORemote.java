@@ -9,7 +9,7 @@ import cc.sourcebox.entities.Box;
 import cc.sourcebox.entities.User;
 
 @Remote
-public interface UsersManagerBeanRemote {
+public interface UsersDAORemote {
 
 	public int join(String name);
 	

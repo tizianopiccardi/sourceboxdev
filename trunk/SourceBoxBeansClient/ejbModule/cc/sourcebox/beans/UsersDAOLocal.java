@@ -5,6 +5,6 @@ import cc.sourcebox.entities.Box;
 import cc.sourcebox.entities.User;
 
 @Local
-public interface UsersManagerBeanLocal {
+public interface UsersDAOLocal {
 
 }
