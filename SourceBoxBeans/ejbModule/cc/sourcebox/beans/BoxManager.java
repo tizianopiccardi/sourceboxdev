@@ -34,11 +34,13 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 	UserInfo user;
 	String alias;
 
-	@EJB
-	ChatBeanRemote chat;
 	
-	@EJB/*(mappedName = "SourceBoxLogicEAR/UsersManagerBean/remote")*/
-	UsersManagerBeanRemote usersBean;
+	@EJB
+	UsersDAORemote usersDao;
+	
+	@EJB
+	BoxInfoBeanLocal boxHelper;
+	//BoxesDAOLocal boxDao;
 	
 	@Override
 	public void init(UserInfo user, String alias) {
@@ -93,9 +95,8 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 	@Override
 	public void send(String msg) throws ChatErrorException {
 		try {
-			//chat.send(msg.getUserid(), msg.getUser(), msg.getText());
-			
-			
+
+			boxHelper.sendChat(user.getUserid(), alias, msg);
 			jmsTopic.send(new ChatMessage(user.getUserid(), msg));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -113,7 +114,7 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 		// TODO Auto-generated method stub
 		user.setCh(c); user.setLine(l);
 		try {
-			usersBean.setCursorPos(this.alias, user.getUserid(), l, c);
+			usersDao.setCursorPos(this.alias, user.getUserid(), l, c);
 			jmsTopic.send(new CursorsDTO(user.getUserid(), l, c));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -124,7 +125,7 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 	public void edit(List<InsertObject> inserts) {
 		// TODO Auto-generated method stub
 		
-		usersBean.heartBeat(user.getUserid());
+		usersDao.heartBeat(user.getUserid());
 	}
 
 }
