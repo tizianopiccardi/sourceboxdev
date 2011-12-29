@@ -22,6 +22,8 @@ public interface BoxManagerRemote {
 	public void setCursor(int l, int c);
 	
 	public void edit(List<InsertObject> inserts);
+	
+	public void heartBeat();
 	/*
 	public String getS();
 	public int getV();*/
