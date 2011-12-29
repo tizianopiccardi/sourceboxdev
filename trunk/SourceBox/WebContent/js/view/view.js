@@ -201,10 +201,10 @@ $(function() {
 					editor.setOption('mode', response.language);
 					EditorManager.isReadOnly = (response.readonly>0);
 					editor.setOption('readOnly', (EditorManager.isReadOnly));
-					
+
 					UsersManager.addList(response.users);
 					
-					EventsManager.onMessage(response.chat);
+					//EventsManager.onMessage(response.chat);
 					
 					for ( var i = 0; i < response.chat.length; i++) 
 						$('#comments-list').append('<div><b>'+UsersManager.getName(response.chat[i].uid)+'</b>: '+response.chat[i].text+"</div>");
