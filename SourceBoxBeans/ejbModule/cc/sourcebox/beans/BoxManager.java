@@ -88,7 +88,7 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 			//events.hasEvent = false;
 		}
 		
-		
+		//usersDao.heartBeat(user.getUserid());
 		return response;
 	}
 
@@ -102,6 +102,7 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 			e.printStackTrace();
 			throw new ChatErrorException();
 		}
+		//usersDao.heartBeat(user.getUserid());
 	}
 	
 	@PreDestroy
@@ -119,12 +120,18 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		//usersDao.heartBeat(user.getUserid());
 	}
 
 	@Override
 	public void edit(List<InsertObject> inserts) {
 		// TODO Auto-generated method stub
 		
+		//usersDao.heartBeat(user.getUserid());
+	}
+
+	@Override
+	public void heartBeat() {
 		usersDao.heartBeat(user.getUserid());
 	}
 
