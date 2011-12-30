@@ -14,6 +14,7 @@ import javax.persistence.Query;
 
 import cc.sourcebox.beans.exceptions.BoxNotFoundException;
 import cc.sourcebox.dto.ChatMessage;
+import cc.sourcebox.dto.InsertObject;
 import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.entities.Message;
 import cc.sourcebox.entities.Revision;
@@ -200,6 +201,12 @@ public class BoxInfoBean implements BoxInfoBeanRemote, BoxInfoBeanLocal {
 	@Override
 	public int userJoin(String nick) {
 		return usersDAO.join(nick);
+	}
+
+
+	@Override
+	public void edit(int uid, String alias, List<InsertObject> inserts) {
+		boxDAO.edit(uid, alias, inserts);
 	}
 
 

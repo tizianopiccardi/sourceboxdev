@@ -125,9 +125,8 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 
 	@Override
 	public void edit(List<InsertObject> inserts) {
-		// TODO Auto-generated method stub
-		
-		//usersDao.heartBeat(user.getUserid());
+
+		boxHelper.edit(user.getUserid(), alias, inserts);
 	}
 
 	@Override
