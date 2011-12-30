@@ -4,6 +4,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import cc.sourcebox.beans.exceptions.BoxNotFoundException;
+import cc.sourcebox.dto.InsertObject;
 import cc.sourcebox.entities.Box;
 import cc.sourcebox.entities.Message;
 import cc.sourcebox.entities.Revision;
@@ -19,6 +20,8 @@ public interface BoxesDAOLocal {
 	public void sendChat(Message msg);
 	
 	public Box get(String alias);
+	
+	public void edit(int uid, String alias, List<InsertObject> inserts);
 	/*
 	public User getUser(int id);
 	public Box getBox(int id);*/
