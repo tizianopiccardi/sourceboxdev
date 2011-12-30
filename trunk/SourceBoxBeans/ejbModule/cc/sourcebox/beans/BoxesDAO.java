@@ -11,8 +11,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import cc.sourcebox.beans.exceptions.BoxNotFoundException;
+import cc.sourcebox.dto.InsertObject;
 import cc.sourcebox.entities.Box;
+import cc.sourcebox.entities.Inbox;
 import cc.sourcebox.entities.Message;
+import cc.sourcebox.entities.Operation;
 import cc.sourcebox.entities.Revision;
 import cc.sourcebox.entities.User;
 
@@ -27,6 +30,9 @@ public class BoxesDAO implements BoxesDAOLocal {
 	
 	@EJB
 	UrlHelperLocal urlHelper;
+	
+	@EJB
+	UsersDAORemote usersDao;
 	
     public BoxesDAO() {}
     
@@ -154,6 +160,27 @@ public class BoxesDAO implements BoxesDAOLocal {
 	@Override
 	public void sendChat(Message msg) {
 		em.persist(msg);
+	}
+
+	@Override
+	public void edit(int uid, String alias, List<InsertObject> inserts) {
+
+		User user = usersDao.get(uid);
+		Box box = get(alias);
+		
+		for (int i = 0; i < inserts.size()	; i++) {
+			InsertObject tmp = inserts.get(i);
+			Operation op = new Operation();
+			op.setUser(user);
+			op.setBox(box);
+			op.setFromLine(tmp.getFromLine());
+			op.setFromChar(tmp.getFromChar());
+			op.setToLine(tmp.getToLine());
+			op.setToChar(tmp.getToChar());
+			op.setString(tmp.getText());
+			em.persist(op);
+		}
+		
 	}
 
 
