@@ -69,15 +69,15 @@ public class Utils {
 	}
 	*/
 	
+	/*
 	
-	
-	/*public static void main(String[] args) {
-		String a = "[{\"sq\":21,\"f\":{\"l\":2,\"c\":13},\"t\":{\"l\":2,\"c\":13},\"s\":\"aa\"},{\"sq\":22,\"f\":{\"l\":2,\"c\":15},\"t\":{\"l\":2,\"c\":15},\"s\":\"aa\"},{\"sq\":23,\"f\":{\"l\":2,\"c\":17},\"t\":{\"l\":2,\"c\":17},\"s\":\"a\"},{\"sq\":24,\"f\":{\"l\":2,\"c\":18},\"t\":{\"l\":2,\"c\":18},\"s\":\"a\"},{\"sq\":25,\"f\":{\"l\":2,\"c\":19},\"t\":{\"l\":2,\"c\":19},\"s\":\"aa\"},{\"sq\":26,\"f\":{\"l\":2,\"c\":21},\"t\":{\"l\":2,\"c\":21},\"s\":\"a\"},{\"sq\":27,\"f\":{\"l\":2,\"c\":22},\"t\":{\"l\":2,\"c\":22},\"s\":\"a\"},{\"sq\":28,\"f\":{\"l\":2,\"c\":23},\"t\":{\"l\":2,\"c\":23},\"s\":\"a\"}]";
+	public static void main(String[] args) {
+		String a = "[{\"sq\":0,\"f\":{\"l\":23,\"c\":0},\"t\":{\"l\":23,\"c\":0},\"s\":\"s\",\"u\":\"sffsd\"}]";
 		
 		new InsertObject();
 		
 	    long c = System.currentTimeMillis();
-	    getInsertList(a);
+	    System.out.println(getInsertList(a));
 	    System.out.println(System.currentTimeMillis()-c);
 		
 	}*/

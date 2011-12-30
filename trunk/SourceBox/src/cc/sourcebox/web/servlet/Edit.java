@@ -56,7 +56,8 @@ public class Edit extends SourceBoxServlet {
 		
 		
 		List<InsertObject> inserts = Utils.getInsertList(req.getParameter("e"));
-		if (inserts.size()>1)
+
+		if (inserts.size()>0)
 			box.edit(inserts);
 			//boxbean.edit(alias, userID, inserts);
 		
