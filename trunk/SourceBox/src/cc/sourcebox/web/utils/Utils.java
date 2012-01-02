@@ -46,7 +46,7 @@ public class Utils {
 			JsonObject ins = jList.get(i).getAsJsonObject();
 			
 			InsertObject insert = new InsertObject();
-			insert.setSequence(ins.get("sq").getAsInt());
+			insert.setUid(ins.get("u").getAsInt());
 			insert.setText(ins.get("s").getAsString());
 			
 			insert.setFromLine(ins.get("f").getAsJsonObject().get("l").getAsInt());

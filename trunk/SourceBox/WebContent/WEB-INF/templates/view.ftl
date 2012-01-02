@@ -72,7 +72,7 @@
 	
 	<a id="chat-button" class="chat-button" href="#" onClick="javascript: toggleChat(); return false;">
 	<img border="0" id="chat-dot" alt="dot" src="images/gray_dot.gif">
-	<!--p id="chat-button-label" style="display : inline;"-->Chat<!-- /p-->
+Chat
 	</a>
 </div>
 

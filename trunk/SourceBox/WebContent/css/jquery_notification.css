@@ -51,7 +51,7 @@ body{
     box-shadow: 0 0 5px #b2495b;
 }
 .succ_bg{
-    background: url('http://pccirebonnews.googlecode.com/files/succ_bg.png') 0 0 repeat-x;
+    background: url('../images/succ_bg.png') 0 0 repeat-x;
 }
 .succ_bg .message_area{
     font:bold 14px arial;
@@ -59,7 +59,7 @@ body{
     text-shadow: 0 1px 0 #fff; 
 }
 .succ_bg .button_area{
-    background: url('http://pccirebonnews.googlecode.com/files/succ_close.png') 0 0 no-repeat;    
+    background: url('../images/succ_close.png') 0 0 no-repeat;    
     cursor: pointer;
 }
 .info_bg{
