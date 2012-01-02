@@ -31,23 +31,7 @@ var EventsManager = {
 			EventsManager.onEditCase(eventsObj['op']);
 			EventsManager.onCursors(eventsObj['cursors']);
 
-			
-			
-			/*for(var key in eventsList) {
-				switch (key) {
-				case 'users': EventsManager.onUserList(eventsList[key]);
-							break;	
-				case 'op': EventsManager.onEditCase(eventsList[key]);
-							 break;
-				case 'msg': EventsManager.onMessage(eventsList[key]);
-							break;	
-				case 'cursors': EventsManager.onCursors(eventsList[key]);
-							break;
-				default:
-					break;
-				}
 
-			}*/
 		},
 		
 		onCursors: function(cursors){
@@ -67,22 +51,7 @@ var EventsManager = {
 				
 				this.editor.addWidget(cursor, document.getElementById("users_"+uid), false);
 			}
-			
-			
-			/*for ( var i = 0; i < cursors.length; i++) {
-				var cursor = cursors[i];
-				
-				if (cursor.) continue;
 
-				/*var pos = {line: user.line, ch: user.ch};
-				//if ($("#users_"+user.username).length < 1) {
-					var newUserDiv = "<div id=\"users_"+user.username+"\" style=\"color: red;position:absolute;font-size:10px !important;\">&oline;"+user.username+"</div>";
-					//console.log("ADD: " + newUserDiv);
-					$("#users-markers").append(newUserDiv);
-				//}
-				
-				this.editor.addWidget(pos, document.getElementById("users_"+user.username), false);
-			}*/
 		},
 		
 		onMessage: function(messages) {
@@ -104,39 +73,50 @@ var EventsManager = {
 				var user = users[i];
 				if (user.userid==User.uid) continue;
 
-				
-				UsersManager.add(user);
-				showNotification({
-	                message: "'"+user.username + "' logged in!",
-	                autoClose: true,
-	                duration: 2
-	            });
+				if (user.add) {
+					UsersManager.add(user);
+					showNotification({
+		                message: "'"+user.username + "' logged in!",
+		                autoClose: true,
+		                duration: 2
+		            });
+				}
+				else {
+					UsersManager.remove(user);
+					$('#users_'+user.userid).remove();
+					showNotification({
+		                message: "'"+user.username + "' logged out!",
+		                type: 'warning',
+		                autoClose: true,
+		                duration: 2
+		            });
+				}
 				
 			}
 			
-			
-			
-			//document.getElementById("users-markers").
-			//$("#users-markers").html('');
-			/*$('[id^="users_"]').remove();
-			
-			for ( var i = 0; i < users.length; i++) {
-				var user = users[i];
-				
-				if (user.username==User.name) continue;
 
-				var pos = {line: user.line, ch: user.ch};
-				//if ($("#users_"+user.username).length < 1) {
-					var newUserDiv = "<div id=\"users_"+user.username+"\" style=\"color: red;position:absolute;font-size:10px !important;\">&oline;"+user.username+"</div>";
-					//console.log("ADD: " + newUserDiv);
-					$("#users-markers").append(newUserDiv);
-				//}
-				
-				this.editor.addWidget(pos, document.getElementById("users_"+user.username), false);
-			}*/
 		},
 		
 		onEditCase: function (values) {
+			
+			for ( var int = 0; int < values.length; int++) {
+				
+				var current = values[int];
+				
+				if (current.uid == User.uid) continue;
+				
+				from = {line:current.fromLine, ch:current.fromChar};
+				to = {line:current.toLine, ch:current.toChar};
+
+				console.log(from);
+				console.log(to);
+				
+				
+				EventsManager.editor.replaceRange(current.text, from, to, true);
+			}
+			
+		}
+		/*onEditCase: function (values) {
 			
 			SyncManager.lockBuffer = true;
 			//ATTENZIONE DEVO TRASFORMARE QUELLO CHE RESTA NEL BUFFER
@@ -188,13 +168,13 @@ var EventsManager = {
 			SyncManager.lockBuffer = false;
 		},
 		
-		applyHistoryOT: function(external /*modifica arrivata*/) {
+		applyHistoryOT: function(external ) {
 			for (var i = 0 ; i < SyncManager.history.length ; i++) {
 				external = OTEngine.T(external, SyncManager.history[i]);
 			}
 			return external;
 			
-		}
+		}*/
 		
 		
 		

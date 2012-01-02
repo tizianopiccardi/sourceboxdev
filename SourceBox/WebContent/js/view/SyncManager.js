@@ -10,7 +10,7 @@ var SyncManager = {
 		
 		bufferAdd: function(from, to, newText) {
 			if (!SyncManager.isNullAction(from, to, newText)) {
-				var insert = Insert.makeInsert(from.line, from.ch, to.line, to.ch, newText.join("\n"), User.name); 
+				var insert = Insert.makeInsert(from.line, from.ch, to.line, to.ch, newText.join("\n"), User.uid); 
 				this.history.push(insert);
 				this.buffer.push(insert);
 				
