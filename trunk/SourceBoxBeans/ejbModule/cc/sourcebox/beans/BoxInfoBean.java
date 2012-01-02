@@ -174,10 +174,12 @@ public class BoxInfoBean implements BoxInfoBeanRemote, BoxInfoBeanLocal {
 		List<Message> chatHis = boxDAO.getChatHistory(alias, 15);
 		
 		List<ChatMessage> wrappedMsg = new ArrayList<ChatMessage>();
-		for (int i = chatHis.size()-1; i >= 0; i--) {
-			ChatMessage c = new ChatMessage(chatHis.get(i).getUser().getIduser(), chatHis.get(i).getText());
-			wrappedMsg.add(c);
-		}
+		for (int i = chatHis.size()-1; i >= 0; i--) 
+			if (chatHis.get(i).getUser()!=null) {
+				ChatMessage c = new ChatMessage(chatHis.get(i).getUser().getIduser(), chatHis.get(i).getText());
+				wrappedMsg.add(c);
+			}
+		
 		return wrappedMsg;
 	}
 

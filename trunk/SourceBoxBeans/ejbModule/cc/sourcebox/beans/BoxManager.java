@@ -6,6 +6,7 @@ import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateful;
+import javax.jms.JMSException;
 
 import org.jboss.ejb3.annotation.CacheConfig;
 
@@ -48,7 +49,7 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 		if (jmsTopic==null)
 		try {
 			
-			System.out.println("INIT EVENT BEAN ON: " + alias);
+			//System.out.println("INIT EVENT BEAN ON: " + alias);
 			
 			
 			jmsTopic = new JmsHelper(alias, events);
@@ -64,9 +65,10 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 
 	}
 
+	private int checksCounter = 0;
 	@Override
 	public boolean somethingNew() {
-		//System.out.println(events.hasEvent);
+		if (++checksCounter%10==0) usersDao.heartBeat(user.getUserid());
 		return events.hasEvents();
 	}
 
@@ -82,13 +84,9 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-			//events.clean();
-			
-			//events.hasEvent = false;
+
 		}
 		
-		//usersDao.heartBeat(user.getUserid());
 		return response;
 	}
 
@@ -112,7 +110,6 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 
 	@Override
 	public void setCursor(int l, int c) {
-		// TODO Auto-generated method stub
 		user.setCh(c); user.setLine(l);
 		try {
 			usersDao.setCursorPos(this.alias, user.getUserid(), l, c);
@@ -127,11 +124,17 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 	public void edit(List<InsertObject> inserts) {
 
 		boxHelper.edit(user.getUserid(), alias, inserts);
+		for (InsertObject i : inserts) 
+			try {
+				jmsTopic.send(i);
+			} catch (JMSException e) {}
+		
+		
 	}
 
 	@Override
 	public void heartBeat() {
-		usersDao.heartBeat(user.getUserid());
+		//usersDao.heartBeat(user.getUserid());
 	}
 
 }

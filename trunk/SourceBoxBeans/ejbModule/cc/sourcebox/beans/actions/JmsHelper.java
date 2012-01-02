@@ -34,7 +34,7 @@ public class JmsHelper {
 		consumer = session.createConsumer(topic);
 		consumer.setMessageListener(new BoxEventsListener(buffer));
 		producer = session.createProducer(topic);
-		
+
 		connection.start();
 
 	}
