@@ -163,7 +163,7 @@ public class BoxesDAO implements BoxesDAOLocal {
 	}
 
 	@Override
-	public void edit(int uid, String alias, List<InsertObject> inserts) {
+	public List<InsertObject> edit(int uid, String alias, List<InsertObject> inserts) {
 
 		User user = usersDao.get(uid);
 		Box box = get(alias);
@@ -179,7 +179,10 @@ public class BoxesDAO implements BoxesDAOLocal {
 			op.setToChar(tmp.getToChar());
 			op.setString(tmp.getText());
 			em.persist(op);
+			inserts.get(i).setSq(op.getIdoperation());
 		}
+		
+		return inserts;
 		
 	}
 
