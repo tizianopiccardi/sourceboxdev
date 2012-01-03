@@ -4,7 +4,6 @@ import java.util.List;
 import javax.ejb.Remote;
 
 import cc.sourcebox.beans.exceptions.ChatErrorException;
-import cc.sourcebox.dto.ChatMessage;
 import cc.sourcebox.dto.EventsDTO;
 import cc.sourcebox.dto.InsertObject;
 import cc.sourcebox.dto.UserInfo;
