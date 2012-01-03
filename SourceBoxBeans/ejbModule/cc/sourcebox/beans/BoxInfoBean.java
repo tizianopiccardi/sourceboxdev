@@ -207,8 +207,8 @@ public class BoxInfoBean implements BoxInfoBeanRemote, BoxInfoBeanLocal {
 
 
 	@Override
-	public void edit(int uid, String alias, List<InsertObject> inserts) {
-		boxDAO.edit(uid, alias, inserts);
+	public List<InsertObject> edit(int uid, String alias, List<InsertObject> inserts) {
+		return boxDAO.edit(uid, alias, inserts);
 	}
 
 

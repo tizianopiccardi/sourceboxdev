@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
+import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.jms.JMSException;
 
@@ -65,10 +66,10 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 
 	}
 
-	private int checksCounter = 0;
+	//private int checksCounter = 0;
 	@Override
 	public boolean somethingNew() {
-		if (++checksCounter%10==0) usersDao.heartBeat(user.getUserid());
+	//	if (++checksCounter%10==0) usersDao.heartBeat(user.getUserid());
 		return events.hasEvents();
 	}
 
@@ -93,7 +94,6 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 	@Override
 	public void send(String msg) throws ChatErrorException {
 		try {
-
 			boxHelper.sendChat(user.getUserid(), alias, msg);
 			jmsTopic.send(new ChatMessage(user.getUserid(), msg));
 		} catch (Exception e) {
@@ -107,6 +107,7 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 	public void remove() {
 		jmsTopic.closeAll();
 	}
+	
 
 	@Override
 	public void setCursor(int l, int c) {
@@ -123,18 +124,17 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 	@Override
 	public void edit(List<InsertObject> inserts) {
 
-		boxHelper.edit(user.getUserid(), alias, inserts);
+		inserts = boxHelper.edit(user.getUserid(), alias, inserts);
 		for (InsertObject i : inserts) 
 			try {
 				jmsTopic.send(i);
 			} catch (JMSException e) {}
-		
-		
+
 	}
 
 	@Override
 	public void heartBeat() {
-		//usersDao.heartBeat(user.getUserid());
+		usersDao.heartBeat(user.getUserid());
 	}
 
 }
