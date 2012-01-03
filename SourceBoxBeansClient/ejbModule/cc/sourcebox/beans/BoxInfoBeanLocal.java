@@ -12,6 +12,6 @@ public interface BoxInfoBeanLocal {
 	//public void notifyUpdate(String alias)  throws BoxNotFoundException;
 	public void sendChat(int userid, String alias, String message);
 	
-	public void edit(int uid, String alias, List<InsertObject> inserts);
+	public List<InsertObject> edit(int uid, String alias, List<InsertObject> inserts);
 	
 }

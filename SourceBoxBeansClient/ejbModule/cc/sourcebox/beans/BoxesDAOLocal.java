@@ -21,7 +21,7 @@ public interface BoxesDAOLocal {
 	
 	public Box get(String alias);
 	
-	public void edit(int uid, String alias, List<InsertObject> inserts);
+	public List<InsertObject> edit(int uid, String alias, List<InsertObject> inserts);
 	/*
 	public User getUser(int id);
 	public Box getBox(int id);*/
