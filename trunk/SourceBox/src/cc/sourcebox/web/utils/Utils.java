@@ -48,6 +48,7 @@ public class Utils {
 			InsertObject insert = new InsertObject();
 			insert.setUid(ins.get("u").getAsInt());
 			insert.setText(ins.get("s").getAsString());
+			insert.setSq(ins.get("sq").getAsInt());
 			
 			insert.setFromLine(ins.get("f").getAsJsonObject().get("l").getAsInt());
 			insert.setFromChar(ins.get("f").getAsJsonObject().get("c").getAsInt());
