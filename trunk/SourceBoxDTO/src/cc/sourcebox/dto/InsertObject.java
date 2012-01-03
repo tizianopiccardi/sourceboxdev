@@ -9,13 +9,14 @@ public class InsertObject implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	int sequence,fromLine,fromChar,toLine,toChar;
+	int uid,fromLine,fromChar,toLine,toChar, sq;
 	String text;
 	
 	public InsertObject() {}
 	
-	public InsertObject(int s, int fl, int fc, int tl, int tc, String txt) {
-		sequence = s;
+	public InsertObject(int s, int u, int fl, int fc, int tl, int tc, String txt) {
+		sq=s;
+		uid = u;
 		fromLine = fl;
 		fromChar = fc;
 		toLine = tl;
@@ -23,12 +24,23 @@ public class InsertObject implements Serializable {
 		text = txt;
 	}
 	
-	public int getSequence() {
-		return sequence;
+
+	public int getSq() {
+		return sq;
 	}
-	public void setSequence(int sequence) {
-		this.sequence = sequence;
+
+	public void setSq(int sq) {
+		this.sq = sq;
 	}
+
+	public int getUid() {
+		return uid;
+	}
+
+	public void setUid(int uid) {
+		this.uid = uid;
+	}
+
 	public int getFromLine() {
 		return fromLine;
 	}
@@ -62,7 +74,7 @@ public class InsertObject implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "\n{SQ: " + getSequence() +
+		return "\n{USR: " + getUid() +
 				"\nFL: " + getFromLine() + 
 				"\nFC: " + getFromChar() + 
 				"\nTL: " + getToLine() + 

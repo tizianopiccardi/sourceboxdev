@@ -10,6 +10,15 @@ public class UserInfo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	int userid, line, ch;
 	String username;
+	boolean add = true;
+
+	public boolean isAdd() {
+		return add;
+	}
+
+	public void setAdd(boolean add) {
+		this.add = add;
+	}
 
 	public UserInfo() {}
 	
