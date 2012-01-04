@@ -32,10 +32,6 @@ public class User implements Serializable {
 	@OneToMany(mappedBy="user")
 	private List<Message> messages;
 
-	//bi-directional many-to-one association to Operation
-	@OneToMany(mappedBy="user")
-	private List<Operation> operations;
-
     public User() {
     }
 
@@ -77,14 +73,6 @@ public class User implements Serializable {
 
 	public void setMessages(List<Message> messages) {
 		this.messages = messages;
-	}
-	
-	public List<Operation> getOperations() {
-		return this.operations;
-	}
-
-	public void setOperations(List<Operation> operations) {
-		this.operations = operations;
 	}
 	
 }
