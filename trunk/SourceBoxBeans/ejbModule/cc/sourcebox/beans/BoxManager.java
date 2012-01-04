@@ -141,7 +141,7 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 	@Override
 	public void save() {
 		//Thread.sleep(1000);
-		
+		boxHelper.save(alias);
 	}
 
 }

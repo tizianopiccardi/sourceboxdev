@@ -84,66 +84,6 @@ public class BoxInfoBean implements BoxInfoBeanRemote, BoxInfoBeanLocal {
 		
 	}
 
-	/*@Override
-	public void edit(String alias, int userID, List<InsertObject> inserts)
-			throws BoxNotFoundException {
-		System.out.println(inserts);
-		
-	}*/
-/*
-	@Override
-	public void notifyUpdate(String alias) throws BoxNotFoundException {
-		Query query = em.createQuery("SELECT b from Box b where b.alias=:alias");
-		query.setParameter("alias", alias);
-		List boxList = query.getResultList();
-		listCheck(boxList);
-		Box box = (Box)boxList.get(0);
-		
-		box.setSequence(box.getSequence()+1);
-		
-		//box.setLastevent(new Timestamp(System.currentTimeMillis()));
-	}
-/*
-	@Override
-	public long lastEvent(String alias) throws BoxNotFoundException {
-		Query query = em.createQuery("SELECT b.lastevent from Box b where b.alias=:alias");
-		query.setParameter("alias", alias);
-		List boxList = query.getResultList();
-		
-		listCheck(boxList);
-		
-		return ((Timestamp)boxList.get(0)).getTime();
-	}*/
-
-	/*@Override
-	public void notifyUpdate(Box box) throws BoxNotFoundException  {
-		System.out.println("BoxBean.notifyUpdate()");
-		box.setLastevent(new Timestamp(System.currentTimeMillis()));
-		//em.persist(box);
-	}*/
-
-
-	/*private void listCheck(List list) throws BoxNotFoundException {
-		if (list.size()<1) throw new BoxNotFoundException();
-	}*/
-
-	/*@Override
-	public Box get(String alias) {
-		Query query = em.createQuery("SELECT b from Box b where b.alias=:alias");
-		query.setParameter("alias", alias);
-		return (Box)query.getSingleResult();
-	}*/
-/*
-	@Override
-	public int getSequence(String alias) throws BoxNotFoundException {
-		Query query = em.createQuery("SELECT b.sequence from Box b where b.alias=:alias");
-		query.setParameter("alias", alias);
-		List boxList = query.getResultList();
-		
-		listCheck(boxList);
-		
-		return ((Integer)boxList.get(0));
-	}*/
 
 
 	@Override
@@ -186,7 +126,7 @@ public class BoxInfoBean implements BoxInfoBeanRemote, BoxInfoBeanLocal {
 
 	@Override
 	public void sendChat(int userid, String alias, String message) {
-		// TODO Auto-generated method stub
+
 		Message msg = new Message();
 		
 		msg.setText(message);
@@ -196,7 +136,7 @@ public class BoxInfoBean implements BoxInfoBeanRemote, BoxInfoBeanLocal {
 		msg.setBox(boxDAO.get(alias));
 		
 		boxDAO.sendChat(msg);
-		//em.persist(msg);
+
 	}
 
 
@@ -208,7 +148,7 @@ public class BoxInfoBean implements BoxInfoBeanRemote, BoxInfoBeanLocal {
 
 	@Override
 	public List<InsertObject> edit(int uid, String alias, List<InsertObject> inserts) {
-		return boxDAO.edit(uid, alias, inserts);
+		return boxDAO.edit(alias, inserts);
 	}
 
 
