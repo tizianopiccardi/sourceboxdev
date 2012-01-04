@@ -11,7 +11,7 @@
 		<class>cc.sourcebox.entities.Inbox</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-			<property name="hibernate.show_sql" value="false"/>
+			<property name="hibernate.show_sql" value="true"/>
 		</properties>
 	</persistence-unit>
 </persistence>
