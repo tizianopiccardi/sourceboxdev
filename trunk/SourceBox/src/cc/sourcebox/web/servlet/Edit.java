@@ -42,7 +42,7 @@ public class Edit extends SourceBoxServlet {
 		
 		//int userID = (Integer)session.getAttribute("userID");
 
-		BoxManagerRemote box = SessionManager.getManager(req, alias, false);
+		BoxManagerRemote box = SessionManager.getManager(session, alias, false);
 		
 		/*********
 		 * UPDATE cursor position

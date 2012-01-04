@@ -34,6 +34,7 @@ public class SourceBoxServlet extends HttpServlet {
 		 * Session start
 		 */
 		HttpSession session = req.getSession(true);
+		session.setMaxInactiveInterval(180);
 		HashMap<String, Object> output = new HashMap<String, Object>();
 		try {
 			

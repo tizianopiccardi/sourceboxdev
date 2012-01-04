@@ -103,14 +103,14 @@ var EventsManager = {
 				
 				var current = values[int];
 				
-				if (current.uid == User.uid) continue;
+				if (current.uid == User.uid || current.sq <= Insert.sequence) continue;
 				
 				from = {line:current.fromLine, ch:current.fromChar};
 				to = {line:current.toLine, ch:current.toChar};
 
-				console.log(from);
-				console.log(to);
-				
+				/*console.log(from);
+				console.log(to);*/
+				Insert.sequence = current.sq;
 				
 				EventsManager.editor.replaceRange(current.text, from, to, true);
 			}

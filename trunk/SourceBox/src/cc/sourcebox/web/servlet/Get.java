@@ -35,8 +35,10 @@ public class Get extends SourceBoxServlet {
 		UserInfo user = SessionManager.getUserInfo(session);
 		Revision rev = boxbean.get(user.getUserid(), alias, password );
 
-		BoxManagerRemote box = SessionManager.getManager(req, alias, true);
+		BoxManagerRemote box = SessionManager.getManager(session, alias, true);
 		box.init(user, alias);
+		
+		SessionManager.addDestroyer(session, alias, box);
 
 		output.put("alias", alias);
 		output.put("code", rev.getSource());
@@ -45,6 +47,8 @@ public class Get extends SourceBoxServlet {
 		output.put("revision", rev.getRev());	
 		output.put("users", boxbean.getUsers(alias));
 		output.put("chat", boxbean.getChatHistory(alias));
+		
+		
 	}
 	
 	

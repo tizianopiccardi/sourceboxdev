@@ -36,7 +36,7 @@ public class Chat extends SourceBoxServlet {
 		String uname = SessionManager.getNickname(session);*/
 		UserInfo user = SessionManager.getUserInfo(session);
 		
-		BoxManagerRemote box = SessionManager.getManager(req, alias, false);
+		BoxManagerRemote box = SessionManager.getManager(session, alias, false);
 		
 		
 		box.send(message);

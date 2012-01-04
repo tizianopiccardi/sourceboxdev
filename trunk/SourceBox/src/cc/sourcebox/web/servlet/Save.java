@@ -6,6 +6,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import cc.sourcebox.beans.BoxManagerRemote;
+import cc.sourcebox.web.utils.SessionManager;
+
 @WebServlet(urlPatterns="/save")
 public class Save extends SourceBoxServlet {
 
@@ -20,7 +23,12 @@ public class Save extends SourceBoxServlet {
 			HashMap<String, Object> output) throws Exception {
 
 
-		Thread.sleep(1000);
+		String alias = req.getParameter("alias");
+		SessionManager.inBoxCheck(session, alias);
+
+		BoxManagerRemote box = SessionManager.getManager(session, alias, false);
+		
+		box.save();
 		
 		
 	}
