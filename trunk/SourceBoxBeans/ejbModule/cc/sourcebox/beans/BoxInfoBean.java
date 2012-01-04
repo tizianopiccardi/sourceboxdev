@@ -212,6 +212,18 @@ public class BoxInfoBean implements BoxInfoBeanRemote, BoxInfoBeanLocal {
 	}
 
 
+	@Override
+	public List<InsertObject> getOperations(int from) {
+		return null;
+	}
+
+
+	@Override
+	public void save(String alias) {
+		boxDAO.save(alias);
+	}
+
+
 
 
 }
