@@ -38,11 +38,6 @@ public class Operation implements Serializable {
 	@JoinColumn(name="boxes_idboxes")
 	private Box box;
 
-	//bi-directional many-to-one association to User
-    @ManyToOne
-	@JoinColumn(name="iduser")
-	private User user;
-
 	//bi-directional many-to-one association to Revision
 	@OneToMany(mappedBy="operation")
 	private List<Revision> revisions;
@@ -104,14 +99,6 @@ public class Operation implements Serializable {
 
 	public void setBox(Box box) {
 		this.box = box;
-	}
-	
-	public User getUser() {
-		return this.user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 	
 	public List<Revision> getRevisions() {
