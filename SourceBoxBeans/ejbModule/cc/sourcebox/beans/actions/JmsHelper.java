@@ -55,7 +55,6 @@ public class JmsHelper {
 			consumer.close();
 			session.close();
 			connection.close();
-			System.out.println("JmsHelper.closeAll()");
 		} catch (JMSException e) {e.printStackTrace();}
 
 		

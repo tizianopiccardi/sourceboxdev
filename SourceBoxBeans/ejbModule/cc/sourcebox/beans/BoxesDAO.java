@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -13,11 +15,9 @@ import javax.persistence.Query;
 import cc.sourcebox.beans.exceptions.BoxNotFoundException;
 import cc.sourcebox.dto.InsertObject;
 import cc.sourcebox.entities.Box;
-import cc.sourcebox.entities.Inbox;
 import cc.sourcebox.entities.Message;
 import cc.sourcebox.entities.Operation;
 import cc.sourcebox.entities.Revision;
-import cc.sourcebox.entities.User;
 
 /**
  * Session Bean implementation class BoxesDAO
@@ -31,8 +31,8 @@ public class BoxesDAO implements BoxesDAOLocal {
 	@EJB
 	UrlHelperLocal urlHelper;
 	
-	@EJB
-	UsersDAORemote usersDao;
+	//@EJB
+	//UsersDAORemote usersDao;
 	
     public BoxesDAO() {}
     
@@ -165,13 +165,13 @@ public class BoxesDAO implements BoxesDAOLocal {
 	@Override
 	public List<InsertObject> edit(int uid, String alias, List<InsertObject> inserts) {
 
-		User user = usersDao.get(uid);
+		//User user = usersDao.get(uid);
 		Box box = get(alias);
-		
+		if (box.getReadonly()>0) throw new RuntimeException("Box is read-only");
 		for (int i = 0; i < inserts.size()	; i++) {
 			InsertObject tmp = inserts.get(i);
 			Operation op = new Operation();
-			op.setUser(user);
+			//op.setUser(user);
 			op.setBox(box);
 			op.setFromLine(tmp.getFromLine());
 			op.setFromChar(tmp.getFromChar());
@@ -184,6 +184,21 @@ public class BoxesDAO implements BoxesDAOLocal {
 		
 		return inserts;
 		
+	}
+
+	@Override
+	public List<Operation> getOperations(int from) {
+		return null;
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void save(String alias) {
+		Query query = em.createQuery("SELECT r.operation from Revision r join r.box b where b.alias=:alias order by r.rev desc");
+		query.setMaxResults(1);
+		/*Query query = em.createQuery("SELECT o from Operation o join o.box b where b.alias = :alias");
+		query.setParameter("alias", alias);*/
+
 	}
 
 

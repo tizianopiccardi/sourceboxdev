@@ -42,16 +42,12 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 	
 	@EJB
 	BoxInfoBeanLocal boxHelper;
-	//BoxesDAOLocal boxDao;
-	
+
 	@Override
 	public void init(UserInfo user, String alias) {
 		
 		if (jmsTopic==null)
 		try {
-			
-			//System.out.println("INIT EVENT BEAN ON: " + alias);
-			
 			
 			jmsTopic = new JmsHelper(alias, events);
 
@@ -100,11 +96,12 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 			e.printStackTrace();
 			throw new ChatErrorException();
 		}
-		//usersDao.heartBeat(user.getUserid());
+
 	}
 	
-	@PreDestroy
+	@Override
 	public void remove() {
+		System.out.println("User timeout: " + user.getUsername() + " (BOX "+alias+")");
 		jmsTopic.closeAll();
 	}
 	
@@ -118,23 +115,33 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//usersDao.heartBeat(user.getUserid());
 	}
 
 	@Override
 	public void edit(List<InsertObject> inserts) {
 
+		/********
+		 * Add the operation to the database and get back the list with the generated sequence (from db)
+		 */
 		inserts = boxHelper.edit(user.getUserid(), alias, inserts);
 		for (InsertObject i : inserts) 
 			try {
 				jmsTopic.send(i);
-			} catch (JMSException e) {}
+			} catch (JMSException e) {
+				e.printStackTrace();
+			}
 
 	}
 
 	@Override
 	public void heartBeat() {
 		usersDao.heartBeat(user.getUserid());
+	}
+
+	@Override
+	public void save() {
+		//Thread.sleep(1000);
+		
 	}
 
 }
