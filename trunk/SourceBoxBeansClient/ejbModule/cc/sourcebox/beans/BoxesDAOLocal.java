@@ -7,6 +7,7 @@ import cc.sourcebox.beans.exceptions.BoxNotFoundException;
 import cc.sourcebox.dto.InsertObject;
 import cc.sourcebox.entities.Box;
 import cc.sourcebox.entities.Message;
+import cc.sourcebox.entities.Operation;
 import cc.sourcebox.entities.Revision;
 import cc.sourcebox.entities.User;
 
@@ -22,6 +23,10 @@ public interface BoxesDAOLocal {
 	public Box get(String alias);
 	
 	public List<InsertObject> edit(int uid, String alias, List<InsertObject> inserts);
+	public List<Operation> getOperations(int from);
+	
+	public void save(String alias);
+	
 	/*
 	public User getUser(int id);
 	public Box getBox(int id);*/

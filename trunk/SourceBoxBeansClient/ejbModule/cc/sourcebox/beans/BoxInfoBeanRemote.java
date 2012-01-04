@@ -5,6 +5,7 @@ import javax.ejb.Remote;
 
 import cc.sourcebox.beans.exceptions.BoxNotFoundException;
 import cc.sourcebox.dto.ChatMessage;
+import cc.sourcebox.dto.InsertObject;
 import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.entities.Revision;
 
@@ -57,6 +58,8 @@ public interface BoxInfoBeanRemote {
 	
 	//public int getSequence(String alias) throws BoxNotFoundException ;
 	
+	
+	public List<InsertObject> getOperations(int from);
 	
 	public List<UserInfo> getUsers(String alias);
 	
