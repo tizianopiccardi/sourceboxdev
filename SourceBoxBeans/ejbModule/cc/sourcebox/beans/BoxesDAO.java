@@ -12,6 +12,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.arjuna.ats.internal.jdbc.drivers.modifiers.list;
+
 import cc.sourcebox.beans.exceptions.BoxNotFoundException;
 import cc.sourcebox.dto.InsertObject;
 import cc.sourcebox.entities.Box;
@@ -31,8 +33,8 @@ public class BoxesDAO implements BoxesDAOLocal {
 	@EJB
 	UrlHelperLocal urlHelper;
 	
-	//@EJB
-	//UsersDAORemote usersDao;
+	@EJB
+	UtilsBeanLocal utils;
 	
     public BoxesDAO() {}
     
@@ -61,6 +63,16 @@ public class BoxesDAO implements BoxesDAOLocal {
 		Revision rev = new Revision();
 		rev.setSource(body);
 		rev.setBox(box);
+		
+		Operation dummyOperation = new Operation();
+		dummyOperation.setBox(box);
+		dummyOperation.setFromChar(0);
+		dummyOperation.setFromLine(0);
+		dummyOperation.setToChar(0);
+		dummyOperation.setToLine(0);
+		dummyOperation.setString("");
+		rev.setOperation(dummyOperation);
+		
 
 		List<Revision> rl = new ArrayList<Revision>(1);
 		rl.add(rev);
@@ -73,7 +85,7 @@ public class BoxesDAO implements BoxesDAOLocal {
 		 */
 		em.persist(box);
 		
-		
+
 		/********
 		 * Now the db has generated a box id 
 		 */
@@ -89,7 +101,7 @@ public class BoxesDAO implements BoxesDAOLocal {
 		query.setParameter("alias", alias);
 		return (Box)query.getSingleResult();
 	}
-
+/*
 	@Override
 	public void save(String alias, String body) throws BoxNotFoundException {
 		Query query = em.createQuery("SELECT max(r.rev), b from Revision r inner join r.box b where b.alias=:alias");
@@ -112,7 +124,7 @@ public class BoxesDAO implements BoxesDAOLocal {
 		em.persist(rev);
 		
 	}
-	
+	*/
 	@Override
 	public Revision get(int userId, String alias, String password) throws BoxNotFoundException {
 		String query = "SELECT r,b from Revision r join r.box b where (b.alias=:alias and b.password=:pwd)" +
@@ -163,7 +175,7 @@ public class BoxesDAO implements BoxesDAOLocal {
 	}
 
 	@Override
-	public List<InsertObject> edit(int uid, String alias, List<InsertObject> inserts) {
+	public List<InsertObject> edit(String alias, List<InsertObject> inserts) {
 
 		//User user = usersDao.get(uid);
 		Box box = get(alias);
@@ -194,16 +206,34 @@ public class BoxesDAO implements BoxesDAOLocal {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void save(String alias) {
-		Query query = em.createQuery("SELECT r.operation from Revision r join r.box b where b.alias=:alias order by r.rev desc");
-		query.setMaxResults(1);
-		/*Query query = em.createQuery("SELECT o from Operation o join o.box b where b.alias = :alias");
-		query.setParameter("alias", alias);*/
+
+		Query lastRevisionQuery = em.createQuery("select r from Revision r where r.idrevision=(SELECT max(r.idrevision) from Revision r join r.box b where b.alias=:alias )");
+		lastRevisionQuery.setParameter("alias", alias);
+		
+		Revision lastRev = (Revision)lastRevisionQuery.getSingleResult();
+		
+		int lastDigestId = lastRev.getOperation().getIdoperation();
+		String revisionText = lastRev.getSource();
+		
+		Query newOperationsQuery = em.createQuery("SELECT o from Operation o join o.box b where o.idoperation>:lastid order by o.idoperation");
+		newOperationsQuery.setParameter("lastid", lastDigestId);
+		
+		List<Operation> operations = newOperationsQuery.getResultList();
+
+		
+		Revision rev = new Revision();
+		rev.setRev(lastRev.getRev()+1);
+		rev.setOperation(operations.get(operations.size()-1));
+		rev.setSource(utils.digest(revisionText, operations));
+		rev.setBox(lastRev.getBox());
+		
+		em.persist(rev);
+
 
 	}
 
 
-	
-	
 
+	
 
 }
