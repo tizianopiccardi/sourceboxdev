@@ -14,7 +14,7 @@ import cc.sourcebox.entities.User;
 @Local
 public interface BoxesDAOLocal {
 	public String make(String language, String body, String password, Boolean readonly);
-	public void save(String alias, String body) throws BoxNotFoundException;
+	//public void save(String alias, String body) throws BoxNotFoundException;
 	public Revision get(int userId, String alias, String password) throws BoxNotFoundException;
 	public List<Message> getChatHistory(String alias, int n);
 	
@@ -22,7 +22,7 @@ public interface BoxesDAOLocal {
 	
 	public Box get(String alias);
 	
-	public List<InsertObject> edit(int uid, String alias, List<InsertObject> inserts);
+	public List<InsertObject> edit(String alias, List<InsertObject> inserts);
 	public List<Operation> getOperations(int from);
 	
 	public void save(String alias);
