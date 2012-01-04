@@ -30,7 +30,7 @@ public class Events extends SourceBoxServlet {
 		BoxManagerRemote box = SessionManager.getManager(session, alias, false);
 
 		box.heartBeat();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 15; i++) {
 
 			if (box.somethingNew()) {
 				output.put("events", box.getEvents());
