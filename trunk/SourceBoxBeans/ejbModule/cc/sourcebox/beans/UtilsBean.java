@@ -1,12 +1,15 @@
 package cc.sourcebox.beans;
 
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -40,13 +43,33 @@ public class UtilsBean implements UtilsBeanRemote, UtilsBeanLocal {
 		cal.setTimeInMillis(System.currentTimeMillis()-_3Minutes);
 		return cal.getTime();
 	}
+	
+	
+	private String[] split(String original, String sep) {
+		List<String> tokens = new ArrayList<String>();
+		StringBuilder tmp = new StringBuilder();
+		char[] src = original.toCharArray();
+		
+		for (int i = 0; i < src.length; i++) 
+			if (src[i]=='\n') { tokens.add(tmp.toString()); tmp.setLength(0);}
+			else
+				tmp.append(src[i]);
+				
+		tokens.add(tmp.toString());
+		//System.out.println(tokens);
+		return tokens.toArray(new String[0]);
+	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public String digest(String original, List<Operation> operations) {
-		/*StringBuilder buffer = new StringBuilder(original);
+		StringBuilder buffer = new StringBuilder(original);
+		try {
+		
 		for (int i = 0; i < operations.size(); i++) {
 			
-			String [] lines = buffer.toString().split("\n");
+			String [] lines = split(buffer.toString(), "\n");
+					//buffer.toString().split("\n");
 			
 			Operation o = operations.get(i);
 			int fl = o.getFromLine();
@@ -72,9 +95,12 @@ public class UtilsBean implements UtilsBeanRemote, UtilsBeanLocal {
 
 		}
 		
-		
-		return buffer.toString();*/
-		return Tester.digest(original, operations);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return buffer.toString();
+
 	}
 
 

@@ -2,17 +2,17 @@ package cc.sourcebox.beans;
 
 import java.util.List;
 
-import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
-import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.jms.JMSException;
 
+import org.jboss.ejb3.annotation.Cache;
 import org.jboss.ejb3.annotation.CacheConfig;
 
 import cc.sourcebox.beans.actions.JmsHelper;
 import cc.sourcebox.beans.exceptions.ChatErrorException;
+import cc.sourcebox.dto.Action;
 import cc.sourcebox.dto.ChatMessage;
 import cc.sourcebox.dto.CursorsDTO;
 import cc.sourcebox.dto.EventsDTO;
@@ -24,8 +24,7 @@ import cc.sourcebox.dto.UserInfo;
  */
 @Stateful
 @LocalBean
-@CacheConfig(removalTimeoutSeconds=180)
-
+@CacheConfig(removalTimeoutSeconds=180, idleTimeoutSeconds=600)
 public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 
 	
@@ -142,6 +141,12 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 	public void save() {
 		//Thread.sleep(1000);
 		boxHelper.save(alias);
+		
+		try {
+			jmsTopic.send(new Action("save", user.getUserid()));
+		} catch (JMSException e) {
+			e.printStackTrace();
+		}
 	}
 
 	//@Override

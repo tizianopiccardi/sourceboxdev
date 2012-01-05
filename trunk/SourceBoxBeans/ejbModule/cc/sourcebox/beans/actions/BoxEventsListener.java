@@ -5,6 +5,7 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
 
+import cc.sourcebox.dto.Action;
 import cc.sourcebox.dto.ChatMessage;
 import cc.sourcebox.dto.CursorsDTO;
 import cc.sourcebox.dto.EventsDTO;
@@ -39,6 +40,9 @@ public class BoxEventsListener implements MessageListener{
 				}
 				if (message.getObject() instanceof UserInfo) {
 					ec.add((UserInfo)message.getObject());
+				}
+				if (message.getObject() instanceof Action) {
+					ec.add((Action)message.getObject());
 				}
 
 				//ec.hasEvent = true;
