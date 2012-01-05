@@ -23,7 +23,7 @@ public interface BoxesDAOLocal {
 	public Box get(String alias);
 	
 	public List<InsertObject> edit(String alias, List<InsertObject> inserts);
-	public List<Operation> getOperations(int from);
+	public List<Operation> getOperations(String alias, int from);
 	
 	public void save(String alias);
 	

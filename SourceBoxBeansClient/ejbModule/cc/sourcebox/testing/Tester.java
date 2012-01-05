@@ -39,24 +39,37 @@ public class Tester {
 			//UtilsBeanRemote u = (UtilsBeanRemote) ctx.lookup("SourceBoxLogicEAR/UtilsBean/remote");
 			
 			
-			
-			String string = "test";
+			System.out.println("START");
+		String string = "ciao\nabc\n\nx";
+				//
+			System.out.println(Tester.split(string, "\n").length);
 			
 			List<Operation> o = new ArrayList<Operation>();
 			
 			
 			Operation op = new Operation();
 			op.setString("a");
-			op.setFromLine(0);
-			op.setFromChar(4);
-			op.setToLine(0);
-			op.setToChar(4);
+			op.setFromLine(1);
+			op.setFromChar(0);
+			op.setToLine(1);
+			op.setToChar(0);
 			
 			
 			o.add(op);
 			
-			System.out.println(Tester.digest(string, o));
+			/*Operation op2 = new Operation();
+			op2.setString("b");
+			op2.setFromLine(0);
+			op2.setFromChar(1);
+			op2.setToLine(0);
+			op2.setToChar(1);
 			
+			
+			o.add(op2);*/
+			
+			//System.out.println(Tester.digest(string, o));
+			
+			//System.out.println(Tester.digest(string, o).endsWith("\n"));
 			
 			/*
 			BoxInfoBeanRemote b = (BoxInfoBeanRemote) ctx
@@ -76,17 +89,32 @@ public class Tester {
 			boxInfo.put("revision", rev.getRev());
 			
 			System.out.println(gson.toJson(boxInfo));*/
-
+			System.out.println("end");
 
 	}
 	
-	public static String digest(String original, List<Operation> operations) {
+	public static String[] split(String original, String sep) {
+		List<String> tokens = new ArrayList<String>();
+		StringBuilder tmp = new StringBuilder();
+		char[] src = original.toCharArray();
 		
-System.out.println(operations);
+		for (int i = 0; i < src.length; i++) 
+			if (src[i]=='\n') { tokens.add(tmp.toString()); tmp.setLength(0);}
+			else
+				tmp.append(src[i]);
+				
+		tokens.add(tmp.toString());
+		System.out.println(tokens);
+		return tokens.toArray(new String[0]);
+	}
+	
+	public static String digest(String original, List<Operation> operations) {
 		StringBuilder buffer = new StringBuilder(original);
+		try {
+		
 		for (int i = 0; i < operations.size(); i++) {
 			
-			String [] lines = buffer.toString().split("\n");
+			String [] lines = Tester.split(buffer.toString(),"\n");
 			
 			Operation o = operations.get(i);
 			int fl = o.getFromLine();
@@ -111,7 +139,10 @@ System.out.println(operations);
 					buffer.append(lines[j]).append((j==lines.length-1)?"":"\n");
 
 		}
-		
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return buffer.toString();
 	}
