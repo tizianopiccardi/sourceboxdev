@@ -212,7 +212,11 @@ $(function() {
 			    	$('#comments-list').scrollTo('100%');
 		
 					
+			    	
+			    	
 					EventsManager.run();
+			    	
+			    	EventsManager.onEditCase(response.operations);
 
 				}
 

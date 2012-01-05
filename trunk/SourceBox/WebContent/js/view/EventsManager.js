@@ -30,7 +30,7 @@ var EventsManager = {
 			EventsManager.onMessage(eventsObj['msg']);
 			EventsManager.onEditCase(eventsObj['op']);
 			EventsManager.onCursors(eventsObj['cursors']);
-
+			EventsManager.onAction(eventsObj['actions']);
 
 		},
 		
@@ -115,6 +115,27 @@ var EventsManager = {
 				EventsManager.editor.replaceRange(current.text, from, to, true);
 			}
 			
+		},
+		
+		onAction: function (actions) {
+			for ( var i = 0; i < actions.length; i++) {
+				current = actions[i];
+				
+				switch (current.name) {
+				case 'save':
+					if (current.params!=User.uid) 
+						showNotification({
+			                message: "Saved",
+			                autoClose: true,
+			                duration: 1
+			            });
+					break;
+
+				default:
+					break;
+				}
+				
+			}
 		}
 		/*onEditCase: function (values) {
 			
