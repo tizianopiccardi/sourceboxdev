@@ -199,8 +199,12 @@ public class BoxesDAO implements BoxesDAOLocal {
 	}
 
 	@Override
-	public List<Operation> getOperations(int from) {
-		return null;
+	public List<Operation> getOperations(String alias, int from) {
+		
+		Query newOperationsQuery = em.createQuery("SELECT o from Operation o join o.box b where o.idoperation>:lastid and b.alias=:alias order by o.idoperation");
+		newOperationsQuery.setParameter("lastid", from);
+		newOperationsQuery.setParameter("alias", alias);
+		return newOperationsQuery.getResultList();
 	}
 
 	@Override
@@ -215,20 +219,26 @@ public class BoxesDAO implements BoxesDAOLocal {
 		int lastDigestId = lastRev.getOperation().getIdoperation();
 		String revisionText = lastRev.getSource();
 		
-		Query newOperationsQuery = em.createQuery("SELECT o from Operation o join o.box b where o.idoperation>:lastid order by o.idoperation");
+		/*Query newOperationsQuery = em.createQuery("SELECT o from Operation o join o.box b where o.idoperation>:lastid order by o.idoperation");
 		newOperationsQuery.setParameter("lastid", lastDigestId);
 		
-		List<Operation> operations = newOperationsQuery.getResultList();
+		List<Operation> operations = newOperationsQuery.getResultList();*/
+		
+		List<Operation> operations = getOperations(alias, lastDigestId);
+		
+		if (operations.size()<1) return;
 
-		System.out.println(utils.digest(revisionText, operations));
+		//System.out.println(utils.digest(revisionText, operations));
 		Revision rev = new Revision();
 		rev.setRev(lastRev.getRev()+1);
+		
 		rev.setOperation(operations.get(operations.size()-1));
+		
 		rev.setSource(utils.digest(revisionText, operations));
 		rev.setBox(lastRev.getBox());
 		
 		em.persist(rev);
-
+/**/
 
 	}
 

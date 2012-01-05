@@ -17,6 +17,7 @@ import cc.sourcebox.dto.ChatMessage;
 import cc.sourcebox.dto.InsertObject;
 import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.entities.Message;
+import cc.sourcebox.entities.Operation;
 import cc.sourcebox.entities.Revision;
 
 /**
@@ -44,29 +45,6 @@ public class BoxInfoBean implements BoxInfoBeanRemote, BoxInfoBeanLocal {
     }
 
 
-	/*@Override
-	public void save(String alias, String body) throws BoxNotFoundException {
-
-		Query query = em.createQuery("SELECT max(r.rev), b from Revision r inner join r.box b where b.alias=:alias");
-		query.setParameter("alias", alias);
-		
-		List boxList = query.getResultList();
-		if (boxList.size()<1) throw new BoxNotFoundException();
-		
-			
-		Object[] data = (Object[]) boxList.get(0);
-		
-		int revNumber = (Integer)data[0]+1;
-		
-		Revision rev = new Revision();
-		rev.setRev(revNumber);
-		rev.setSource(body);
-		rev.setBox((Box)data[1]);
-
-
-		em.persist(rev);
-
-	}*/
 
 
 	@Override
@@ -104,7 +82,6 @@ public class BoxInfoBean implements BoxInfoBeanRemote, BoxInfoBeanLocal {
 
 	@Override
 	public List<UserInfo> getUsers(String alias) {
-		// TODO Auto-generated method stub
 		return usersDAO.getUsers(alias);
 	}
 
@@ -153,8 +130,24 @@ public class BoxInfoBean implements BoxInfoBeanRemote, BoxInfoBeanLocal {
 
 
 	@Override
-	public List<InsertObject> getOperations(int from) {
-		return null;
+	public List<InsertObject> getOperations(String alias, int from) {
+		System.out.println("BoxInfoBean.getOperations()");
+		List<Operation> op = boxDAO.getOperations(alias, from);
+		
+		ArrayList<InsertObject> out = new ArrayList<InsertObject>();
+		
+		for (int i = 0; i < op.size(); i++) {
+			InsertObject o = new InsertObject();
+			o.setFromChar(op.get(i).getFromChar());
+			o.setFromLine(op.get(i).getFromLine());
+			o.setToChar(op.get(i).getToChar());
+			o.setToLine(op.get(i).getToLine());
+			o.setText(op.get(i).getString());
+			o.setSq(op.get(i).getIdoperation());
+			out.add(o);
+		}
+		
+		return out;
 	}
 
 
