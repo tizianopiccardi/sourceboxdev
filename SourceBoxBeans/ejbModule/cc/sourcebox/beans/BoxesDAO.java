@@ -220,7 +220,7 @@ public class BoxesDAO implements BoxesDAOLocal {
 		
 		List<Operation> operations = newOperationsQuery.getResultList();
 
-		
+		System.out.println(utils.digest(revisionText, operations));
 		Revision rev = new Revision();
 		rev.setRev(lastRev.getRev()+1);
 		rev.setOperation(operations.get(operations.size()-1));

@@ -144,4 +144,7 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 		boxHelper.save(alias);
 	}
 
+	//@Override
+	//public void ping() {}
+
 }
