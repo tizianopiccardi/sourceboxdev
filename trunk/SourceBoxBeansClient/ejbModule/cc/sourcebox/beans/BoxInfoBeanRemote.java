@@ -59,7 +59,7 @@ public interface BoxInfoBeanRemote {
 	//public int getSequence(String alias) throws BoxNotFoundException ;
 	
 	
-	public List<InsertObject> getOperations(int from);
+	public List<InsertObject> getOperations(String alias, int from) ;
 	
 	public List<UserInfo> getUsers(String alias);
 	
