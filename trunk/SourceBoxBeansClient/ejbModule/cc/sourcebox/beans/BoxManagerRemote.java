@@ -72,5 +72,7 @@ public interface BoxManagerRemote {
 	 */
 	@Remove
 	public void remove();
+	
+	//public void ping();
 
 }
