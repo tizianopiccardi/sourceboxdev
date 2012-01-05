@@ -29,7 +29,17 @@ public class SessionManager {
 	}
 	
 	public static BoxManagerRemote getManager(HttpSession session, String alias, boolean create) throws SecurityException  {
-		return SessionManager.get(session, JndiPaths.get("BOX_MGR"), BoxManagerRemote.class, create, alias);
+		BoxManagerRemote mgr = null;
+		
+		/*while(true)
+			try {*/
+				mgr = SessionManager.get(session, JndiPaths.get("BOX_MGR"), BoxManagerRemote.class, create, alias);
+				/*mgr.ping();
+				break;
+			}
+		catch (Exception e) {SessionManager.destroy(session, JndiPaths.get("BOX_MGR"), alias);}
+*/
+		return mgr;
 	}
 	
 	
@@ -77,6 +87,10 @@ public class SessionManager {
 		return cl.cast(bean);
 		
 	}
+	
+	/*public static void destroy(HttpSession session, String jndiName, String id) {
+		session.removeAttribute(jndiName+"_"+id);
+	}*/
 	
 	
 	public static void addDestroyer(HttpSession session, String alias, BoxManagerRemote b) {
