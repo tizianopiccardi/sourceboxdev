@@ -47,7 +47,7 @@ public class Get extends SourceBoxServlet {
 		output.put("revision", rev.getRev());	
 		output.put("users", boxbean.getUsers(alias));
 		output.put("chat", boxbean.getChatHistory(alias));
-		
+		output.put("operations", boxbean.getOperations(alias, rev.getOperation().getIdoperation()));
 		
 	}
 	
