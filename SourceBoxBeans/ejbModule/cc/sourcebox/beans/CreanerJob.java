@@ -25,6 +25,7 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 
 import cc.sourcebox.beans.actions.JmsHelper;
+import cc.sourcebox.beans.query.Queries;
 import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.entities.User;
 
@@ -47,12 +48,35 @@ public class CreanerJob implements Job {
 	public void execute(JobExecutionContext arg0) {
 		// if(1==1) return;
 		cleanUser();
+		cleanBoxes();
+		//cleanOperations();
 	}
+	
+	
+	private void cleanBoxes() {
+		
+	}
+	
+	/*private void cleanOperations() {
+		Query operationsQuery = em.createQuery("select r.operation.idoperation, r.box.alias from Revision r");
+		List<Object[]> lastOp = operationsQuery.getResultList();
+		
+		
+		Query deleteQuery = em.createQuery("delete from Operation o join o.box b where o.idoperation < :id and b.alias=:alias");
+		for (int i = 0; i < lastOp.size(); i++) {
+			Object[] current = lastOp.get(i);
+			deleteQuery.setParameter("id", current[0] );
+			deleteQuery.setParameter("alias", current[1] );
+			deleteQuery.executeUpdate();
+		}
+		
+		
+	}*/
+	
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	private void cleanUser() {
-		Query userQuery = em
-				.createQuery("select u, b.alias from User u join u.inbox i join i.box b where u.lastActivity < :limit order by b.alias");
+		Query userQuery = em.createQuery(Queries.get("CLEANER_GETUSER"));
 		userQuery.setParameter("limit", utils.getUsersTimeDeadline());
 
 		List users = userQuery.getResultList();
@@ -85,7 +109,7 @@ public class CreanerJob implements Job {
 
 			connection.close();
 			
-			Query deleteQuery = em.createQuery("delete from User u where u.lastActivity < :limit");
+			Query deleteQuery = em.createQuery(Queries.get("CLEANER_DELUSER"));
 			deleteQuery.setParameter("limit", utils.getUsersTimeDeadline());
 			deleteQuery.executeUpdate();
 

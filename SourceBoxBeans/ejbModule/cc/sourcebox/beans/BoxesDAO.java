@@ -15,6 +15,7 @@ import javax.persistence.Query;
 import com.arjuna.ats.internal.jdbc.drivers.modifiers.list;
 
 import cc.sourcebox.beans.exceptions.BoxNotFoundException;
+import cc.sourcebox.beans.query.Queries;
 import cc.sourcebox.dto.InsertObject;
 import cc.sourcebox.entities.Box;
 import cc.sourcebox.entities.Message;
@@ -127,10 +128,8 @@ public class BoxesDAO implements BoxesDAOLocal {
 	*/
 	@Override
 	public Revision get(int userId, String alias, String password) throws BoxNotFoundException {
-		String query = "SELECT r,b from Revision r join r.box b where (b.alias=:alias and b.password=:pwd)" +
-				"OR b.idboxes = (select b.idboxes from Inbox i join i.user u join i.box b where u.iduser = :iduser and b.alias=:alias)" +
-				" order by r.rev desc";
-		Query boxQuery = em.createQuery(query);
+
+		Query boxQuery = em.createQuery(Queries.get("BOXES_GET"));
 		
 		/************
 		 * I need only 1 revision. The revisions are ordered by rev number (desc)
@@ -218,17 +217,11 @@ public class BoxesDAO implements BoxesDAOLocal {
 		
 		int lastDigestId = lastRev.getOperation().getIdoperation();
 		String revisionText = lastRev.getSource();
-		
-		/*Query newOperationsQuery = em.createQuery("SELECT o from Operation o join o.box b where o.idoperation>:lastid order by o.idoperation");
-		newOperationsQuery.setParameter("lastid", lastDigestId);
-		
-		List<Operation> operations = newOperationsQuery.getResultList();*/
-		
+
 		List<Operation> operations = getOperations(alias, lastDigestId);
 		
 		if (operations.size()<1) return;
 
-		//System.out.println(utils.digest(revisionText, operations));
 		Revision rev = new Revision();
 		rev.setRev(lastRev.getRev()+1);
 		
@@ -238,7 +231,17 @@ public class BoxesDAO implements BoxesDAOLocal {
 		rev.setBox(lastRev.getBox());
 		
 		em.persist(rev);
-/**/
+		
+		removeOperations(alias, rev.getOperation().getIdoperation());
+
+	}
+	
+	@TransactionAttribute(TransactionAttributeType.MANDATORY)
+	private void removeOperations(String alias, int upTo) {
+		Query deleteQuery = em.createQuery("delete from Operation o where o.idoperation < :id and o.box = (select b from Box b where b.alias=:alias)");
+		deleteQuery.setParameter("alias", alias);
+		deleteQuery.setParameter("id", upTo);
+		deleteQuery.executeUpdate();
 
 	}
 
