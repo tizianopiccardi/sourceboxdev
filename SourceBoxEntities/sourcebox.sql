@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generato il: 04 gen, 2012 at 04:14 
+-- Generato il: 07 gen, 2012 at 05:08 
 -- Versione MySQL: 5.5.8
 -- Versione PHP: 5.3.5
 
@@ -34,10 +34,12 @@ CREATE TABLE IF NOT EXISTS `boxes` (
   `readonly` int(11) DEFAULT NULL,
   `password` varchar(60) DEFAULT '',
   `lastevent` timestamp NULL DEFAULT NULL,
+  `destroykey` varchar(45) NOT NULL,
   PRIMARY KEY (`idboxes`),
   KEY `aliasIndex` (`alias`),
-  KEY `lasteventIndex` (`lastevent`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+  KEY `lasteventIndex` (`lastevent`),
+  KEY `destroyk` (`destroykey`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 -- --------------------------------------------------------
 
@@ -56,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `inbox` (
   UNIQUE KEY `uniqueJoin` (`boxes_idboxes`,`users_iduser`),
   KEY `fk_inbox_boxes1` (`boxes_idboxes`),
   KEY `fk_inbox_users1` (`users_iduser`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -73,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   PRIMARY KEY (`idmessages`),
   KEY `fk_messages_users1` (`iduser`),
   KEY `fk_messages_boxes1` (`idbox`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
 
 -- --------------------------------------------------------
 
@@ -91,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `operations` (
   `boxes_idboxes` int(11) unsigned NOT NULL,
   PRIMARY KEY (`idoperation`) USING HASH,
   KEY `op_box` (`boxes_idboxes`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=214 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=807 ;
 
 -- --------------------------------------------------------
 
@@ -109,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `revisions` (
   UNIQUE KEY `idbbox_rev` (`idbox`,`rev`),
   KEY `fk_revisions_boxes` (`idbox`),
   KEY `fk_revisions_operations1` (`lastoperation`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=59 ;
 
 -- --------------------------------------------------------
 
@@ -123,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_activity` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`iduser`),
   KEY `lastactivity` (`last_activity`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Limiti per le tabelle scaricate
@@ -133,25 +135,25 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Limiti per la tabella `inbox`
 --
 ALTER TABLE `inbox`
-  ADD CONSTRAINT `fk_inbox_boxes1` FOREIGN KEY (`boxes_idboxes`) REFERENCES `boxes` (`idboxes`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_inbox_boxes1` FOREIGN KEY (`boxes_idboxes`) REFERENCES `boxes` (`idboxes`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_inbox_users1` FOREIGN KEY (`users_iduser`) REFERENCES `users` (`iduser`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Limiti per la tabella `messages`
 --
 ALTER TABLE `messages`
-  ADD CONSTRAINT `fk_messages_boxes1` FOREIGN KEY (`idbox`) REFERENCES `boxes` (`idboxes`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_messages_boxes1` FOREIGN KEY (`idbox`) REFERENCES `boxes` (`idboxes`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_messages_users1` FOREIGN KEY (`iduser`) REFERENCES `users` (`iduser`) ON DELETE SET NULL ON UPDATE NO ACTION;
 
 --
 -- Limiti per la tabella `operations`
 --
 ALTER TABLE `operations`
-  ADD CONSTRAINT `fk_operations_boxes` FOREIGN KEY (`boxes_idboxes`) REFERENCES `boxes` (`idboxes`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_operations_boxes` FOREIGN KEY (`boxes_idboxes`) REFERENCES `boxes` (`idboxes`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Limiti per la tabella `revisions`
 --
 ALTER TABLE `revisions`
-  ADD CONSTRAINT `fk_revisions_boxes` FOREIGN KEY (`idbox`) REFERENCES `boxes` (`idboxes`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_revisions_operations1` FOREIGN KEY (`lastoperation`) REFERENCES `operations` (`idoperation`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_revisions_boxes` FOREIGN KEY (`idbox`) REFERENCES `boxes` (`idboxes`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_revisions_operations1` FOREIGN KEY (`lastoperation`) REFERENCES `operations` (`idoperation`) ON DELETE SET NULL ON UPDATE NO ACTION;
