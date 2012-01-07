@@ -67,5 +67,7 @@ public interface BoxInfoBeanRemote {
 	
 	public int userJoin(String nick);
 	
+	public void destroy (String alias, String key);
+	
 	
 }
