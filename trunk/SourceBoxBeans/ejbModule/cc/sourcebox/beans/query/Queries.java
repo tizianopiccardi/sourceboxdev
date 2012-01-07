@@ -22,7 +22,20 @@ public class Queries {
 							"OR b.idboxes = (select b.idboxes from Inbox i join i.user u join i.box b where u.iduser = :iduser and b.alias=:alias)" +
 							" order by r.rev desc");
 
+		q.put("BOXES_SIMPLEGET", "SELECT b from Box b where b.alias=:alias");
 		
+		q.put("BOXES_CHAT", "SELECT m from Message m join m.box b where b.alias=:alias order by m.idmessages desc");
+
+		q.put("BOXES_OPERATIONS", "SELECT o from Operation o join o.box b where o.idoperation>:lastid and b.alias=:alias order by o.idoperation");
+
+	
+		q.put("BOXES_SAVE", "select r from Revision r where r.idrevision=(SELECT max(r.idrevision) from Revision r join r.box b where b.alias=:alias )");
+
+		
+		q.put("BOXES_DESTROY", "delete from Box b where b.alias=:alias and b.destroykey=:key");
+		
+		q.put("BOXES_REMOPERATIONS", "delete from Operation o where o.idoperation < :id and o.box = (select b from Box b where b.alias=:alias)");
+
 	}
 	
 	
