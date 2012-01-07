@@ -143,7 +143,11 @@ $(function(){
 			  		window.scrollTo(0,0);
 			  		$('#maincontent').hide('slow');
 			  		
-			  		$("#BoxURL").append('<a href="'+response.url+'">'+response.url+'</a>');
+			  		$("#BoxURL").append('<h1><a href="'+response.url+'">'+response.url+'</a></h1>'+
+			  				'Destroy link:<br>'+
+			  				'<a href="'+window.location+"destroy?alias="+response.alias+"&key="+response.key
+			  				+'">'+window.location+"destroy?alias="+response.alias+"&key="+response.key+'</a>'
+			  		);
 			  		
 			  		/*
 			  		$('#infoset').hide();
