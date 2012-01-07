@@ -39,8 +39,11 @@ public class Store extends SourceBoxServlet {
 
 		boolean readonly = req.getParameter("readonly").equals("true");
 
-		String alias = bbr.make(language, code, password, readonly);
+		String [] aliasAndDKey = bbr.make(language, code, password, readonly).split(":");
 
+		String alias = aliasAndDKey[0];
+		String destroyKey = aliasAndDKey[1];
+		
 		System.out.println("Language: " + language);
 		System.out.println("Code: " + code);
 		System.out.println("Password: " + password);
@@ -53,6 +56,7 @@ public class Store extends SourceBoxServlet {
 
 		output.put("url", reconstructedURL);
 		output.put("alias", alias);
+		output.put("key", destroyKey);
 	}
 
 }
