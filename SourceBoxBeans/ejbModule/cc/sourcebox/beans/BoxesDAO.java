@@ -80,6 +80,7 @@ public class BoxesDAO implements BoxesDAOLocal {
 		
 		box.setRevisions(rl);
 		
+		box.setDestroykey(utils.getRandomString(8));
 		
 		/*******
 		 * Save to db
@@ -93,7 +94,7 @@ public class BoxesDAO implements BoxesDAOLocal {
 		box.setAlias(urlHelper.idToAlias(box.getIdboxes()));
 		
 		
-		return box.getAlias();
+		return box.getAlias()+":"+box.getDestroykey();
 	}
 	
 	@Override
@@ -243,6 +244,16 @@ public class BoxesDAO implements BoxesDAOLocal {
 		deleteQuery.setParameter("id", upTo);
 		deleteQuery.executeUpdate();
 
+	}
+
+	@Override
+	public void destroy(String alias, String key) {
+		
+		Query deleteQuery = em.createQuery("delete from Box b where b.alias=:alias and b.destroykey=:key");
+		deleteQuery.setParameter("alias", alias);
+		deleteQuery.setParameter("key", key);
+		deleteQuery.executeUpdate();
+		System.out.println("DESTROY: " + alias);
 	}
 
 
