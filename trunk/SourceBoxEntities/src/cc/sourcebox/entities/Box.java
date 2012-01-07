@@ -23,6 +23,8 @@ public class Box implements Serializable {
 
 	private Timestamp creation;
 
+	private String destroykey;
+
 	private String language;
 
 	private Timestamp lastevent;
@@ -74,6 +76,14 @@ public class Box implements Serializable {
 
 	public void setCreation(Timestamp creation) {
 		this.creation = creation;
+	}
+
+	public String getDestroykey() {
+		return this.destroykey;
+	}
+
+	public void setDestroykey(String destroykey) {
+		this.destroykey = destroykey;
 	}
 
 	public String getLanguage() {
