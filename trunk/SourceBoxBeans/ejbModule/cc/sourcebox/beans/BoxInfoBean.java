@@ -159,4 +159,13 @@ public class BoxInfoBean implements BoxInfoBeanRemote, BoxInfoBeanLocal {
 
 
 
+	@Override
+	public void destroy(String alias, String key) {
+		// TODO Auto-generated method stub
+		boxDAO.destroy(alias, key);
+	}
+
+
+
+
 }
