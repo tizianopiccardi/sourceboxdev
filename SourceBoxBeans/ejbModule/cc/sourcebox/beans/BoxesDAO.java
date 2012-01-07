@@ -99,7 +99,7 @@ public class BoxesDAO implements BoxesDAOLocal {
 	
 	@Override
 	public Box get(String alias) {
-		Query query = em.createQuery("SELECT b from Box b where b.alias=:alias");
+		Query query = em.createQuery(Queries.get("BOXES_SIMPLEGET"));
 		query.setParameter("alias", alias);
 		return (Box)query.getSingleResult();
 	}
@@ -160,7 +160,7 @@ public class BoxesDAO implements BoxesDAOLocal {
 	@Override
 	public List<Message> getChatHistory(String alias, int n) {
 		
-		Query query = em.createQuery("SELECT m from Message m join m.box b where b.alias=:alias order by m.idmessages desc");
+		Query query = em.createQuery(Queries.get("BOXES_CHAT"));
 		query.setParameter("alias", alias);
 		query.setMaxResults(n);
 		
@@ -201,7 +201,7 @@ public class BoxesDAO implements BoxesDAOLocal {
 	@Override
 	public List<Operation> getOperations(String alias, int from) {
 		
-		Query newOperationsQuery = em.createQuery("SELECT o from Operation o join o.box b where o.idoperation>:lastid and b.alias=:alias order by o.idoperation");
+		Query newOperationsQuery = em.createQuery(Queries.get("BOXES_OPERATIONS"));
 		newOperationsQuery.setParameter("lastid", from);
 		newOperationsQuery.setParameter("alias", alias);
 		return newOperationsQuery.getResultList();
@@ -211,7 +211,7 @@ public class BoxesDAO implements BoxesDAOLocal {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void save(String alias) {
 
-		Query lastRevisionQuery = em.createQuery("select r from Revision r where r.idrevision=(SELECT max(r.idrevision) from Revision r join r.box b where b.alias=:alias )");
+		Query lastRevisionQuery = em.createQuery(Queries.get("BOXES_SAVE"));
 		lastRevisionQuery.setParameter("alias", alias);
 		
 		Revision lastRev = (Revision)lastRevisionQuery.getSingleResult();
@@ -239,7 +239,7 @@ public class BoxesDAO implements BoxesDAOLocal {
 	
 	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	private void removeOperations(String alias, int upTo) {
-		Query deleteQuery = em.createQuery("delete from Operation o where o.idoperation < :id and o.box = (select b from Box b where b.alias=:alias)");
+		Query deleteQuery = em.createQuery(Queries.get("BOXES_REMOPERATIONS"));
 		deleteQuery.setParameter("alias", alias);
 		deleteQuery.setParameter("id", upTo);
 		deleteQuery.executeUpdate();
@@ -249,7 +249,7 @@ public class BoxesDAO implements BoxesDAOLocal {
 	@Override
 	public void destroy(String alias, String key) {
 		
-		Query deleteQuery = em.createQuery("delete from Box b where b.alias=:alias and b.destroykey=:key");
+		Query deleteQuery = em.createQuery(Queries.get("BOXES_DESTROY"));
 		deleteQuery.setParameter("alias", alias);
 		deleteQuery.setParameter("key", key);
 		deleteQuery.executeUpdate();
