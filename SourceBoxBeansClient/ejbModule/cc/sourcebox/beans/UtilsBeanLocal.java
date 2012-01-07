@@ -14,5 +14,5 @@ public interface UtilsBeanLocal {
 	public Date getUsersTimeDeadline();
 	
 	public String digest(String original, List<Operation> operations);
-	
+	public String getRandomString(int size);
 }
