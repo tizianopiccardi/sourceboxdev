@@ -7,8 +7,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import cc.sourcebox.beans.BoxInfoBeanRemote;
-import cc.sourcebox.beans.BoxManagerRemote;
+import cc.sourcebox.beans.BoxTasksBeanRemote;
+import cc.sourcebox.beans.BoxBeanRemote;
 import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.entities.Revision;
 import cc.sourcebox.web.utils.SessionManager;
@@ -21,8 +21,8 @@ public class Get extends SourceBoxServlet {
 	 */
 	private static final long serialVersionUID = 1147497135400155556L;
 	
-	@EJB(mappedName = "SourceBoxLogicEAR/BoxInfoBean/remote")
-	private BoxInfoBeanRemote boxbean;
+	@EJB(mappedName = "SourceBoxLogicEAR/BoxTasksBean/remote")
+	private BoxTasksBeanRemote boxbean;
 
 	
 	@Override
@@ -35,7 +35,7 @@ public class Get extends SourceBoxServlet {
 		UserInfo user = SessionManager.getUserInfo(session);
 		Revision rev = boxbean.get(user.getUserid(), alias, password );
 
-		BoxManagerRemote box = SessionManager.getManager(session, alias, true);
+		BoxBeanRemote box = SessionManager.getManager(session, alias, true);
 		box.init(user, alias);
 		
 		SessionManager.addDestroyer(session, alias, box);

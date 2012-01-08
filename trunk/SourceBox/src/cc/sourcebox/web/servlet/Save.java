@@ -6,7 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import cc.sourcebox.beans.BoxManagerRemote;
+import cc.sourcebox.beans.BoxBeanRemote;
 import cc.sourcebox.web.utils.SessionManager;
 
 @WebServlet(urlPatterns="/save")
@@ -26,7 +26,7 @@ public class Save extends SourceBoxServlet {
 		String alias = req.getParameter("alias");
 		SessionManager.inBoxCheck(session, alias);
 
-		BoxManagerRemote box = SessionManager.getManager(session, alias, false);
+		BoxBeanRemote box = SessionManager.getManager(session, alias, false);
 		
 		box.save();
 		

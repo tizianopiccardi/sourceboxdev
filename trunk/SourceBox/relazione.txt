@@ -1,0 +1,80 @@
+SourceBox
+A collaborative web-based IDE
+
+
+Domain:
+SourceBox is a collaborative web IDE that allows the users to share and edit snippet of text or source code. In this context we call "box" the set of revisions, online users and exchanged messages.
+The users that join the box can interact with each others using a chat system and editing the text. Every update maked to the box is instantly notified to the other users.
+The box is a disposable item and if it is not used for some time, it will be removed.
+
+Creation:
+A box can be freely created with some features like a password protection or as read-only property. In this phase is mandatory also to specify the language of the text that will be used for the highlighting of the keywords.
+Because of to make a new box is not required any registration, in this process is involved a captcha protection.
+When the box is created the webpage return 2 links: the first is the box URL while the second is the link that the user can use to force the deletion of the box.
+For allowing an easy sharing of the link, it is shortened in this format: http://site.com/@A where "A" is the alias.
+
+Use the box:
+Before loading the box the system asks for a nickname. This name is global and is used for every joined box within the duration of the session.
+
+
+Technology (and libraries):
+
+Due to the nature of this project some choices was made for performance reason. 
+Let's see in details the technology used:
+
+Backend:
+	JBossAS 6.1 + JBossWeb 3 (Tomcat based)
+	Used as container for the beans, servlet, etc...
+	
+	EJB 3
+	Used in the implementation of the business logic of the application. The version used for this project is the 3.0 in order to take advantage of the use of annotations.
+	
+	Hibernate 4.0
+	Used as ORM in the persistency layer. The language used to retrive object is the "HQL" (Hibernate Query Language).
+	
+	Mysql 5.0
+	Used to store the data, it is accessed by Hybernate via JDBC (using driver type 4).
+	
+	ActiveMQ
+	ActiveMQ is a JSM message broker used in this project by the beans to exchange messages. They join a "topic" wherein it's used a publisher/subscriber behaviour.
+	
+	HornetQ
+	It is the default JBoss messages provider and in this project is used (by Quartz Scheduler) to activate a Message Driven Bean.
+	
+	FreeMarker template engine
+	FreeMarker is an high efficency template engine. It allows to configure the pages cache to improve the perfomance.
+	
+	Quartz Scheduler
+	Quartz is a scheduler service that can be integrate in any JavaEE (and SE) application. In JBoss container, the adapter allows to activate a Message Driven Bean using a linux cron syntax. 
+	
+	Tuckey UrlRewriteFilter (based on Apache mod_rewrite)
+	Google Gson
+
+Frontend
+	JQuery
+	CodeMirror
+	Html/CSS/Javascript
+
+
+Architecture:
+	Tiers
+	
+Structure webtier
+	
+Structure EJB
+classdiagram
+	
+Patterns:
+
+MVC
+	M:
+	V:
+	C:
+DAO
+DTO
+
+Business delegate : BoxInfo
+
+Singleton
+
+Structure persistency tier

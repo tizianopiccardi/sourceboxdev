@@ -4,7 +4,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.http.HttpSession;
 
-import cc.sourcebox.beans.BoxManagerRemote;
+import cc.sourcebox.beans.BoxBeanRemote;
 import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.web.exception.SecurityException;
 
@@ -28,12 +28,12 @@ public class SessionManager {
 		if(!SessionManager.isInBox(session, alias)) throw new SecurityException();
 	}
 	
-	public static BoxManagerRemote getManager(HttpSession session, String alias, boolean create) throws SecurityException  {
-		BoxManagerRemote mgr = null;
+	public static BoxBeanRemote getManager(HttpSession session, String alias, boolean create) throws SecurityException  {
+		BoxBeanRemote mgr = null;
 		
 		/*while(true)
 			try {*/
-				mgr = SessionManager.get(session, JndiPaths.get("BOX_MGR"), BoxManagerRemote.class, create, alias);
+				mgr = SessionManager.get(session, JndiPaths.get("BOX_MGR"), BoxBeanRemote.class, create, alias);
 				/*mgr.ping();
 				break;
 			}
@@ -93,7 +93,7 @@ public class SessionManager {
 	}*/
 	
 	
-	public static void addDestroyer(HttpSession session, String alias, BoxManagerRemote b) {
+	public static void addDestroyer(HttpSession session, String alias, BoxBeanRemote b) {
 		if (session.getAttribute("DESTROYER_"+alias)==null)
 			session.setAttribute("DESTROYER_"+alias, new BoxDestroyer(b));
 	}

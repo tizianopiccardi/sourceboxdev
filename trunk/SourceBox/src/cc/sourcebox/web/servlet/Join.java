@@ -7,8 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import cc.sourcebox.beans.BoxInfoBeanRemote;
-import cc.sourcebox.beans.UsersDAORemote;
+import cc.sourcebox.beans.BoxTasksBeanRemote;
 import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.web.utils.SessionManager;
 
@@ -17,8 +16,8 @@ public class Join extends SourceBoxServlet {
 
 	private static final long serialVersionUID = 8233025717568950848L;
 
-	@EJB(mappedName = "SourceBoxLogicEAR/BoxInfoBean/remote")
-	private BoxInfoBeanRemote boxbean;
+	@EJB(mappedName = "SourceBoxLogicEAR/BoxTasksBean/remote")
+	private BoxTasksBeanRemote boxbean;
 
 	@Override
 	public void process(HttpServletRequest req, HttpSession session,

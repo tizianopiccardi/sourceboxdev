@@ -3,14 +3,11 @@ package cc.sourcebox.web.servlet;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import cc.sourcebox.beans.BoxInfoBeanRemote;
-import cc.sourcebox.beans.BoxManagerRemote;
-import cc.sourcebox.beans.UsersDAORemote;
+import cc.sourcebox.beans.BoxBeanRemote;
 import cc.sourcebox.dto.InsertObject;
 import cc.sourcebox.web.utils.SessionManager;
 import cc.sourcebox.web.utils.Utils;
@@ -42,7 +39,7 @@ public class Edit extends SourceBoxServlet {
 		
 		//int userID = (Integer)session.getAttribute("userID");
 
-		BoxManagerRemote box = SessionManager.getManager(session, alias, false);
+		BoxBeanRemote box = SessionManager.getManager(session, alias, false);
 		
 		/*********
 		 * UPDATE cursor position
