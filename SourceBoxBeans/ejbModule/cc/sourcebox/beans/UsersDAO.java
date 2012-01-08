@@ -23,7 +23,7 @@ import cc.sourcebox.entities.User;
  */
 @Stateless
 @LocalBean
-public class UsersDAO implements UsersDAORemote, UsersDAOLocal {
+public class UsersDAO implements UsersDAOLocal {
 
 	@PersistenceContext(name="SourceBoxEntities")
 	EntityManager em;

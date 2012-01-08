@@ -25,14 +25,14 @@ import cc.sourcebox.entities.Revision;
  */
 @Stateless
 @LocalBean
-public class BoxInfoBean implements BoxInfoBeanRemote, BoxInfoBeanLocal {
+public class BoxTasksBean implements BoxTasksBeanRemote, BoxTasksBeanLocal {
 
 	@PersistenceContext(name="SourceBoxEntities")
 	EntityManager em;
 
 	
 	@EJB
-	UsersDAORemote usersDAO;
+	UsersDAOLocal usersDAO;
 	
 	@EJB
 	BoxesDAOLocal boxDAO;
@@ -40,7 +40,7 @@ public class BoxInfoBean implements BoxInfoBeanRemote, BoxInfoBeanLocal {
     /**
      * Default constructor. 
      */
-    public BoxInfoBean() {
+    public BoxTasksBean() {
         // TODO Auto-generated constructor stub
     }
 
