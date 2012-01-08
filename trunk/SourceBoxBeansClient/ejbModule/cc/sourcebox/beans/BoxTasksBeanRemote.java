@@ -10,7 +10,7 @@ import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.entities.Revision;
 
 @Remote
-public interface BoxInfoBeanRemote {
+public interface BoxTasksBeanRemote {
 
 	/************
 	 * Create a new BOX. If the password is null or "" the box is public

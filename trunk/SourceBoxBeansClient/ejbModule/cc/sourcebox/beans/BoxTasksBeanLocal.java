@@ -6,7 +6,7 @@ import javax.ejb.Local;
 import cc.sourcebox.dto.InsertObject;
 
 @Local
-public interface BoxInfoBeanLocal {
+public interface BoxTasksBeanLocal {
 
 	/**********
 	 *  Interface to DAO layer called only by local beans
