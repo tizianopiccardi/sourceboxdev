@@ -25,7 +25,7 @@ import cc.sourcebox.dto.UserInfo;
 @Stateful
 @LocalBean
 @CacheConfig(removalTimeoutSeconds=180, idleTimeoutSeconds=600)
-public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
+public class BoxBean implements BoxBeanRemote, BoxBeanLocal {
 
 	
 	
@@ -37,10 +37,10 @@ public class BoxManager implements BoxManagerRemote, BoxManagerLocal {
 
 	
 	@EJB
-	UsersDAORemote usersDao;
+	UsersDAOLocal usersDao;
 	
 	@EJB
-	BoxInfoBeanLocal boxHelper;
+	BoxTasksBeanLocal boxHelper;
 
 	@Override
 	public void init(UserInfo user, String alias) {
