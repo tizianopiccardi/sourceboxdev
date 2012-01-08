@@ -6,7 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import cc.sourcebox.beans.BoxManagerRemote;
+import cc.sourcebox.beans.BoxBeanRemote;
 import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.web.utils.SessionManager;
 
@@ -36,7 +36,7 @@ public class Chat extends SourceBoxServlet {
 		String uname = SessionManager.getNickname(session);*/
 		UserInfo user = SessionManager.getUserInfo(session);
 		
-		BoxManagerRemote box = SessionManager.getManager(session, alias, false);
+		BoxBeanRemote box = SessionManager.getManager(session, alias, false);
 		
 		
 		box.send(message);

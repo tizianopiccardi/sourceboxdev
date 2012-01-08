@@ -12,7 +12,7 @@ public class JndiPaths {
 	}
 
 	static {
-		values.put("BOX_MGR", "SourceBoxLogicEAR/BoxManager/remote");
+		values.put("BOX_MGR", "SourceBoxLogicEAR/BoxBean/remote");
 	}
 	
 	

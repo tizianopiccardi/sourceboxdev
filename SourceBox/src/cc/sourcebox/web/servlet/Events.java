@@ -6,7 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import cc.sourcebox.beans.BoxManagerRemote;
+import cc.sourcebox.beans.BoxBeanRemote;
 import cc.sourcebox.web.exception.SecurityException;
 import cc.sourcebox.web.utils.SessionManager;
 
@@ -27,7 +27,7 @@ public class Events extends SourceBoxServlet {
 		String alias = req.getParameter("alias");
 		if (!SessionManager.isInBox(session, alias)) throw new SecurityException();
 
-		BoxManagerRemote box = SessionManager.getManager(session, alias, false);
+		BoxBeanRemote box = SessionManager.getManager(session, alias, false);
 
 		box.heartBeat();
 		for (int i = 0; i < 15; i++) {

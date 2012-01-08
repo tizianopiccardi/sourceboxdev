@@ -3,12 +3,12 @@ package cc.sourcebox.web.utils;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
 
-import cc.sourcebox.beans.BoxManagerRemote;
+import cc.sourcebox.beans.BoxBeanRemote;
 
 public class BoxDestroyer implements HttpSessionBindingListener {
 
-	BoxManagerRemote b;
-	public BoxDestroyer(BoxManagerRemote b) {
+	BoxBeanRemote b;
+	public BoxDestroyer(BoxBeanRemote b) {
 		this.b = b;
 	}
 	

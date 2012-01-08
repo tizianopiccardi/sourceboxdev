@@ -10,15 +10,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cc.sourcebox.beans.BoxInfoBeanRemote;
+import cc.sourcebox.beans.BoxTasksBeanRemote;
 
 @WebServlet(urlPatterns="/destroy")
 public class Destroy extends HttpServlet {
 
 	private static final long serialVersionUID = -1030475469127579398L;
 
-	@EJB(mappedName = "SourceBoxLogicEAR/BoxInfoBean/remote")
-	private BoxInfoBeanRemote bbr;
+	@EJB(mappedName = "SourceBoxLogicEAR/BoxTasksBean/remote")
+	private BoxTasksBeanRemote bbr;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
