@@ -12,7 +12,7 @@ import cc.sourcebox.dto.UserInfo;
 
 
 @Remote
-public interface BoxManagerRemote {
+public interface BoxBeanRemote {
 
 	/************
 	 * Initial configuration (and jms topic subscription)

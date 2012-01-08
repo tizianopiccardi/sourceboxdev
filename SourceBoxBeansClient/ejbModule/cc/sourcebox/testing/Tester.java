@@ -10,7 +10,7 @@ import javax.naming.InitialContext;
 
 import com.google.gson.Gson;
 
-import cc.sourcebox.beans.BoxInfoBeanRemote;
+import cc.sourcebox.beans.BoxTasksBeanRemote;
 import cc.sourcebox.beans.UtilsBeanLocal;
 import cc.sourcebox.beans.UtilsBeanRemote;
 import cc.sourcebox.entities.Operation;
