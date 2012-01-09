@@ -7,6 +7,7 @@ import javax.ejb.Remove;
 import cc.sourcebox.beans.exceptions.ChatErrorException;
 import cc.sourcebox.dto.EventsDTO;
 import cc.sourcebox.dto.InsertObject;
+import cc.sourcebox.dto.RevisionDTO;
 import cc.sourcebox.dto.UserInfo;
 
 
@@ -73,6 +74,9 @@ public interface BoxBeanRemote {
 	@Remove
 	public void remove();
 	
+	public void backTo(int revision);
+	
+	public RevisionDTO getRevision(Integer revision);
 	//public void ping();
 
 }

@@ -29,6 +29,7 @@ public interface BoxesDAOLocal {
 	
 	public void destroy (String alias, String key);
 	
+	public Revision getRevision (String alias, Integer revision);
 	/*
 	public User getUser(int id);
 	public Box getBox(int id);*/
