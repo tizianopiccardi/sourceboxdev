@@ -7,7 +7,6 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateful;
 import javax.jms.JMSException;
 
-import org.jboss.ejb3.annotation.Cache;
 import org.jboss.ejb3.annotation.CacheConfig;
 
 import cc.sourcebox.beans.actions.JmsHelper;
@@ -17,6 +16,7 @@ import cc.sourcebox.dto.ChatMessage;
 import cc.sourcebox.dto.CursorsDTO;
 import cc.sourcebox.dto.EventsDTO;
 import cc.sourcebox.dto.InsertObject;
+import cc.sourcebox.dto.RevisionDTO;
 import cc.sourcebox.dto.UserInfo;
 
 /**
@@ -25,7 +25,7 @@ import cc.sourcebox.dto.UserInfo;
 @Stateful
 @LocalBean
 @CacheConfig(removalTimeoutSeconds=180, idleTimeoutSeconds=600)
-public class BoxBean implements BoxBeanRemote, BoxBeanLocal {
+public class BoxBean implements BoxBeanRemote {
 
 	
 	
@@ -147,6 +147,18 @@ public class BoxBean implements BoxBeanRemote, BoxBeanLocal {
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void backTo(int revision) {
+		boxHelper.restore(alias, revision);
+	}
+
+	@Override
+	public RevisionDTO getRevision(Integer revision) {
+		RevisionDTO out = boxHelper.getRevision(alias, revision);
+		System.out.println(out);
+		return out;
 	}
 
 	//@Override
