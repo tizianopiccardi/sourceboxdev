@@ -148,7 +148,7 @@ $(function() {
 	});
 
 	EditorManager.setEditor(editor);
-
+	RevisionsBrowser.setEditor(editor);
 
 	/*************
 	 * Every n seconds I check the buffer for new changes
