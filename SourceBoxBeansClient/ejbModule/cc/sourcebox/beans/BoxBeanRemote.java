@@ -74,8 +74,6 @@ public interface BoxBeanRemote {
 	@Remove
 	public void remove();
 	
-	public void backTo(int revision);
-	
 	public RevisionDTO getRevision(Integer revision);
 	//public void ping();
 

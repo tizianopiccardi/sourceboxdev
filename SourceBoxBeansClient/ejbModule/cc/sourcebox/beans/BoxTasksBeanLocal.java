@@ -28,9 +28,7 @@ public interface BoxTasksBeanLocal {
 	
 	
 	public void save(String alias);
-	
-	public void restore (String alias, int revision);
-	
+
 	
 	public RevisionDTO getRevision (String alias, Integer revision);
 	
