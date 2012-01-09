@@ -4,6 +4,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import cc.sourcebox.dto.InsertObject;
+import cc.sourcebox.dto.RevisionDTO;
 
 @Local
 public interface BoxTasksBeanLocal {
@@ -27,4 +28,10 @@ public interface BoxTasksBeanLocal {
 	
 	
 	public void save(String alias);
+	
+	public void restore (String alias, int revision);
+	
+	
+	public RevisionDTO getRevision (String alias, Integer revision);
+	
 }

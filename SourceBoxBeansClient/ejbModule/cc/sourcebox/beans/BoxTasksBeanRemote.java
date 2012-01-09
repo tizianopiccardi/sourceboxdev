@@ -23,13 +23,6 @@ public interface BoxTasksBeanRemote {
 	public String make(String language, String body, String password, Boolean readonly);
 	
 	
-	/************
-	 * Save the editor content creating a new revision
-	 * @param alias
-	 * @param body
-	 * @throws BoxNotFoundException
-	 */
-	//public void save(String alias, String body) throws BoxNotFoundException;
 	
 	/************
 	 * Retrieve the last revision and set the user as logged
@@ -68,6 +61,8 @@ public interface BoxTasksBeanRemote {
 	public int userJoin(String nick);
 	
 	public void destroy (String alias, String key);
+	
+	
 	
 	
 }
