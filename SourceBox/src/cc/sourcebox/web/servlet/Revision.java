@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import cc.sourcebox.beans.BoxBeanRemote;
+import cc.sourcebox.dto.RevisionDTO;
 import cc.sourcebox.web.utils.SessionManager;
 
 @WebServlet(urlPatterns="/revision")
@@ -29,7 +30,12 @@ public class Revision extends SourceBoxServlet {
 		
 		String rev = req.getParameter("revision");
 
-		output.put("revision", box.getRevision((rev==null)?null:Integer.valueOf(rev)));
+		RevisionDTO revision = box.getRevision((rev==null)?null:Integer.valueOf(rev));
+		
+		if (revision!=null)
+			output.put("revision", revision);
+		else
+			output.put("limit", true);
 		
 	}
 	
