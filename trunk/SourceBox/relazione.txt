@@ -8,16 +8,23 @@ The users that join the box can interact with each others using a chat system an
 The box is a disposable item and if it is not used for some time, it will be removed.
 
 Creation:
-A box can be freely created with some features like a password protection or as read-only property. In this phase is mandatory also to specify the language of the text that will be used for the highlighting of the keywords.
+A box can be freely created with some features like a password protection, the initial source code and a read-only property. In this phase is mandatory also to specify the language of the text that will be used for the highlighting of the keywords.
 Because of to make a new box is not required any registration, in this process is involved a captcha protection.
-When the box is created the webpage return 2 links: the first is the box URL while the second is the link that the user can use to force the deletion of the box.
+When the box is created the webpage return 2 links: the first is the box URL while the second is the link that the user can use to force the deletion.
 For allowing an easy sharing of the link, it is shortened in this format: http://site.com/@A where "A" is the alias.
 
 Use the box:
 Before loading the box the system asks for a nickname. This name is global and is used for every joined box within the duration of the session.
+When the user is registered the interface show the password request dialog (if the box is protected) and eventually the content is loaded.
+Now the user can use the box. He can edit the text, send chat messages and save the current status creating a new revision (pressing Crtl+s).
+The interface is constantly updated so the user can view the position of the cursor of the others, save actions, join/leave, chat messages and real-time editing.
+
+	Shortcut:
+		Ctrl+s: save the current status creation a new revision
+		Ctrl+n: create a new box
 
 
-Technology (and libraries):
+Technology (and libraries) overview:
 
 Due to the nature of this project some choices was made for performance reason. 
 Let's see in details the technology used:
@@ -30,16 +37,16 @@ Backend:
 	Used in the implementation of the business logic of the application. The version used for this project is the 3.0 in order to take advantage of the use of annotations.
 	
 	Hibernate 4.0
-	Used as ORM in the persistency layer. The language used to retrive object is the "HQL" (Hibernate Query Language).
+	Used as ORM in the persistency layer. The language used to retrive objects is the "HQL" (Hibernate Query Language).
 	
 	Mysql 5.0
 	Used to store the data, it is accessed by Hybernate via JDBC (using driver type 4).
 	
-	ActiveMQ
+	Apache ActiveMQ
 	ActiveMQ is a JSM message broker used in this project by the beans to exchange messages. They join a "topic" wherein it's used a publisher/subscriber behaviour.
 	
 	HornetQ
-	It is the default JBoss messages provider and in this project is used (by Quartz Scheduler) to activate a Message Driven Bean.
+	It is the default JBoss messages provider and in this project is used (by Quartz Scheduler) to activate a Message Driven Bean that clean the old messages, boxes and users.
 	
 	FreeMarker template engine
 	FreeMarker is an high efficency template engine. It allows to configure the pages cache to improve the perfomance.
@@ -48,33 +55,44 @@ Backend:
 	Quartz is a scheduler service that can be integrate in any JavaEE (and SE) application. In JBoss container, the adapter allows to activate a Message Driven Bean using a linux cron syntax. 
 	
 	Tuckey UrlRewriteFilter (based on Apache mod_rewrite)
+	It is a web filter that allows to rewrite the url matching a particular regular expression. It is used to shorten the url for a easly sharing.
+	The url http://www.site.com/@A is rewritten to http://www.site.com/?alias=A
+	
 	Google Gson
+	Used to serialize the java objects to Json format.
 
 Frontend
-	JQuery
-	CodeMirror
 	Html/CSS/Javascript
+	
+	JQuery
+	The JQuery framework is used to aid the DOM manipulations and to implement compact AJAX request and callback with few lines of code. The framework supply also an automatic way to deserialize the Json objects to Javascript object.
+	
+	CodeMirror
+	It is a JavaScript library that allows the creation of rich text editor with keyword highlighting and indentation. For this project the original CodeMirror code was modified for managing the collaborative features that are not provided.
 
 
 Architecture:
-	Tiers
+	The project is divided in 3 tiers: web, business logic and persistency. Each of them can be easily replaced with low effort to adapt the others.
 	
-Structure webtier
+	Structure webtier
+		This level is implemented using Java Servlet 
+		
+		
+	Structure EJB
+	<classdiagram>
 	
-Structure EJB
-classdiagram
-	
+
+	Structure persistency tier
+
 Patterns:
 
-MVC
-	M:
-	V:
-	C:
-DAO
-DTO
+	MVC
+		M:
+		V:
+		C:
+	DAO
+	DTO
 
-Business delegate : BoxInfo
+	Business delegate : BoxInfo
 
-Singleton
-
-Structure persistency tier
+	Singleton

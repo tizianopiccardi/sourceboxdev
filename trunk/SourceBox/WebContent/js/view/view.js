@@ -7,6 +7,8 @@ $(function() {
 	$("#password-form").hide();
 	$("#pw-check-img").hide();
 	$("#wrong-password").hide();
+
+	
 	
 	
 	$("#share-dialog").hide();
@@ -70,8 +72,7 @@ $(function() {
 							"activeline");
 
 					SyncManager.cursorPos = editor.getCursor(false);
-					// editor.addWidget(editor.getCursor(),
-					// document.getElementById("user") ,false);
+
 				},
 
 				onKeyEvent : function(ed, ke) {
@@ -147,9 +148,7 @@ $(function() {
 	});
 
 	EditorManager.setEditor(editor);
-	/*
-	 * EditorManager.setEditor(editor); EditorManager.run();
-	 */
+
 
 	/*************
 	 * Every n seconds I check the buffer for new changes
@@ -159,18 +158,7 @@ $(function() {
 	
 	EventsManager.setEditor(editor);
 	
-	/*
-	 * $.ajax({ url: "join.php", dataType: "text", success: function(response){
-	 * User.name = response; } });
-	 * 
-	 */
 
-	// editor.getNewPos('',2,3);
-	// editor.replaceRange("ciao",{line:0,ch:0}, null,true);
-
-	/*
-	 * CodeMirror.save(); alert(editor.getInputField().value); editor.refresh();
-	 */
 
 	function join() {
 

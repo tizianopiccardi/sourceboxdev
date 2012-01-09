@@ -26,6 +26,7 @@
    <script type="text/javascript" src="js/view/view.js"></script>
    <script type="text/javascript" src="js/view/EditorManager.js"></script>
    <script type="text/javascript" src="js/view/chat.js"></script>
+   <script type="text/javascript" src="js/view/RevisionsBrowser.js"></script>
     <script type="text/javascript" src="js/view/UsersManager.js"></script>
     <script type="text/javascript" src="libs/jquery/jquery.scrollTo.js"></script>
     
@@ -100,13 +101,21 @@ Chat
 		</div>
 	</div>
 	
-	
 	<div id="share-dialog" title="Share url">
 		<p>Box URL:</p>
 		<center>
 			<input type="text" name="boxurl" id="boxurl" style="width : 250px;" class="text ui-widget-content ui-corner-all" />
 		</center>
 
+	</div>
+
+	<div id="revisions-dialog" title="Revisions Browser" align="center">
+	<p id="revisions-number">Revision:</p>
+		<textarea rows="20" cols="90" id="revisions" readonly="yes" wrap="off"></textarea>
+	<p align="center"><div id="revisions-prev">Prev</div>
+	<div id="revisions-next">Next</div>
+	<div id="revisions-restore">Restore</div>
+	<div id="revisions-close">Close</div><p>
 	</div>
 
 
