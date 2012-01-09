@@ -150,15 +150,8 @@ public class BoxBean implements BoxBeanRemote {
 	}
 
 	@Override
-	public void backTo(int revision) {
-		boxHelper.restore(alias, revision);
-	}
-
-	@Override
 	public RevisionDTO getRevision(Integer revision) {
-		RevisionDTO out = boxHelper.getRevision(alias, revision);
-		System.out.println(out);
-		return out;
+		return  boxHelper.getRevision(alias, revision);
 	}
 
 	//@Override

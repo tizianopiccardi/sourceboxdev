@@ -166,19 +166,19 @@ public class BoxTasksBean implements BoxTasksBeanRemote, BoxTasksBeanLocal {
 
 
 
-	@Override
-	public void restore(String alias, int revision) {
-		
-		
-	}
-
 
 
 
 	@Override
 	public RevisionDTO getRevision(String alias, Integer revision) {
-		Revision rev = boxDAO.getRevision(alias, revision);
-		return new RevisionDTO(rev.getIdrevision(), rev.getSource());
+		try {
+			Revision rev = boxDAO.getRevision(alias, revision);
+			return new RevisionDTO(rev.getRev(), rev.getSource());
+		}
+		catch (Exception e) {
+			return null;
+		}
+		
 	}
 
 
