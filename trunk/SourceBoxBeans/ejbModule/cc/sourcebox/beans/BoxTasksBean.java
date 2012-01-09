@@ -15,6 +15,7 @@ import javax.persistence.Query;
 import cc.sourcebox.beans.exceptions.BoxNotFoundException;
 import cc.sourcebox.dto.ChatMessage;
 import cc.sourcebox.dto.InsertObject;
+import cc.sourcebox.dto.RevisionDTO;
 import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.entities.Message;
 import cc.sourcebox.entities.Operation;
@@ -40,9 +41,7 @@ public class BoxTasksBean implements BoxTasksBeanRemote, BoxTasksBeanLocal {
     /**
      * Default constructor. 
      */
-    public BoxTasksBean() {
-        // TODO Auto-generated constructor stub
-    }
+    public BoxTasksBean() {}
 
 
 
@@ -161,9 +160,30 @@ public class BoxTasksBean implements BoxTasksBeanRemote, BoxTasksBeanLocal {
 
 	@Override
 	public void destroy(String alias, String key) {
-		// TODO Auto-generated method stub
 		boxDAO.destroy(alias, key);
 	}
+
+
+
+
+	@Override
+	public void restore(String alias, int revision) {
+		
+		
+	}
+
+
+
+
+	@Override
+	public RevisionDTO getRevision(String alias, Integer revision) {
+		Revision rev = boxDAO.getRevision(alias, revision);
+		return new RevisionDTO(rev.getIdrevision(), rev.getSource());
+	}
+
+
+
+
 
 
 

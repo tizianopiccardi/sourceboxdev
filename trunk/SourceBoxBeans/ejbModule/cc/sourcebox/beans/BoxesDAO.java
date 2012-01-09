@@ -256,8 +256,31 @@ public class BoxesDAO implements BoxesDAOLocal {
 		System.out.println("DESTROY: " + alias);
 	}
 
+	@Override
+	public Revision getRevision(String alias, Integer revision) {
+		
+		Query revisionQuery = em.createQuery("select r from Revision r where r.box.alias=:alias and r.rev=:id");
+		revisionQuery.setParameter("alias", alias);
+		
+		if (revision==null)
+			revision = getMaxRevision(alias);
+		revisionQuery.setParameter("id", revision);
+		
+		
+		revisionQuery.setMaxResults(1);
+		
+		List<Revision> rev = revisionQuery.getResultList();
+		if (rev.size()<1) throw new RuntimeException("Revision not available");
+		return rev.get(0);
+	}
 
 
+	private int getMaxRevision(String alias) {
+		Query maxRevisionQuery = em.createQuery("select max(r.rev) from Revision r where r.box.alias=:alias");
+		maxRevisionQuery.setParameter("alias", alias);
+		maxRevisionQuery.setMaxResults(1);
+		return (Integer)maxRevisionQuery.getSingleResult();
+	}
 	
 
 }
