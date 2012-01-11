@@ -43,11 +43,7 @@ public class JmsHelper {
 		Message wrappedMsg = session.createObjectMessage(msg);
 		producer.send(wrappedMsg);
 	}
-	/*
-	public void send(UserInfo userUpdate) throws JMSException{
-		Message wrappedMsg = session.createObjectMessage(userUpdate);
-		producer.send(wrappedMsg);
-	}*/
+
 	
 	public void closeAll(){
 		try {
