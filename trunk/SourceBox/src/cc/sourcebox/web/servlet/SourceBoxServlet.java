@@ -14,9 +14,6 @@ import cc.sourcebox.web.utils.Utils;
 
 public class SourceBoxServlet extends HttpServlet {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5257979831768209196L;
 	
 	@Override
@@ -34,7 +31,6 @@ public class SourceBoxServlet extends HttpServlet {
 		 * Session start
 		 */
 		HttpSession session = req.getSession(true);
-		session.setMaxInactiveInterval(180);
 		HashMap<String, Object> output = new HashMap<String, Object>();
 		try {
 			
@@ -46,7 +42,6 @@ public class SourceBoxServlet extends HttpServlet {
 			output.put("success", false);
 			output.put("type", e.getClass().getSimpleName());
 			output.put("message", e.getMessage());
-			//e.printStackTrace();
 		}
 		
 		out.print(Utils.encode(output));

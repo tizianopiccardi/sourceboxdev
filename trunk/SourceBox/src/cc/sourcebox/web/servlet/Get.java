@@ -35,7 +35,7 @@ public class Get extends SourceBoxServlet {
 		UserInfo user = SessionManager.getUserInfo(session);
 		Revision rev = boxbean.get(user.getUserid(), alias, password );
 
-		BoxBeanRemote box = SessionManager.getManager(session, alias, true);
+		BoxBeanRemote box = SessionManager.getBox(session, alias, true);
 		box.init(user, alias);
 		
 		SessionManager.addDestroyer(session, alias, box);

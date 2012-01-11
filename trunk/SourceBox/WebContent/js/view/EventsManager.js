@@ -24,8 +24,6 @@ var EventsManager = {
 		
 		eventSelector: function(eventsObj) {
 			
-			//console.log(eventsObj);
-			
 			EventsManager.onUserList(eventsObj['users']);
 			EventsManager.onMessage(eventsObj['msg']);
 			EventsManager.onEditCase(eventsObj['op']);
@@ -35,16 +33,10 @@ var EventsManager = {
 		},
 		
 		onCursors: function(cursors){
-			//$('[id^="users_"]').remove();
-			//console.log(cursors);
 			for(var uid in cursors) {
-				//console.log(uid);
 				if (uid==User.uid) continue;
-				
 				$('#users_'+uid).remove();
-				
 				username = UsersManager.getName(uid);
-				//console.log(username);
 				cursor = cursors[uid];
 				var newUserDiv = "<div id=\"users_"+uid+"\" style=\"color: red;position:absolute;font-size:10px !important;\">&oline;"+username+"</div>";
 				$("#users-markers").append(newUserDiv);
@@ -108,8 +100,6 @@ var EventsManager = {
 				from = {line:current.fromLine, ch:current.fromChar};
 				to = {line:current.toLine, ch:current.toChar};
 
-				/*console.log(from);
-				console.log(to);*/
 				Insert.sequence = current.sq;
 				
 				EventsManager.editor.replaceRange(current.text, from, to, true);
@@ -137,6 +127,8 @@ var EventsManager = {
 				
 			}
 		}
+		
+		
 		/*onEditCase: function (values) {
 			
 			SyncManager.lockBuffer = true;

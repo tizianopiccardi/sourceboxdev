@@ -1,10 +1,7 @@
 package cc.sourcebox.web.utils;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
 
 import cc.sourcebox.dto.InsertObject;
 
@@ -20,7 +17,7 @@ public class Utils {
 
 	public static String encode(Object o) {
 		//VALUTA NEW
-		return gson.toJson(o);
+		return gson.toJson(o);//to JSON
 	}
 	
 	public static JsonObject decodeObject(String json) {
@@ -31,11 +28,7 @@ public class Utils {
 		return parser.parse(json).getAsJsonArray();
 	}
 
-	/*
-	public static int getUserId(HttpSession session) {
-		return Integer.valueOf(session.getAttribute("userID").toString());
-	}*/
-	
+
 	
 	public static List<InsertObject> getInsertList(String json) {
 		JsonArray jList = decodeArray(json);
@@ -60,27 +53,6 @@ public class Utils {
 		return inserts;
 	}
 	
-	
 
-	
-	/*
-	
-	public static Timestamp currentTimestamp() {
-		return new Timestamp(System.currentTimeMillis());
-	}
-	*/
-	
-	/*
-	
-	public static void main(String[] args) {
-		String a = "[{\"sq\":0,\"f\":{\"l\":23,\"c\":0},\"t\":{\"l\":23,\"c\":0},\"s\":\"s\",\"u\":\"sffsd\"}]";
-		
-		new InsertObject();
-		
-	    long c = System.currentTimeMillis();
-	    System.out.println(getInsertList(a));
-	    System.out.println(System.currentTimeMillis()-c);
-		
-	}*/
 	
 }

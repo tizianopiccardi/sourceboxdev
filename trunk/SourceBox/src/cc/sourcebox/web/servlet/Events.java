@@ -25,9 +25,9 @@ public class Events extends SourceBoxServlet {
 
 
 		String alias = req.getParameter("alias");
-		if (!SessionManager.isInBox(session, alias)) throw new SecurityException();
+		SessionManager.inBoxCheck(session, alias);
 
-		BoxBeanRemote box = SessionManager.getManager(session, alias, false);
+		BoxBeanRemote box = SessionManager.getBox(session, alias, false);
 
 		box.heartBeat();
 		for (int i = 0; i < 15; i++) {

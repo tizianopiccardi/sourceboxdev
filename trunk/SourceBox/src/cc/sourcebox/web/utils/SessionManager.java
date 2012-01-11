@@ -28,7 +28,7 @@ public class SessionManager {
 		if(!SessionManager.isInBox(session, alias)) throw new SecurityException();
 	}
 	
-	public static BoxBeanRemote getManager(HttpSession session, String alias, boolean create) throws SecurityException  {
+	public static BoxBeanRemote getBox(HttpSession session, String alias, boolean create) throws SecurityException  {
 		BoxBeanRemote mgr = null;
 		
 		/*while(true)
@@ -69,12 +69,7 @@ public class SessionManager {
 	 */
 	public static <T extends Object> T get(HttpSession session, String jndiName, Class<T> cl, boolean create, String id) {
 		Object bean = session.getAttribute(jndiName+"_"+id);
-		
-		//Provo ad usare il bean per assicurarmi che sia funzionante
-/*		try {
-			bean.toString();
-		}catch(Exception e) {bean=null;}
-*/
+
 		if (bean==null && create) {
 			try {
 				if (ctx == null) ctx = new InitialContext();
@@ -87,11 +82,7 @@ public class SessionManager {
 		return cl.cast(bean);
 		
 	}
-	
-	/*public static void destroy(HttpSession session, String jndiName, String id) {
-		session.removeAttribute(jndiName+"_"+id);
-	}*/
-	
+
 	
 	public static void addDestroyer(HttpSession session, String alias, BoxBeanRemote b) {
 		if (session.getAttribute("DESTROYER_"+alias)==null)

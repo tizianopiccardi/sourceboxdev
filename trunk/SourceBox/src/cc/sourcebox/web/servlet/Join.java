@@ -24,7 +24,8 @@ public class Join extends SourceBoxServlet {
 			HashMap<String, Object> output) throws Exception {
 		
 		String nick = req.getParameter("nick");
-
+		session.setMaxInactiveInterval(180);
+		
 		/*******
 		 * Save the username and the generated user id
 		 */

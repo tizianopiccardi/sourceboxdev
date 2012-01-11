@@ -26,7 +26,7 @@ public class Revision extends SourceBoxServlet {
 		String alias = req.getParameter("alias");
 		SessionManager.inBoxCheck(session, alias);
 
-		BoxBeanRemote box = SessionManager.getManager(session, alias, false);
+		BoxBeanRemote box = SessionManager.getBox(session, alias, false);
 		
 		String rev = req.getParameter("revision");
 
