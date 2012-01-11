@@ -22,24 +22,15 @@ public class Edit extends SourceBoxServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = -5621807639847885403L;
-/*
-	@EJB(mappedName = "SourceBoxLogicEAR/UsersManagerBean/remote")
-	private UsersManagerBeanRemote usersMgr;
-	*/
-	/*@EJB(mappedName = "SourceBoxLogicEAR/BoxBean/remote")
-	private BoxBeanRemote boxbean;*/
-	
+
 	@Override
 	public void process(HttpServletRequest req, HttpSession session,
 			HashMap<String, Object> output) throws Exception {
 
 		String alias = req.getParameter("alias");
 		SessionManager.inBoxCheck(session, alias);
-		
-		
-		//int userID = (Integer)session.getAttribute("userID");
 
-		BoxBeanRemote box = SessionManager.getManager(session, alias, false);
+		BoxBeanRemote box = SessionManager.getBox(session, alias, false);
 		
 		/*********
 		 * UPDATE cursor position
@@ -56,11 +47,7 @@ public class Edit extends SourceBoxServlet {
 
 		if (inserts.size()>0)
 			box.edit(inserts);
-			//boxbean.edit(alias, userID, inserts);
-		
-		
-		//usersMgr.heartBeat(SessionManager.getUserInfo(session).getUserid());
-		
+
 		
 	}
 	

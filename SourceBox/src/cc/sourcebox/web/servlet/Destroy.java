@@ -30,7 +30,7 @@ public class Destroy extends HttpServlet {
 		
 		bbr.destroy(alias, key);
 		
-		PrintWriter out = resp.getWriter();
+		//PrintWriter out = resp.getWriter();
 
 		resp.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
 		resp.setHeader("Location", "./");
