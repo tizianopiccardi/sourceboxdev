@@ -36,24 +36,13 @@ public class Queries {
 		
 		q.put("BOXES_REMOPERATIONS", "delete from Operation o where o.idoperation < :id and o.box = (select b from Box b where b.alias=:alias)");
 
+		q.put("BOXES_REVISIONS", "select r from Revision r where r.box.alias=:alias and r.rev=:id");
+		q.put("BOXES_LASTREVISION", "select max(r.rev) from Revision r where r.box.alias=:alias");
+		
+		q.put("BOXES_PRIVATE", "SELECT b.password from Box b where b.alias=:alias");
+
 	}
 	
 	
-	
-	
-	
-	/*private static Properties prop = null;
-	public static String get(String q) {
-		if (prop==null) {
-			prop = new Properties();
-			try {
-				prop.load(new FileInputStream("queries.prop"));
-			} catch (Exception e) {
-				e.printStackTrace();
-			} 
-		}
-		return prop.getProperty(q);
-	}
-	*/
 	
 }

@@ -22,9 +22,7 @@ public class BoxEventsListener implements MessageListener{
 	@Override
 	public void onMessage(Message msg) {
 		try {
-			//System.out.println("BoxEventsListener.onMessage()");
-			//ec.hasEvent = true;
-			//if (1==1)return;
+
 			ObjectMessage message = (ObjectMessage)msg;
 
 			synchronized (ec) {
@@ -45,8 +43,6 @@ public class BoxEventsListener implements MessageListener{
 					ec.add((Action)message.getObject());
 				}
 
-				//ec.hasEvent = true;
-				//System.out.println(ec.hasEvent);
 			}
 
 		} catch (JMSException e) {

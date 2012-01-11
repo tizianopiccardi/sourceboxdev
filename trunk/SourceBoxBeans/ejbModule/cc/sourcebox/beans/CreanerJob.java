@@ -7,10 +7,7 @@ import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import javax.enterprise.inject.spi.Producer;
 import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
@@ -19,7 +16,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
 import org.jboss.ejb3.annotation.ResourceAdapter;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -46,33 +42,13 @@ public class CreanerJob implements Job {
 	 * @see Job#execute(JobExecutionContext)
 	 */
 	public void execute(JobExecutionContext arg0) {
-		// if(1==1) return;
 		cleanUser();
 		cleanBoxes();
-		//cleanOperations();
 	}
-	
-	
+
 	private void cleanBoxes() {
-		
+
 	}
-	
-	/*private void cleanOperations() {
-		Query operationsQuery = em.createQuery("select r.operation.idoperation, r.box.alias from Revision r");
-		List<Object[]> lastOp = operationsQuery.getResultList();
-		
-		
-		Query deleteQuery = em.createQuery("delete from Operation o join o.box b where o.idoperation < :id and b.alias=:alias");
-		for (int i = 0; i < lastOp.size(); i++) {
-			Object[] current = lastOp.get(i);
-			deleteQuery.setParameter("id", current[0] );
-			deleteQuery.setParameter("alias", current[1] );
-			deleteQuery.executeUpdate();
-		}
-		
-		
-	}*/
-	
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	private void cleanUser() {
@@ -108,7 +84,7 @@ public class CreanerJob implements Job {
 			}
 
 			connection.close();
-			
+
 			Query deleteQuery = em.createQuery(Queries.get("CLEANER_DELUSER"));
 			deleteQuery.setParameter("limit", utils.getUsersTimeDeadline());
 			deleteQuery.executeUpdate();
