@@ -14,7 +14,7 @@ import cc.sourcebox.entities.User;
 @Local
 public interface BoxesDAOLocal {
 	public String make(String language, String body, String password, Boolean readonly);
-	//public void save(String alias, String body) throws BoxNotFoundException;
+
 	public Revision get(int userId, String alias, String password) throws BoxNotFoundException;
 	public List<Message> getChatHistory(String alias, int n);
 	
@@ -30,7 +30,11 @@ public interface BoxesDAOLocal {
 	public void destroy (String alias, String key);
 	
 	public Revision getRevision (String alias, Integer revision);
-	/*
-	public User getUser(int id);
-	public Box getBox(int id);*/
+	/***********
+	 * Check if the password is not null
+	 * @param alias
+	 * @return
+	 * @throws BoxNotFoundException
+	 */
+	public Boolean isPrivate(String alias) throws BoxNotFoundException;
 }

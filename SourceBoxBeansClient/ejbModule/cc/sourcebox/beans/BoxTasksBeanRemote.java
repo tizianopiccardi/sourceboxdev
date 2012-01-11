@@ -34,23 +34,7 @@ public interface BoxTasksBeanRemote {
 	 */
 	public Revision get(int userId, String alias, String password) throws BoxNotFoundException;
 
-	
-	/***********
-	 * Check if the password is not null
-	 * @param alias
-	 * @return
-	 * @throws BoxNotFoundException
-	 */
-	public Boolean isPrivate(String alias) throws BoxNotFoundException;
-	
-	//public void edit(String alias, int userID, List<InsertObject> inserts) throws BoxNotFoundException;
-	
-	//public void notifyUpdate(String alias) throws BoxNotFoundException ;
 
-	//public long lastEvent(String alias) throws BoxNotFoundException ;
-	
-	//public int getSequence(String alias) throws BoxNotFoundException ;
-	
 	
 	public List<InsertObject> getOperations(String alias, int from) ;
 	
@@ -63,6 +47,6 @@ public interface BoxTasksBeanRemote {
 	public void destroy (String alias, String key);
 	
 	
-	
+	public Boolean isPrivate(String alias) throws BoxNotFoundException;
 	
 }
