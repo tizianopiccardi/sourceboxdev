@@ -13,6 +13,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import cc.sourcebox.beans.exceptions.BoxNotFoundException;
+import cc.sourcebox.beans.query.Queries;
 import cc.sourcebox.dto.UserInfo;
 import cc.sourcebox.entities.Box;
 import cc.sourcebox.entities.Inbox;
@@ -56,7 +57,7 @@ public class UsersDAO implements UsersDAOLocal {
 	public void joinBox(int userID, Box box) {
 
 		Query inboxQuery = em
-				.createQuery("SELECT u.iduser from Inbox i join i.user u join i.box b where u.iduser = :userid and b.idboxes = :idbox");
+				.createQuery(Queries.get("USER_JOINBOX"));
 		inboxQuery.setParameter("userid", userID);
 		inboxQuery.setParameter("idbox", box.getIdboxes());
 		if (inboxQuery.getResultList().size() > 0)
@@ -83,7 +84,7 @@ public class UsersDAO implements UsersDAOLocal {
 			throws BoxNotFoundException {
 
 		Query inboxQuery = em
-				.createQuery("SELECT i from Inbox i join i.box b join i.user u where u.iduser=:iduser and b.alias=:alias");
+				.createQuery(Queries.get("USER_SETCURSOR"));
 
 		inboxQuery.setParameter("iduser", userID);
 		inboxQuery.setParameter("alias", boxAlias);
@@ -102,7 +103,7 @@ public class UsersDAO implements UsersDAOLocal {
 		Date limit = utils.getUsersTimeDeadline();
 
 		Query inboxQuery = em
-				.createQuery("SELECT i from Inbox i join i.box b join i.user u where b.alias=:alias and u.lastActivity > :limit");
+				.createQuery(Queries.get("USER_GETIN"));
 		inboxQuery.setParameter("alias", alias);
 		inboxQuery.setParameter("limit", limit);
 
