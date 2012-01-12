@@ -11,6 +11,7 @@ public interface BoxTasksBeanLocal {
 
 	/**********
 	 *  Interface to DAO layer called only by local beans
+	 *  Store the chat message
 	 * @param userid
 	 * @param alias
 	 * @param message
@@ -19,6 +20,7 @@ public interface BoxTasksBeanLocal {
 	
 	/**********
 	 * Interface to DAO layer called only by local beans
+	 * Store the edit
 	 * @param uid
 	 * @param alias
 	 * @param inserts
@@ -27,9 +29,18 @@ public interface BoxTasksBeanLocal {
 	public List<InsertObject> edit(int uid, String alias, List<InsertObject> inserts);
 	
 	
+	/*********
+	 * Digests the pending operations and create a new revision
+	 * @param alias
+	 */
 	public void save(String alias);
 
-	
+	/********
+	 * Retrieve the revision from the dao
+	 * @param alias
+	 * @param revision
+	 * @return
+	 */
 	public RevisionDTO getRevision (String alias, Integer revision);
 	
 }
