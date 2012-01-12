@@ -180,7 +180,7 @@ public class BoxesDAO implements BoxesDAOLocal {
 	}
 
 	@Override
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void save(String alias) {
 
 		Query lastRevisionQuery = em.createQuery(Queries.get("BOXES_LASTREV"));
