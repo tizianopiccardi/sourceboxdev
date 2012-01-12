@@ -74,7 +74,12 @@ public interface BoxBeanRemote {
 	@Remove
 	public void remove();
 	
+	/****
+	 * Retrieve the revision number...
+	 * @param revision
+	 * @return
+	 */
 	public RevisionDTO getRevision(Integer revision);
-	//public void ping();
+
 
 }
