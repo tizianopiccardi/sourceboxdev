@@ -183,7 +183,7 @@ public class BoxesDAO implements BoxesDAOLocal {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void save(String alias) {
 
-		Query lastRevisionQuery = em.createQuery(Queries.get("BOXES_SAVE"));
+		Query lastRevisionQuery = em.createQuery(Queries.get("BOXES_LASTREV"));
 		lastRevisionQuery.setParameter("alias", alias);
 
 		Revision lastRev = (Revision) lastRevisionQuery.getSingleResult();
