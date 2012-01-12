@@ -108,6 +108,12 @@ Chat
 		</center>
 
 	</div>
+	
+	<div id="dialog-users-list" title="Users">
+		<p>List of online users: (Esc to close)</p>
+		<ul id="users-list">
+		</ul>
+	</div>
 
 	<div id="revisions-dialog" title="Revisions Browser" align="center">
 	<p id="revisions-number">Revision:</p>
