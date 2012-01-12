@@ -21,7 +21,7 @@ $(function() {
 													{line: linesCount,
 													ch:RevisionsBrowser.editor.getLine(linesCount-1).lenght
 													});
-		//EditorManager.save();
+
 		
 	});
 	
