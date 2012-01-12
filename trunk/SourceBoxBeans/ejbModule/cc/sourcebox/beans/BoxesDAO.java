@@ -256,7 +256,7 @@ public class BoxesDAO implements BoxesDAOLocal {
 
 	@Override
 	public Boolean isPrivate(String alias) throws BoxNotFoundException {
-		Query boxQuery = em.createQuery("BOXES_PRIVATE");
+		Query boxQuery = em.createQuery(Queries.get("BOXES_PRIVATE"));
 
 		boxQuery.setParameter("alias", alias);
 
