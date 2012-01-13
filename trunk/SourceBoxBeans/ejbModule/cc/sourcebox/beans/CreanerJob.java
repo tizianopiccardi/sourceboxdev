@@ -38,7 +38,7 @@ public class CreanerJob implements Job {
 	@EJB
 	private UtilsBeanLocal utils;
 
-	private static int boxTimeout = 60*24*15;
+	private static int boxTimeout = 60*60*24*15;
 	/**
 	 * @see Job#execute(JobExecutionContext)
 	 */
@@ -46,16 +46,15 @@ public class CreanerJob implements Job {
 	public void execute(JobExecutionContext arg0) {
 		cleanUser();
 		
-		if (++counter>boxTimeout){ 
+		if (counter++%1440==0)
 			cleanBoxes();
-			counter=0;
-		}
+		
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	private void cleanBoxes() {
 		Query boxQuery = em.createQuery("DELETE FROM Box b where b.lastevent<:limit");
-		boxQuery.setParameter("limit", utils.getDateAt(-600));
+		boxQuery.setParameter("limit", utils.getDateAt(-boxTimeout));
 		boxQuery.executeUpdate();
 	}
 
