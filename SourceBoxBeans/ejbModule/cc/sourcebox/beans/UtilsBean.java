@@ -21,7 +21,7 @@ import cc.sourcebox.entities.Operation;
 @LocalBean
 public class UtilsBean implements UtilsBeanRemote, UtilsBeanLocal {
 
-	public static final long _3Minutes = 1000 * 60 * 3;
+	public static final long _3Minutes = 60 * 3;
 
 	public UtilsBean() {
 
@@ -34,9 +34,7 @@ public class UtilsBean implements UtilsBeanRemote, UtilsBeanLocal {
 
 	@Override
 	public Date getUsersTimeDeadline() {
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(System.currentTimeMillis() - _3Minutes);
-		return cal.getTime();
+		return getDateAt(-_3Minutes);
 	}
 
 	private String[] split(String original, String sep) {
@@ -90,6 +88,13 @@ public class UtilsBean implements UtilsBeanRemote, UtilsBeanLocal {
 		}
 		return buffer.toString();
 
+	}
+
+	@Override
+	public Date getDateAt(long deltaSeconds) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(System.currentTimeMillis() + (1000 * deltaSeconds));
+		return cal.getTime();
 	}
 
 }

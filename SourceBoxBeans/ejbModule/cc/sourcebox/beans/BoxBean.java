@@ -129,6 +129,7 @@ public class BoxBean implements BoxBeanRemote {
 	@Override
 	public void heartBeat() {
 		usersDao.heartBeat(user.getUserid());
+		boxHelper.boxHeartBeat(alias);
 	}
 
 	@Override

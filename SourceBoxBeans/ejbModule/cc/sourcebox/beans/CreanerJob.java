@@ -41,13 +41,19 @@ public class CreanerJob implements Job {
 	/**
 	 * @see Job#execute(JobExecutionContext)
 	 */
+	int counter = 0;
 	public void execute(JobExecutionContext arg0) {
 		cleanUser();
-		cleanBoxes();
+		
+		//if (++counter%5==0) //executed every 5 runs
+			cleanBoxes();
 	}
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	private void cleanBoxes() {
-
+		Query boxQuery = em.createQuery("DELETE FROM Box b where b.lastevent<:limit");
+		boxQuery.setParameter("limit", utils.getDateAt(-600));
+		boxQuery.executeUpdate();
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
