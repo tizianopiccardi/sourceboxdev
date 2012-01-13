@@ -17,6 +17,14 @@ public interface UtilsBeanLocal {
 	 */
 	public Date getUsersTimeDeadline();
 	
+
+	/********
+	 * Add the passed seconds
+	 * @param deltaSeconds
+	 * @return
+	 */
+	public Date getDateAt(long deltaSeconds);
+	
 	/*********
 	 * Digest the pending operations applying them to the original string
 	 * @param original

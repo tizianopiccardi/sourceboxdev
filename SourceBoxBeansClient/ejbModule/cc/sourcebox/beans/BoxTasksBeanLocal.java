@@ -43,4 +43,10 @@ public interface BoxTasksBeanLocal {
 	 */
 	public RevisionDTO getRevision (String alias, Integer revision);
 	
+	/*******
+	 * Prevents the box deletion
+	 * @param alias
+	 */
+	public void boxHeartBeat(String alias);
+
 }
