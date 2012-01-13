@@ -38,6 +38,7 @@ public class CreanerJob implements Job {
 	@EJB
 	private UtilsBeanLocal utils;
 
+	private static int boxTimeout = 60*24*15;
 	/**
 	 * @see Job#execute(JobExecutionContext)
 	 */
@@ -45,8 +46,10 @@ public class CreanerJob implements Job {
 	public void execute(JobExecutionContext arg0) {
 		cleanUser();
 		
-		if (++counter%5==0) //executed every 5 runs
+		if (++counter>boxTimeout){ //executed every 5 runs
 			cleanBoxes();
+			counter=0;
+		}
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
