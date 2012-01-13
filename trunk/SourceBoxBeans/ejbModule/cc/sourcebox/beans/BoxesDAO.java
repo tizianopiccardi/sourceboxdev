@@ -150,6 +150,8 @@ public class BoxesDAO implements BoxesDAOLocal {
 	public List<InsertObject> edit(String alias, List<InsertObject> inserts) {
 
 		Box box = get(alias);
+		
+		
 		if (box.getReadonly() > 0)
 			throw new RuntimeException("Box is read-only");
 		for (int i = 0; i < inserts.size(); i++) {
@@ -164,7 +166,7 @@ public class BoxesDAO implements BoxesDAOLocal {
 			em.persist(op);
 			inserts.get(i).setSq(op.getIdoperation());
 		}
-
+		//box.setLastevent(new Timestamp(System.currentTimeMillis()));
 		return inserts;
 
 	}
@@ -266,6 +268,12 @@ public class BoxesDAO implements BoxesDAOLocal {
 		} catch (Exception e) {
 			throw new BoxNotFoundException();
 		}
+	}
+
+	@Override
+	public void boxHeartBeat(String alias) {
+		Box box = get(alias);
+		box.setLastevent(new Timestamp(System.currentTimeMillis()));
 	}
 
 }

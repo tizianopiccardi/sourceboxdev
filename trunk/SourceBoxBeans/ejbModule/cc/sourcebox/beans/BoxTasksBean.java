@@ -142,4 +142,9 @@ public class BoxTasksBean implements BoxTasksBeanRemote, BoxTasksBeanLocal {
 
 	}
 
+	@Override
+	public void boxHeartBeat(String alias) {
+		boxDAO.boxHeartBeat(alias);
+	}
+
 }
