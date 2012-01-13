@@ -100,4 +100,10 @@ public interface BoxesDAOLocal {
 	 * @throws BoxNotFoundException
 	 */
 	public Boolean isPrivate(String alias) throws BoxNotFoundException;
+	
+	/**********
+	 * Update the last event field
+	 * @param alias
+	 */
+	public void boxHeartBeat(String alias);
 }
