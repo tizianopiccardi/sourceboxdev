@@ -45,7 +45,7 @@ public class CreanerJob implements Job {
 	public void execute(JobExecutionContext arg0) {
 		cleanUser();
 		
-		//if (++counter%5==0) //executed every 5 runs
+		if (++counter%5==0) //executed every 5 runs
 			cleanBoxes();
 	}
 

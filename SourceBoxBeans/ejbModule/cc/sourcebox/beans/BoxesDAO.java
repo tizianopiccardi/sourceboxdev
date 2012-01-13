@@ -166,7 +166,7 @@ public class BoxesDAO implements BoxesDAOLocal {
 			em.persist(op);
 			inserts.get(i).setSq(op.getIdoperation());
 		}
-		//box.setLastevent(new Timestamp(System.currentTimeMillis()));
+
 		return inserts;
 
 	}
